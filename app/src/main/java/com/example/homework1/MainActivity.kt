@@ -10,67 +10,60 @@ import android.view.View
 import android.widget.TextView
 
 
-
-const val REQUEST_ID = 1
 const val COUNTER_ID = "Counter"
-const val TEXT_CNT = "Second activity counter: "
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var CounterTextView :TextView
+    private lateinit var counterTextView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        CounterTextView = findViewById(R.id.cntTextView) as TextView
-        CounterTextView.setText(getString(R.string.Default_textView))
+
+        this.counterTextView = findViewById(R.id.cntTextView)
+
+        // If it's the first time it happens, it should be null => otherwise it's not gonna be null.
+        if (savedInstanceState == null) {
+            this.counterTextView.text = intent.getIntExtra(COUNTER_ID, 0).toString()
+        } else {
+            savedInstanceState.getInt(COUNTER_ID)
+        }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == REQUEST_ID && resultCode == Activity.RESULT_OK)
-        {
-            if (data != null) {
-                val value = data.getIntExtra(COUNTER_ID,0)
-                CounterTextView.setText(getString(R.string.Default_text_content, value))
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            super.onSaveInstanceState(savedInstanceState)
+            try
+            {
+                val cntTextViewValue = counterTextView.text.toString()
+                savedInstanceState.putInt(COUNTER_ID, cntTextViewValue.toInt())
             }
-        }
-    }
-
-    fun StartSecondActivity(@Suppress("UNUSED_PARAMETER")view: View?)
-    {
-        val intent = Intent(this, SecondActivity::class.java)
-        val cntTextView = CounterTextView.text.toString()
-        val pattern = "\\d+".toRegex()
-        val found = pattern.find(cntTextView)
-        if(found != null) {
-            intent.putExtra(COUNTER_ID, found.value.toInt())
-        }
-        else {
-            intent.putExtra(COUNTER_ID, 0)
-        }
-
-        startActivityForResult(intent, REQUEST_ID)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        if(outState != null) {
-            super.onSaveInstanceState(outState)
-            val cntTextView = CounterTextView.text.toString()
-            val pattern = "\\d+".toRegex()
-            val found = pattern.find(cntTextView)
-            if (found != null) {
-                outState.putInt(COUNTER_ID, found.value.toInt())
-            } else {
-                outState.putInt(COUNTER_ID, 0)
+            catch(e : NumberFormatException)
+            {
+                savedInstanceState.putInt(COUNTER_ID, 0)
             }
+
         }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
+            counterTextView.text = savedInstanceState.getInt(COUNTER_ID).toString()
             super.onRestoreInstanceState(savedInstanceState)
-                val value = savedInstanceState.getInt(COUNTER_ID)
-                CounterTextView.setText(getString(R.string.Default_text_content, value))
-
         }
     }
+
+    fun startSecondActivity(@Suppress("UNUSED_PARAMETER") view: View?) {
+        val intent = Intent(this, SecondActivity::class.java)
+        try {
+            val cntTextViewValue = this.counterTextView.text.toString()
+            intent.putExtra(COUNTER_ID, cntTextViewValue.toInt()+1)
+        } catch (e: NumberFormatException) {
+            intent.putExtra(COUNTER_ID, 0)
+        }
+
+        startActivity(intent)
+    }
+
 }
