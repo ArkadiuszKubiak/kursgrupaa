@@ -37,8 +37,7 @@ class FirstFragment : Fragment(), View.OnClickListener {
         return view
     }
 
-    override fun onClick(view: View?)
-    {
+    override fun onClick(view: View?) {
         val secondFragment = SecondFragment.newInstance()
         val myActivity = activity as SecondActivity
         replaceFragment(secondFragment, R.id.fragment_container)

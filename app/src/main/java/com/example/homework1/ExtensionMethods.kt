@@ -1,6 +1,5 @@
 package com.example.homework1
 
-import android.graphics.Insets.add
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -14,22 +13,22 @@ inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
     fragmentTransaction.commit()
 }
 
-fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int){
+fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
     supportFragmentManager.inTransaction { add(frameId, fragment) }
 }
 
 fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
-    supportFragmentManager.inTransaction{replace(frameId, fragment)}
+    supportFragmentManager.inTransaction { replace(frameId, fragment) }
 }
 
 
 @Suppress("unused")
-fun Fragment.addFragment(fragment: Fragment, frameId: Int){
+fun Fragment.addFragment(fragment: Fragment, frameId: Int) {
     activity!!.supportFragmentManager.inTransaction { add(frameId, fragment) }
 }
 
 fun Fragment.replaceFragment(fragment: Fragment, frameId: Int) {
-    activity!!.supportFragmentManager.inTransaction{replace(frameId, fragment)}
+    activity!!.supportFragmentManager.inTransaction { replace(frameId, fragment) }
 }
 
 // End
