@@ -1,7 +1,7 @@
 package com.example.homework1
 
 import android.os.Bundle
-import android.view.View
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 const val COUNTER_ID = "Counter"
@@ -14,10 +14,10 @@ class MainActivity : BaseCountingActivity() {
         setContentView(R.layout.activity_main)
 
         this.loadCounterValues(savedInstanceState, R.id.cntTextView)
-    }
 
-    fun startActivityAndPassCounter(@Suppress("UNUSED_PARAMETER") view: View?) {
-        this.startActivityAndPassCounter(view, SecondActivity::class.java)
+        // For switching activity.
+        buttonActivityReturn.setOnClickListener {
+            this.startActivityAndPassCounter(it, SecondActivity::class.java)
+        }
     }
-
 }

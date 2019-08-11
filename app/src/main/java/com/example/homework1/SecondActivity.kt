@@ -1,7 +1,6 @@
 package com.example.homework1
 
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.second_activity.*
 
@@ -19,6 +18,10 @@ class SecondActivity : BaseCountingActivity() {
         val myFragment = FirstFragment.newInstance(this.counter)
         addFragment(myFragment, R.id.fragment_container)
 
+        // For switching activity.
+        buttonActivityReturn.setOnClickListener {
+            this.startActivityAndPassCounter(it, MainActivity::class.java)
+        }
 
         // For switching fragments.
         buttonFragment.setOnClickListener {
@@ -35,7 +38,4 @@ class SecondActivity : BaseCountingActivity() {
         }
     }
 
-    fun startActivityAndPassCounter(@Suppress("UNUSED_PARAMETER") view: View?) {
-        this.startActivityAndPassCounter(view, MainActivity::class.java)
-    }
 }

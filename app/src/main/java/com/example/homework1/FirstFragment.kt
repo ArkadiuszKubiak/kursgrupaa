@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 
 
-class FirstFragment : Fragment() {
+class FirstFragment : Fragment(), View.OnClickListener {
     private var counter = 0
 
     companion object {
@@ -32,14 +32,17 @@ class FirstFragment : Fragment() {
         counterTextView.text = this.counter.toString()
 
         val button = view.findViewById<Button>(R.id.buttonFragment)
-        button.setOnClickListener {
-            val secondFragment = SecondFragment.newInstance()
-            val myActivity = activity as SecondActivity
-            replaceFragment(secondFragment, R.id.fragment_container)
-            myActivity.currentFragment = "SecondFragment"
-        }
+        button.setOnClickListener(this)
 
         return view
+    }
+
+    override fun onClick(view: View?)
+    {
+        val secondFragment = SecondFragment.newInstance()
+        val myActivity = activity as SecondActivity
+        replaceFragment(secondFragment, R.id.fragment_container)
+        myActivity.currentFragment = "SecondFragment"
     }
 
     override fun onAttach(context: Context?) {

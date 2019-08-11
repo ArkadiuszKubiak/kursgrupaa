@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 @SuppressLint("Registered")
-open class BaseCountingActivity : AppCompatActivity() {
+abstract class BaseCountingActivity : AppCompatActivity() {
 
     private lateinit var counterTextView: TextView
 
