@@ -1,13 +1,10 @@
 package com.example.homework1
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-
-import androidx.appcompat.app.AppCompatActivity
-
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 
 const val COUNTER_ID = "Counter"
@@ -35,13 +32,10 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
             super.onSaveInstanceState(savedInstanceState)
-            try
-            {
+            try {
                 val cntTextViewValue = counterTextView.text.toString()
                 savedInstanceState.putInt(COUNTER_ID, cntTextViewValue.toInt())
-            }
-            catch(e : NumberFormatException)
-            {
+            } catch (e: NumberFormatException) {
                 savedInstanceState.putInt(COUNTER_ID, 0)
             }
 
@@ -59,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, SecondActivity::class.java)
         try {
             val cntTextViewValue = this.counterTextView.text.toString()
-            intent.putExtra(COUNTER_ID, cntTextViewValue.toInt()+1)
+            intent.putExtra(COUNTER_ID, cntTextViewValue.toInt() + 1)
         } catch (e: NumberFormatException) {
             intent.putExtra(COUNTER_ID, 0)
         }

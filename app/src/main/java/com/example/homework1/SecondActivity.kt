@@ -1,14 +1,11 @@
 package com.example.homework1
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.second_activity.*
-import java.lang.NumberFormatException
 
 class SecondActivity : AppCompatActivity() {
     lateinit var counterTextView: TextView
@@ -52,9 +49,7 @@ class SecondActivity : AppCompatActivity() {
 
                 // Replace the fragment on container
                 transaction.replace(R.id.fragment_container, myFragment, "Fragment")
-            }
-            else
-            {
+            } else {
                 // Get the text fragment instance
                 val myFragment = SecondFragment.newInstance()
 
@@ -71,12 +66,11 @@ class SecondActivity : AppCompatActivity() {
 
     }
 
-    fun startFirstActivity(@Suppress("UNUSED_PARAMETER")view: View?)
-    {
+    fun startFirstActivity(@Suppress("UNUSED_PARAMETER") view: View?) {
         val intent = Intent(this, MainActivity::class.java)
         try {
             val cntTextViewValue = this.counterTextView.text.toString()
-            intent.putExtra(COUNTER_ID, cntTextViewValue.toInt()+1)
+            intent.putExtra(COUNTER_ID, cntTextViewValue.toInt() + 1)
         } catch (e: NumberFormatException) {
             intent.putExtra(COUNTER_ID, 0)
         }

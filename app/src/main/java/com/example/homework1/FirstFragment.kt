@@ -6,11 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.Fragment
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.first_fragment.*
-import kotlinx.android.synthetic.main.first_fragment.cntTextView
+import androidx.fragment.app.Fragment
 
 
 class FirstFragment : Fragment() {
