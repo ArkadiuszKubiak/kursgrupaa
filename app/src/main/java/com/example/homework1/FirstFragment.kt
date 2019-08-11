@@ -34,7 +34,6 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         CounterTextView = view.findViewById<TextView>(R.id.cntTextView)
         CounterTextView.setText(getString(R.string.Default_text_content,arguments!!.getInt("value", 0)))
-
     }
 
     override fun onDetach() {

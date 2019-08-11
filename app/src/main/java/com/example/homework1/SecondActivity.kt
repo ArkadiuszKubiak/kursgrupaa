@@ -4,6 +4,7 @@ import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
 class SecondActivity : AppCompatActivity(), FirstFragment.OnFragmentInteractionListener, SecondFragment.OnFragmentInteractionListener  {
@@ -25,12 +26,14 @@ class SecondActivity : AppCompatActivity(), FirstFragment.OnFragmentInteractionL
             transaction.replace(R.id.flContent, FirstFragment.newInstance(counter))
             transaction.commit()
         }
-        if (savedInstanceState == null) {
+    }
+
+    fun SecondFragment(view: View?)
+    {
             val manager = supportFragmentManager
             val transaction = manager.beginTransaction()
-            transaction.replace(R.id.flContent2, SecondFragment.newInstance())
+            transaction.replace(R.id.flContent, SecondFragment.newInstance())
             transaction.commit()
-        }
     }
 
     override fun onBackPressed() {
