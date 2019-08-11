@@ -21,17 +21,13 @@ class SecondFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-
         val view = inflater.inflate(R.layout.second_fragment, container, false)
         val button = view.findViewById<Button>(R.id.buttonFragment)
         button.setOnClickListener {
             val myActivity = activity as SecondActivity
             val firstFragment = FirstFragment.newInstance(myActivity.counterTextView.text.toString().toInt())
-            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fragment_container, firstFragment)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
+            replaceFragment(firstFragment, R.id.fragment_container)
+            myActivity.currentFragment = "FirstFragment"
         }
 
         return view

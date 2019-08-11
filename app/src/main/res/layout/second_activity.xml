@@ -20,7 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:text="Return to 1st Activity"
             tools:layout_editor_absoluteX="109dp" android:id="@+id/button2"
-            android:onClick="startFirstActivity"/>
+            android:onClick="startActivityAndPassCounter"/>
 
     <Button
             android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/cntTextViewSecond"
+            android:id="@+id/cntTextView"
             android:text="0"
             app:layout_constraintHorizontal_bias="0.498"/>
 
