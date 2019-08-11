@@ -19,7 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".SecondActivity">
+        <activity android:name=".SecondActivity"
+                  android:label="@string/Second_Activity"
+                  android:theme="@style/AppTheme">
         </activity>
     </application>
 
