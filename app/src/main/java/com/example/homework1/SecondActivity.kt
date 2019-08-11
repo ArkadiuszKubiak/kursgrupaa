@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.second_activity.*
 import java.lang.NumberFormatException
 
 class SecondActivity : AppCompatActivity() {
-    private lateinit var counterTextView: TextView
+    lateinit var counterTextView: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +27,13 @@ class SecondActivity : AppCompatActivity() {
             savedInstanceState.getInt(COUNTER_ID)
         }
 
+        val manager = supportFragmentManager
+        val transaction = manager.beginTransaction()
+        val myFragment = FirstFragment.newInstance(counterTextView.text.toString().toInt())
+        transaction.add(R.id.fragment_container, myFragment, "Fragment")
+        transaction.addToBackStack(null)
+        transaction.commit()
+
 
         buttonFragment.setOnClickListener {
 
@@ -41,7 +48,7 @@ class SecondActivity : AppCompatActivity() {
             // It's either SecondFragment or None.
             if (currentFragment is SecondFragment) {
                 // Get the text fragment instance
-                val myFragment = FirstFragment()
+                val myFragment = FirstFragment.newInstance(counterTextView.text.toString().toInt())
 
                 // Replace the fragment on container
                 transaction.replace(R.id.fragment_container, myFragment, "Fragment")
@@ -49,7 +56,7 @@ class SecondActivity : AppCompatActivity() {
             else
             {
                 // Get the text fragment instance
-                val myFragment = SecondFragment()
+                val myFragment = SecondFragment.newInstance()
 
                 // Replace the fragment on container
                 transaction.replace(R.id.fragment_container, myFragment, "Fragment")
