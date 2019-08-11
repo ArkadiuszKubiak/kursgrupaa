@@ -2,12 +2,11 @@ package com.example.homework1
 
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.second_activity.*
 
 class SecondActivity : BaseCountingActivity() {
-    public lateinit var currentFragment: String
+    lateinit var currentFragment: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +16,7 @@ class SecondActivity : BaseCountingActivity() {
 
         // Add an initial fragment.
         this.currentFragment = "FirstFragment"
-        val myFragment = FirstFragment.newInstance(counterTextView.text.toString().toInt())
+        val myFragment = FirstFragment.newInstance(this.counter)
         addFragment(myFragment, R.id.fragment_container)
 
 
@@ -26,11 +25,11 @@ class SecondActivity : BaseCountingActivity() {
             val myNewFragment: Fragment
 
             if (this.currentFragment != "FirstFragment") {
-                myNewFragment = FirstFragment.newInstance(counterTextView.text.toString().toInt())
-                currentFragment = "FirstFragment"
+                myNewFragment = FirstFragment.newInstance(this.counter)
+                this.currentFragment = "FirstFragment"
             } else {
                 myNewFragment = SecondFragment.newInstance()
-                currentFragment = "SecondFragment"
+                this.currentFragment = "SecondFragment"
             }
             replaceFragment(myNewFragment, R.id.fragment_container)
         }

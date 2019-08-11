@@ -25,7 +25,7 @@ class SecondFragment : Fragment() {
         val button = view.findViewById<Button>(R.id.buttonFragment)
         button.setOnClickListener {
             val myActivity = activity as SecondActivity
-            val firstFragment = FirstFragment.newInstance(myActivity.counterTextView.text.toString().toInt())
+            val firstFragment = FirstFragment.newInstance(myActivity.counter)
             replaceFragment(firstFragment, R.id.fragment_container)
             myActivity.currentFragment = "FirstFragment"
         }

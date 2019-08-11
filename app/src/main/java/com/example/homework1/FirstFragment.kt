@@ -28,8 +28,8 @@ class FirstFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.first_fragment, container, false)
 
-        val tv = view.findViewById(R.id.cntTextView) as TextView
-        tv.text = this.counter.toString()
+        val counterTextView = view.findViewById(R.id.cntTextView) as TextView
+        counterTextView.text = this.counter.toString()
 
         val button = view.findViewById<Button>(R.id.buttonFragment)
         button.setOnClickListener {
