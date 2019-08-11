@@ -36,15 +36,15 @@ class SecondActivity : AppCompatActivity() {
             // Begin the fragment transition using support fragment manager
             val transaction = manager.beginTransaction()
 
-            val currentFragment = supportFragmentManager.findFragmentByTag("FirstFragment")
+            val currentFragment = supportFragmentManager.findFragmentByTag("Fragment")
 
             // It's either SecondFragment or None.
-            if (currentFragment == null) {
+            if (currentFragment is SecondFragment) {
                 // Get the text fragment instance
                 val myFragment = FirstFragment()
 
                 // Replace the fragment on container
-                transaction.replace(R.id.fragment_container, myFragment, "FirstFragment")
+                transaction.replace(R.id.fragment_container, myFragment, "Fragment")
             }
             else
             {
@@ -52,7 +52,7 @@ class SecondActivity : AppCompatActivity() {
                 val myFragment = SecondFragment()
 
                 // Replace the fragment on container
-                transaction.replace(R.id.fragment_container, myFragment, "SecondFragment")
+                transaction.replace(R.id.fragment_container, myFragment, "Fragment")
             }
 
             transaction.addToBackStack(null)

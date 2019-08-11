@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:orientation="vertical"
-            android:background="#c1cfba"
+            android:background="#000000"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/buttonFragment"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
