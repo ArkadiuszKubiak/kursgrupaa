@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FF0000"
+            android:weightSum="10"
+            android:layout_margin="10dp"
+    >
+        <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:scaleType="fitCenter"
+                android:src="@{viewmodel.avatar}"
+                android:layout_margin="10dp"
+                android:background="#FFFF00"
+        />
+
+        <TextView
+                android:text="@{viewmodel.name}"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:layout_margin="10dp"
+                android:background="#FFFF00"
+        />
+        <TextView
+                android:text="@{viewmodel.position}"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:layout_margin="10dp"
+                android:background="#FFFF00"
+        />
+
+    </LinearLayout>
+</LinearLayout>

@@ -22,7 +22,7 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
 }
 
 
-@Suppress("unused")
+
 fun Fragment.addFragment(fragment: Fragment, frameId: Int) {
     activity!!.supportFragmentManager.inTransaction { add(frameId, fragment) }
 }
