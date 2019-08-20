@@ -17,18 +17,18 @@
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="#FF0000"
             android:weightSum="10"
-            android:layout_margin="10dp"
+            android:layout_margin="1dp"
     >
         <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:scaleType="centerCrop"
+                android:layout_gravity="center_horizontal"
                 app:imageUrl="@{viewmodel.getPersonById(person_id).avatar}"
-                android:layout_margin="10dp"
+                android:layout_margin="1dp"
                 android:background="#FFFF00"
         />
 
@@ -37,47 +37,47 @@
                 android:text="@{String.valueOf(viewmodel.getPersonById(person_id).id)}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="1dp"
                 android:background="#FFFF00"
-                android:layout_weight="1"
                 android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
         />
 
         <TextView
                 android:text="@{viewmodel.getPersonById(person_id).name}"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView"
-                android:layout_margin="10dp"
+                android:layout_margin="1dp"
                 android:background="#FFFF00"
+                android:layout_gravity="center_horizontal"
         />
         <TextView
                 android:text="@{viewmodel.getPersonById(person_id).position}"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView2"
-                android:layout_margin="10dp"
+                android:layout_margin="1dp"
                 android:background="#FFFF00"
+                android:layout_gravity="center_horizontal"
         />
         <TextView
                 android:text="@{viewmodel.getPersonById(person_id).current_project}"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView3"
-                android:layout_margin="10dp"
+                android:layout_margin="1dp"
                 android:background="#FFFF00"
+                android:layout_gravity="center_horizontal"
         />
         <TextView
                 android:text="@{viewmodel.getPersonById(person_id).current_topic}"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView4"
-                android:layout_margin="10dp"
+                android:layout_margin="1dp"
                 android:background="#FFFF00"
+                android:layout_gravity="center_horizontal"
         />
 
 
