@@ -1,22 +1,16 @@
 package com.example.homework1.viewmodel.fragments
 
 import android.app.Application
-
 import androidx.lifecycle.MutableLiveData
-import com.example.homework1.viewmodel.base.BaseViewModel
-
-import com.example.homework1.*
 import com.example.homework1.pseudomodels.PseudoModelPersonList
-import com.google.gson.Gson
+import com.example.homework1.readJsonFromAssets
+import com.example.homework1.viewmodel.base.BaseViewModel
 
 class ItemsViewModel(application: Application) : BaseViewModel(application) {
 
     lateinit var persons: MutableLiveData<Array<PseudoModelPersonList>>
     lateinit var selectedPerson: MutableLiveData<PseudoModelPersonList>
     lateinit var selectedItemsHistory: MutableLiveData<MutableMap<Int, Int>>
-
-    var colorActive: String = "#FFFF00"
-    var colorInactive: String = "#FF0000"
 
     fun init() {
         persons = MutableLiveData<Array<PseudoModelPersonList>>()

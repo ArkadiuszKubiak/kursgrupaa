@@ -22,7 +22,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@{ viewmodel.selectedItemsHistory[viewmodel.selectedPerson.id] > 0 ? viewmodel.colorActive : viewmodel.colorInactive }"
+            android:background="@{ viewmodel.selectedItemsHistory[viewmodel.selectedPerson.id] > 0 ? @color/activeField : @color/inactiveField }"
             android:layout_margin="10dp"
             android:weightSum="6"
             android:clickable="true"
