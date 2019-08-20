@@ -12,11 +12,14 @@ import com.google.gson.Gson
 class ItemsViewModel(application: Application) : BaseViewModel(application) {
 
     lateinit var persons: MutableLiveData<Array<PseudoModelPersonList>>
+    lateinit var selectedPerson: MutableLiveData<PseudoModelPersonList>
 
     fun init() {
         persons = MutableLiveData<Array<PseudoModelPersonList>>()
         persons.value = arrayOf()
         populatePersons()
+        selectedPerson = MutableLiveData()
+        selectedPerson.value = getPersonAtPosition(0)
     }
 
     private fun populatePersons() {
@@ -31,5 +34,11 @@ class ItemsViewModel(application: Application) : BaseViewModel(application) {
             return persons.value?.get(position)
         }
         return null
+    }
+
+    fun onItemClick(position: Int)
+    {
+        val person = getPersonAtPosition(position)
+        selectedPerson.value = person
     }
 }

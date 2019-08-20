@@ -1,6 +1,7 @@
 package com.example.homework1.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,10 @@ import com.example.homework1.R
 import com.example.homework1.adapters.MyAdapter
 import com.example.homework1.databinding.ItemsFragmentBinding
 import com.example.homework1.viewmodel.fragments.ItemsViewModel
+import androidx.lifecycle.Observer
+import com.example.homework1.pseudomodels.PseudoModelPerson
+import com.example.homework1.pseudomodels.PseudoModelPersonList
+import com.example.homework1.view.activities.MainActivity
 
 
 class ItemListFragment : Fragment() {
@@ -26,6 +31,7 @@ class ItemListFragment : Fragment() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
+    private val TAG = "ItemListFragment"
 
     companion object {
         fun newInstance() = ItemListFragment().apply {
@@ -58,8 +64,17 @@ class ItemListFragment : Fragment() {
             adapter = viewAdapter
         }
 
+        viewModel.selectedPerson.observe(this, Observer<PseudoModelPersonList> {
+                selectPerson ->
+            run {
+                Log.d(TAG, "onSelectedPersonChanged: ")
+                (activity as MainActivity).viewModel.chosenPseudoModelPerson.value = selectPerson
+            }
+        })
 
-        return binding.root
+
+
+            return binding.root
     }
 
 

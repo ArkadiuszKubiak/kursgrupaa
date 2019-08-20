@@ -1,6 +1,7 @@
 package com.example.homework1.view.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.homework1.R
 import com.example.homework1.addFragment
 import com.example.homework1.databinding.ActivityMainBinding
+import com.example.homework1.pseudomodels.PseudoModelPersonList
 import com.example.homework1.view.activities.base.BaseActivity
 import com.example.homework1.view.fragments.ItemDetailsFragment
 import com.example.homework1.view.fragments.ItemListFragment
@@ -21,7 +23,7 @@ class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var viewModel: MainViewModel
+    lateinit var viewModel: MainViewModel
 
     private lateinit var itemDetailsFragment: ItemDetailsFragment
     private lateinit var itemListFragment: ItemListFragment
@@ -48,6 +50,13 @@ class MainActivity : BaseActivity() {
 
         this.itemDetailsFragment = ItemDetailsFragment.newInstance()
         addFragment(this.itemDetailsFragment, R.id.item_details_fragment_container)
+
+        viewModel.chosenPseudoModelPerson.observe(this, Observer<PseudoModelPersonList> { selectPerson ->
+            run {
+                Log.d(TAG, "onSelectedPersonChanged: ")
+                this.itemDetailsFragment.binding.position = selectPerson.id
+            }
+        })
 
     }
 }

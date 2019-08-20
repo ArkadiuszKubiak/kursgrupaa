@@ -14,7 +14,7 @@
 
         <variable
                 name="position"
-                type="Integer"/>
+                type="java.lang.Integer"/>
 
     </data>
 
@@ -24,7 +24,12 @@
             android:layout_height="wrap_content"
             android:background="#FF0000"
             android:layout_margin="10dp"
-            android:weightSum="6">
+            android:weightSum="6"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> viewmodel.onItemClick(position)}"
+
+    >
 
         <ImageView
                     android:id="@+id/person_avatar"
