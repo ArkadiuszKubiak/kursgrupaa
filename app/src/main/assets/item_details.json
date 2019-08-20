@@ -1,5 +1,13 @@
 [
   {
+    "id": 0,
+    "name": "David",
+    "position": "Trainee",
+    "avatar": "https://picsum.photos/id/0/200/300",
+    "current_project": "SuperProjekt",
+    "current_topic": "C"
+  },
+  {
     "id": 1,
     "name": "John",
     "position": "Junior",

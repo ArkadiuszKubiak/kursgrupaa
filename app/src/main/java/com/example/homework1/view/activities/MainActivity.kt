@@ -2,15 +2,12 @@ package com.example.homework1.view.activities
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.homework1.R
 import com.example.homework1.addFragment
 import com.example.homework1.databinding.ActivityMainBinding
-import com.example.homework1.pseudomodels.PseudoModelPersonList
 import com.example.homework1.view.activities.base.BaseActivity
 import com.example.homework1.view.fragments.ItemDetailsFragment
 import com.example.homework1.view.fragments.ItemListFragment
@@ -54,10 +51,10 @@ class MainActivity : BaseActivity() {
         this.itemDetailsFragment = ItemDetailsFragment.newInstance()
         addFragment(this.itemDetailsFragment, R.id.item_details_fragment_container)
 
-        viewModel.chosenPseudoModelPerson.observe(this, Observer<PseudoModelPersonList> { selectPerson ->
+        viewModel.chosenPseudoModelPersonId.observe(this, Observer<Int> { selectedPersonId ->
             run {
-                Log.d(TAG, "onSelectedPersonChanged: ")
-                this.itemDetailsFragment.binding.position = selectPerson.id
+                Log.d(TAG, "onchosenPseudoModelPersonIdChanged: ")
+                this.itemDetailsFragment.binding.personId = selectedPersonId
             }
         })
 

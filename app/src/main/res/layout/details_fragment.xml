@@ -10,8 +10,8 @@
                 type="com.example.homework1.viewmodel.fragments.DetailsViewModel"
         />
         <variable
-                name="position"
-                type="Integer"/>
+                name="person_id"
+                type="java.lang.Integer"/>
     </data>
 
     <LinearLayout
@@ -27,13 +27,24 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:scaleType="centerCrop"
-                app:imageUrl="@{viewmodel.getPersonAtPosition(position).avatar}"
+                app:imageUrl="@{viewmodel.getPersonById(person_id).avatar}"
                 android:layout_margin="10dp"
                 android:background="#FFFF00"
         />
 
         <TextView
-                android:text="@{viewmodel.getPersonAtPosition(position).name}"
+                android:id="@+id/person_id_field"
+                android:text="@{String.valueOf(viewmodel.getPersonById(person_id).id)}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="#FFFF00"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+        />
+
+        <TextView
+                android:text="@{viewmodel.getPersonById(person_id).name}"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -42,7 +53,7 @@
                 android:background="#FFFF00"
         />
         <TextView
-                android:text="@{viewmodel.getPersonAtPosition(position).position}"
+                android:text="@{viewmodel.getPersonById(person_id).position}"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -51,7 +62,7 @@
                 android:background="#FFFF00"
         />
         <TextView
-                android:text="@{viewmodel.getPersonAtPosition(position).current_project}"
+                android:text="@{viewmodel.getPersonById(person_id).current_project}"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -60,7 +71,7 @@
                 android:background="#FFFF00"
         />
         <TextView
-                android:text="@{viewmodel.getPersonAtPosition(position).current_topic}"
+                android:text="@{viewmodel.getPersonById(person_id).current_topic}"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"

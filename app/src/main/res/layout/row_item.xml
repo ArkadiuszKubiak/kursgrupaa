@@ -5,15 +5,18 @@
 >
 
     <data>
-        <import type="com.example.homework1.viewmodel.fragments.ItemsViewModel" />
+        <import type="com.example.homework1.viewmodel.fragments.ItemsViewModel"/>
 
         <variable
                 name="viewmodel"
                 type="com.example.homework1.viewmodel.fragments.ItemsViewModel"
         />
-
         <variable
                 name="position"
+                type="java.lang.Integer"/>
+
+        <variable
+                name="person_id"
                 type="java.lang.Integer"/>
 
     </data>
@@ -22,47 +25,59 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@{ viewmodel.selectedItemsHistory[viewmodel.selectedPerson.id] > 0 ? @color/activeField : @color/inactiveField }"
+            app:mark_active="@{viewmodel.selectedItemsHistory[position] > 0}"
             android:layout_margin="10dp"
             android:weightSum="6"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{() -> viewmodel.onItemClick(position)}"
+            android:onClick="@{(v) -> viewmodel.onItemClick(v, position)}"
 
     >
 
+
         <ImageView
-                    android:id="@+id/person_avatar"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:scaleType="centerCrop"
-                    app:imageUrl ="@{viewmodel.getPersonAtPosition(position).avatar}"
-                    android:layout_margin="10dp"
-                    android:background="#FFFF00"
-                    android:contentDescription="TODO"
-            />
+                android:id="@+id/person_avatar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{viewmodel.getPersonById(position).avatar}"
+                android:layout_margin="10dp"
+                android:background="#FFFF00"
+                android:contentDescription="TODO"
+        />
 
-            <TextView
-                    android:id="@+id/person_name"
-                    android:text="@{viewmodel.getPersonAtPosition(position).name}"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:background="#FFFF00"
-                    android:layout_weight="3"
-                    android:gravity="center_vertical"
-            />
+        <TextView
+                android:id="@+id/person_id_field"
+                android:text="@{String.valueOf(viewmodel.getPersonById(position).id)}"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:background="#FFFF00"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+        />
 
-            <TextView
-                    android:text="@{viewmodel.getPersonAtPosition(position).position}"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/person_position"
-                    android:layout_margin="10dp"
-                    android:background="#FFFF00"
-                    android:gravity="center_vertical"
-                    android:layout_weight="3"
-            />
+        <TextView
+                android:id="@+id/person_name"
+                android:text="@{viewmodel.getPersonById(position).name}"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:background="#FFFF00"
+                android:layout_weight="3"
+                android:gravity="center_vertical"
+        />
 
-        </LinearLayout>
+        <TextView
+                android:text="@{viewmodel.getPersonById(position).position}"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/person_position"
+                android:layout_margin="10dp"
+                android:background="#FFFF00"
+                android:gravity="center_vertical"
+                android:layout_weight="3"
+        />
+
+    </LinearLayout>
 </layout>

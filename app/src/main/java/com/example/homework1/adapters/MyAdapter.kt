@@ -22,6 +22,7 @@ class MyAdapter(
         fun bind(viewModel: ItemsViewModel, position: Int?) {
             binding.setVariable(BR.viewmodel, viewModel)
             binding.setVariable(BR.position, position)
+            //binding.setVariable(BR.person_id, viewModel.selectedPersonId.value)
             binding.executePendingBindings()
         }
     }
@@ -38,6 +39,7 @@ class MyAdapter(
             false
         )
 
+
         return GenericViewHolder(binding)
     }
 
@@ -45,13 +47,9 @@ class MyAdapter(
         holder.bind(viewModel, position)
     }
 
-    private fun getLayoutIdForPosition(position: Int): Int {
-        return layoutId
-    }
-
     override fun getItemCount() = personData.size
 
     override fun getItemViewType(position: Int): Int {
-        return getLayoutIdForPosition(position)
+        return layoutId
     }
 }

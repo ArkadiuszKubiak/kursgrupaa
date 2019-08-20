@@ -10,11 +10,9 @@
                 name="viewmodel"
                 type="com.example.homework1.viewmodel.fragments.ItemsViewModel"
         />
-
         <variable
-                name="position"
-                type="Integer"/>
-
+                name="person_id"
+                type="java.lang.Integer"/>
     </data>
     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView

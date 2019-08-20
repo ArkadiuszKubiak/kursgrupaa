@@ -7,17 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.homework1.R
 import com.example.homework1.adapters.MyAdapter
 import com.example.homework1.databinding.ItemsFragmentBinding
-import com.example.homework1.viewmodel.fragments.ItemsViewModel
-import androidx.lifecycle.Observer
-import com.example.homework1.pseudomodels.PseudoModelPerson
-import com.example.homework1.pseudomodels.PseudoModelPersonList
 import com.example.homework1.view.activities.MainActivity
+import com.example.homework1.viewmodel.fragments.ItemsViewModel
 
 
 class ItemListFragment : Fragment() {
@@ -64,17 +62,14 @@ class ItemListFragment : Fragment() {
             adapter = viewAdapter
         }
 
-        viewModel.selectedPerson.observe(this, Observer<PseudoModelPersonList> {
-                selectPerson ->
+        viewModel.selectedPersonId.observe(this, Observer<Int> { selectedPersonId ->
             run {
                 Log.d(TAG, "onSelectedPersonChanged: ")
-                (activity as MainActivity).viewModel.chosenPseudoModelPerson.value = selectPerson
+                (activity as MainActivity).viewModel.chosenPseudoModelPersonId.value = selectedPersonId
             }
         })
 
-
-
-            return binding.root
+        return binding.root
     }
 
 

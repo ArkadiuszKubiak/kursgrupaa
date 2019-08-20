@@ -15,7 +15,8 @@ import com.example.homework1.viewmodel.fragments.DetailsViewModel
 class ItemDetailsFragment : Fragment() {
     lateinit var binding: DetailsFragmentBinding
     lateinit var viewModel: DetailsViewModel
-    private val TAG = "ItemListFragment"
+
+    private val TAG = "ItemDetailsFragment"
 
     companion object {
         fun newInstance(): ItemDetailsFragment {
