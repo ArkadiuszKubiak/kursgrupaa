@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
 >
 
     <data>
@@ -30,7 +31,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:scaleType="centerCrop"
-                    android:src="@{viewmodel.getPersonAtPosition(position).avatar}"
+                    app:imageUrl ="@{viewmodel.getPersonAtPosition(position).avatar}"
                     android:layout_margin="10dp"
                     android:background="#FFFF00"
                     android:contentDescription="TODO"
