@@ -35,6 +35,9 @@ class MainActivity : BaseActivity() {
 
         super.onCreate(savedInstanceState)
 
+        supportActionBar!!.hide()
+
+
         // Bindings
         this.binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
