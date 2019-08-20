@@ -9,7 +9,7 @@ import com.example.homework1.readJsonFromAssets
 import com.example.homework1.viewmodel.base.BaseViewModel
 import com.google.gson.Gson
 
-class ItemsDetailViewModel(application: Application) : BaseViewModel(application) {
+class DetailsViewModel(application: Application) : BaseViewModel(application) {
 
     lateinit var persons: MutableLiveData<Array<PseudoModelPerson>>
 

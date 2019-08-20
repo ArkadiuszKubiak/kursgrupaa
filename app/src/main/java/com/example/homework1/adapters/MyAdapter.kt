@@ -8,18 +8,18 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.homework1.BR
 import com.example.homework1.pseudomodels.PseudoModelPersonList
-import com.example.homework1.viewmodel.fragments.ItemListViewModel
+import com.example.homework1.viewmodel.fragments.ItemsViewModel
 
 
 class MyAdapter(
-    @LayoutRes val layoutId: Int, val viewModel: ItemListViewModel,
+    @LayoutRes val layoutId: Int, val viewModel: ItemsViewModel,
     val personData: Array<PseudoModelPersonList>
 ) :
     RecyclerView.Adapter<MyAdapter.GenericViewHolder>() {
 
 
     class GenericViewHolder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(viewModel: ItemListViewModel, position: Int?) {
+        fun bind(viewModel: ItemsViewModel, position: Int?) {
             binding.setVariable(BR.viewmodel, viewModel)
             binding.setVariable(BR.position, position)
             binding.executePendingBindings()
@@ -33,7 +33,7 @@ class MyAdapter(
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<ViewDataBinding>(
             layoutInflater,
-            com.example.homework1.R.layout.item_list_row,
+            com.example.homework1.R.layout.row_item,
             parent,
             false
         )

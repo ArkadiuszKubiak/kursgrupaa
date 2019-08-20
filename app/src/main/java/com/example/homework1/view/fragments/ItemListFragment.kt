@@ -11,18 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.homework1.R
 import com.example.homework1.adapters.MyAdapter
-import com.example.homework1.databinding.ItemListFragmentBinding
-import com.example.homework1.pseudomodels.PseudoModelPersonList
-import com.example.homework1.viewmodel.fragments.ItemListViewModel
-import com.example.homework1.viewmodel.fragments.ItemsDetailViewModel
+import com.example.homework1.databinding.ItemsFragmentBinding
+import com.example.homework1.viewmodel.fragments.ItemsViewModel
 
 
 class ItemListFragment : Fragment() {
 
-    lateinit var binding: ItemListFragmentBinding
+    lateinit var binding: ItemsFragmentBinding
 
 
-    private lateinit var viewModel: ItemListViewModel
+    private lateinit var viewModel: ItemsViewModel
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -43,16 +41,16 @@ class ItemListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.item_list_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.items_fragment, container, false)
 
-        viewModel = ViewModelProviders.of(activity!!).get(ItemListViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!).get(ItemsViewModel::class.java)
         viewModel.init()
 
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = MyAdapter(R.layout.item_list_fragment, viewModel, viewModel.persons.value!!)
+        viewAdapter = MyAdapter(R.layout.items_fragment, viewModel, viewModel.persons.value!!)
 
         recyclerView = binding.root.findViewById<RecyclerView>(R.id.item_list_recycler_view).apply {
             setHasFixedSize(true)

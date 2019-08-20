@@ -4,11 +4,11 @@
 >
 
     <data>
-        <import type="com.example.homework1.viewmodel.fragments.ItemListViewModel"/>
+        <import type="com.example.homework1.viewmodel.fragments.ItemsViewModel"/>
 
         <variable
                 name="viewmodel"
-                type="com.example.homework1.viewmodel.fragments.ItemListViewModel"
+                type="com.example.homework1.viewmodel.fragments.ItemsViewModel"
         />
 
         <variable
