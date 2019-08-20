@@ -1,22 +1,27 @@
 package com.example.homework1
 
 import android.content.res.AssetManager
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import org.json.JSONObject
 import java.io.InputStream
+import android.graphics.drawable.Drawable
+import java.net.URL
 
-fun readJsonFromAssets(assets : AssetManager, filePath: String) :JSONObject
+
+fun readJsonFromAssets(assets : AssetManager, filePath: String) : String
 {
     try {
         val inputStream: InputStream = assets.open(filePath)
-        val inputString = inputStream.bufferedReader().use{it.readText()}
-        return JSONObject(inputString)
+
+        return inputStream.bufferedReader().use{it.readText()}
         //Log.d(TAG,inputString)
     } catch (e:Exception){
         //Log.d(TAG, e.toString())
     }
 
-    return JSONObject()
+    return ""
+}
+
+private fun GetImg(url: String): Drawable? {
+    val inputStream = URL(url).getContent() as InputStream
+    return Drawable.createFromStream(inputStream, "src name")
 }

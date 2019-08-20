@@ -37,7 +37,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="#000000"
-                        android:visibility="@{viewmodel.chosenPseudoModelPerson != null}"
+                        android:visibility="@{viewmodel. != null}"
                         android:orientation="horizontal"/>
 
                 <TextView android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
                 android:orientation="vertical"
                 android:background="#000000"
                 android:layout_margin="10dp"
-                android:visibility="@{!viewmodel.loaded}"
+                android:visibility="gone"
         >
             <TextView android:layout_width="wrap_content"
                       android:layout_gravity="center"

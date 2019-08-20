@@ -25,11 +25,6 @@ class MainActivity : BaseActivity() {
     private lateinit var itemDetailsFragment: ItemDetailsFragment
     private lateinit var itemListFragment: ItemListFragment
 
-    @BindingAdapter("app:goneUnless")
-    fun goneUnless(view: View, visible: Boolean) {
-        view.visibility = if (visible) View.VISIBLE else View.GONE
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // SplashScreen
@@ -43,7 +38,7 @@ class MainActivity : BaseActivity() {
         this.binding.lifecycleOwner = this
 
         // Initialize fragments.
-        this.itemListFragment = ItemListFragment.newInstance(1)
+        this.itemListFragment = ItemListFragment.newInstance()
         addFragment(this.itemListFragment, R.id.items_list_fragment_container)
 
         this.itemDetailsFragment = ItemDetailsFragment.newInstance()
