@@ -5,6 +5,7 @@ import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.homework1.R
 import com.example.homework1.addFragment
 import com.example.homework1.databinding.ActivityMainBinding
@@ -34,6 +35,10 @@ class MainActivity : BaseActivity() {
 
         // Bindings
         this.binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel.init()
+
         this.binding.viewmodel = this.viewModel
         this.binding.lifecycleOwner = this
 

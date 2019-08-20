@@ -9,4 +9,10 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
 
     val loaded: MutableLiveData<Boolean> = MutableLiveData()
     val chosenPseudoModelPerson: MutableLiveData<PseudoModelPerson> = MutableLiveData()
+
+    fun init()
+    {
+        loaded.value = false
+        chosenPseudoModelPerson.value = PseudoModelPerson("", "", "", 5,  "", "")
+    }
 }

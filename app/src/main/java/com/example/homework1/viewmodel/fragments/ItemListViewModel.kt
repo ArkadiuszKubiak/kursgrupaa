@@ -20,6 +20,12 @@ class ItemListViewModel(application: Application) : BaseViewModel(application) {
 
     lateinit var persons: MutableLiveData<Array<PseudoModelPersonList>>
 
+    fun init() {
+        persons = MutableLiveData<Array<PseudoModelPersonList>>()
+        persons.value = arrayOf()
+        populatePersons()
+    }
+
     private fun populatePersons() {
 
         val jsonStr = readJsonFromAssets(getApplication<Application>().applicationContext.assets, "items_list.json")

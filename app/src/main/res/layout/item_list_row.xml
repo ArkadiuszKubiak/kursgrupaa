@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+>
 
     <data>
         <import type="com.example.homework1.viewmodel.fragments.ItemListViewModel" />
@@ -30,7 +30,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:scaleType="centerCrop"
-                    android:src="@{viewmodel.avatar}"
+                    android:src="@{viewmodel.getPersonAtPosition(position).avatar}"
                     android:layout_margin="10dp"
                     android:background="#FFFF00"
                     android:contentDescription="TODO"
@@ -38,7 +38,7 @@
 
             <TextView
                     android:id="@+id/person_name"
-                    android:text="@{viewmodel.name}"
+                    android:text="@{viewmodel.getPersonAtPosition(position).name}"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
@@ -48,7 +48,7 @@
             />
 
             <TextView
-                    android:text="@{viewmodel.position}"
+                    android:text="@{viewmodel.getPersonAtPosition(position).position}"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id="@+id/person_position"

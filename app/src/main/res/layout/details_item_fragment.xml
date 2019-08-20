@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
 >
 
     <data>
@@ -8,6 +8,9 @@
                 name="viewmodel"
                 type="com.example.homework1.viewmodel.fragments.ItemsDetailViewModel"
         />
+        <variable
+                name="position"
+                type="Integer"/>
     </data>
 
     <LinearLayout
@@ -20,46 +23,46 @@
     >
         <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="6"
                 android:scaleType="fitCenter"
-                android:src="@{viewmodel.avatar}"
+                android:src="@{viewmodel.getPersonAtPosition(position).avatar}"
                 android:layout_margin="10dp"
                 android:background="#FFFF00"
         />
 
         <TextView
-                android:text="@{viewmodel.name}"
+                android:text="@{viewmodel.getPersonAtPosition(position).name}"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/textView"
                 android:layout_margin="10dp"
                 android:background="#FFFF00"
         />
         <TextView
-                android:text="@{viewmodel.position}"
+                android:text="@{viewmodel.getPersonAtPosition(position).position}"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/textView2"
                 android:layout_margin="10dp"
                 android:background="#FFFF00"
         />
         <TextView
-                android:text="@{viewmodel.currentProject}"
+                android:text="@{viewmodel.getPersonAtPosition(position).current_project}"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/textView3"
                 android:layout_margin="10dp"
                 android:background="#FFFF00"
         />
         <TextView
-                android:text="@{viewmodel.currentTopic}"
+                android:text="@{viewmodel.getPersonAtPosition(position).current_topic}"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/textView4"
                 android:layout_margin="10dp"
                 android:background="#FFFF00"
