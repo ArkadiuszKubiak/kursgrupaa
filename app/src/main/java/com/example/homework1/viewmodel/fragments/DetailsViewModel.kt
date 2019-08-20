@@ -20,7 +20,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun populatePersons() {
-
+        Thread.sleep(2000)
         val jsonStr = readJsonFromAssets(getApplication<Application>().applicationContext.assets, "item_details.json")
         val gson = Gson()
         persons.value = gson.fromJson(jsonStr, Array<PseudoModelPerson>::class.java)

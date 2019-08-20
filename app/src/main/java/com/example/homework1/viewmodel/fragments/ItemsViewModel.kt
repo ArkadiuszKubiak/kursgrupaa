@@ -13,6 +13,10 @@ class ItemsViewModel(application: Application) : BaseViewModel(application) {
 
     lateinit var persons: MutableLiveData<Array<PseudoModelPersonList>>
     lateinit var selectedPerson: MutableLiveData<PseudoModelPersonList>
+    lateinit var selectedItemsHistory: MutableLiveData<MutableMap<Int, Int>>
+
+    var colorActive: String = "#FFFF00"
+    var colorInactive: String = "#FF0000"
 
     fun init() {
         persons = MutableLiveData<Array<PseudoModelPersonList>>()
@@ -20,10 +24,15 @@ class ItemsViewModel(application: Application) : BaseViewModel(application) {
         populatePersons()
         selectedPerson = MutableLiveData()
         selectedPerson.value = getPersonAtPosition(0)
+
+        selectedItemsHistory = MutableLiveData()
+        selectedItemsHistory.value = mutableMapOf()
+
+        selectedItemsHistory.value!![0] = 1
     }
 
     private fun populatePersons() {
-
+        Thread.sleep(2000)
         val jsonStr = readJsonFromAssets(getApplication<Application>().applicationContext.assets, "items_list.json")
         val gson = Gson()
         persons.value = gson.fromJson(jsonStr, Array<PseudoModelPersonList>::class.java)
@@ -40,5 +49,15 @@ class ItemsViewModel(application: Application) : BaseViewModel(application) {
     {
         val person = getPersonAtPosition(position)
         selectedPerson.value = person
+
+        // Write History somehow.
+        if(selectedItemsHistory.value!!.containsKey(person?.id))
+        {
+            selectedItemsHistory.value!![person!!.id] = selectedItemsHistory.value!![person.id]!! +1
+        }
+        else
+        {
+            selectedItemsHistory.value!![person!!.id] = 1
+        }
     }
 }
