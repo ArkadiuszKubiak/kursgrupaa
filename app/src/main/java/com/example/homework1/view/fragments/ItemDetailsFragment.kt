@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.homework1.R
 import com.example.homework1.databinding.DetailsFragmentBinding
+import com.example.homework1.view.fragments.base.BaseFragment
 import com.example.homework1.viewmodel.fragments.DetailsViewModel
 
 
-class ItemDetailsFragment : Fragment() {
+class ItemDetailsFragment : BaseFragment() {
     lateinit var binding: DetailsFragmentBinding
     lateinit var viewModel: DetailsViewModel
 

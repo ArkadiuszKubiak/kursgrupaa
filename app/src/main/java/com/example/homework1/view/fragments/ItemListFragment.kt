@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,10 +14,11 @@ import com.example.homework1.R
 import com.example.homework1.adapters.MyAdapter
 import com.example.homework1.databinding.ItemsFragmentBinding
 import com.example.homework1.view.activities.MainActivity
+import com.example.homework1.view.fragments.base.BaseFragment
 import com.example.homework1.viewmodel.fragments.ItemsViewModel
 
 
-class ItemListFragment : Fragment() {
+class ItemListFragment : BaseFragment() {
 
     lateinit var binding: ItemsFragmentBinding
 
