@@ -24,16 +24,22 @@ class ItemDetailsFragment : BaseFragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(activity!!).get(DetailsViewModel::class.java)
+        viewModel.init()
+        binding.executePendingBindings()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.details_fragment, container, false)
-        viewModel = ViewModelProviders.of(activity!!).get(DetailsViewModel::class.java)
-        viewModel.init()
         binding.viewmodel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = activity
+
+
 
         return binding.root
     }

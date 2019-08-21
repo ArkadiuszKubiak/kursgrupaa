@@ -38,6 +38,15 @@ class ItemListFragment : BaseFragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(activity!!).get(ItemsViewModel::class.java)
+        viewModel.init()
+
+        viewManager = LinearLayoutManager(activity)
+        viewAdapter = MyAdapter(R.layout.items_fragment, viewModel, viewModel.persons.value!!)
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,14 +55,11 @@ class ItemListFragment : BaseFragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.items_fragment, container, false)
 
-        viewModel = ViewModelProviders.of(activity!!).get(ItemsViewModel::class.java)
-        viewModel.init()
+
 
         binding.viewmodel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = activity
 
-        viewManager = LinearLayoutManager(activity)
-        viewAdapter = MyAdapter(R.layout.items_fragment, viewModel, viewModel.persons.value!!)
 
         recyclerView = binding.root.findViewById<RecyclerView>(R.id.item_list_recycler_view).apply {
             setHasFixedSize(true)
