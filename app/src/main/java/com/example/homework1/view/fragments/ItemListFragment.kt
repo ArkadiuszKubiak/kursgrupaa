@@ -1,7 +1,6 @@
 package com.example.homework1.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,8 +63,7 @@ class ItemListFragment : BaseFragment() {
 
         viewModel.selectedPersonId.observe(this, Observer<Int> { selectedPersonId ->
             run {
-                Log.d(TAG, "onSelectedPersonChanged: ")
-                (activity as MainActivity).viewModel.chosenPseudoModelPersonId.value = selectedPersonId
+                (activity as MainActivity).onSelectedPersonChanged(selectedPersonId)
             }
         })
 
