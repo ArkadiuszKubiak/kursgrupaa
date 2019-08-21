@@ -32,6 +32,12 @@ class OutputFragment : Fragment() {
                 context?.let { it1 -> Glide.with(it1).load(model.pokImg.value).into(pokemon_Image) }
             }
         })
+
+        model.myIndex.observe(this, Observer {
+            it?.let {
+                clicks.text = model.numClicks[model.myIndex.value!!].toString()
+            }
+        })
     }
 
 

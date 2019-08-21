@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 data class Pokemon (
     @Expose
     @SerializedName("id")
-    val id: Integer,
+    val id: Int,
     @Expose
     @SerializedName("num")
     val num: String,
@@ -31,7 +31,7 @@ data class Pokemon (
     val candy: String,
     @Expose
     @SerializedName("candy_count")
-    val candy_count: Integer,
+    val candy_count: Int,
     @Expose
     @SerializedName("egg")
     val egg: String,

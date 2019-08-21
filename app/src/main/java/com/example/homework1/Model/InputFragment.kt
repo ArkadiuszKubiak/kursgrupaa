@@ -26,6 +26,8 @@ class InputFragment : Fragment() {
     var adapter: MyAdapter? = null
     lateinit var progerssProgressDialog: ProgressDialog
     var dataList = ArrayList<Pokemon>()
+    var numclick = ArrayList<Int>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
 
@@ -49,21 +51,24 @@ class InputFragment : Fragment() {
                 progerssProgressDialog.dismiss()
                 dataList.addAll(response!!.body()!!.pokemon!!)
 
+                sharedViewModel!!.setNumItems(dataList.size)
+
                 adapter = activity?.let { MyAdapter(it, dataList) }
+                sharedViewModel!!.setClickArray()
 
                 listView1.adapter = adapter
 
                 listView1.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, id ->
                     sharedViewModel!!.setPokName(dataList[position].name)
                     sharedViewModel!!.setImage(dataList[position].img)
+                    sharedViewModel!!.setIndex(position)
+                    sharedViewModel!!.IncClick()
                 }
             }
 
             override fun onFailure(call: Call<PokemonClass>?, t: Throwable?) {
                 progerssProgressDialog.dismiss()
             }
-
         })
     }
-
 }
