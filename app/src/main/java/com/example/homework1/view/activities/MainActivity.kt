@@ -36,4 +36,16 @@ class MainActivity : BaseActivity() {
     fun onSelectedPersonChanged(newSelectedPerson: Int) {
         this.itemDetailsFragment.binding.personId = newSelectedPerson
     }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            super.onSaveInstanceState(savedInstanceState)
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            super.onRestoreInstanceState(savedInstanceState)
+        }
+    }
 }

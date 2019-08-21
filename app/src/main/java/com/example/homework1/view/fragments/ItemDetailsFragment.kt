@@ -28,8 +28,8 @@ class ItemDetailsFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(activity!!).get(DetailsViewModel::class.java)
         viewModel.init()
-        binding.executePendingBindings()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
