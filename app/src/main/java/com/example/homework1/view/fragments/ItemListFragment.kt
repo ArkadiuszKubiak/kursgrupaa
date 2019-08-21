@@ -46,6 +46,7 @@ class ItemListFragment : BaseFragment() {
         viewManager = LinearLayoutManager(activity)
         viewAdapter = MyAdapter(R.layout.items_fragment, viewModel, viewModel.persons.value!!)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
