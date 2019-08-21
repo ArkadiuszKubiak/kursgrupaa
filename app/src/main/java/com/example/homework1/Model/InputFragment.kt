@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.example.homework1.Model.PokemonClass
 import kotlinx.android.synthetic.main.fragment_input.*
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,29 +42,28 @@ class InputFragment : Fragment() {
         progerssProgressDialog.setCancelable(false)
         progerssProgressDialog.show()
 
-        val call: Call<List<Pokemon>> = ApiClient.getClient.getPokemons()
-        call.enqueue(object : Callback<List<Pokemon>> {
+        val call: Call<PokemonClass> = ApiClient.getClient.getPokemons()
+        call.enqueue(object : Callback<PokemonClass> {
 
-            override fun onResponse(call: Call<List<Pokemon>>?, response: Response<List<Pokemon>>?) {
+            override fun onResponse(call: Call<PokemonClass>?, response: Response<PokemonClass>?) {
                 progerssProgressDialog.dismiss()
-                dataList.addAll(response!!.body()!!)
+                dataList.addAll(response!!.body()!!.pokemon!!)
+
+                adapter = activity?.let { MyAdapter(it, dataList) }
+
+                listView1.adapter = adapter
+
+                listView1.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, id ->
+                    sharedViewModel!!.setPokName(dataList[position].name)
+                    sharedViewModel!!.setImage(dataList[position].img)
+                }
             }
 
-            override fun onFailure(call: Call<List<Pokemon>>?, t: Throwable?) {
+            override fun onFailure(call: Call<PokemonClass>?, t: Throwable?) {
                 progerssProgressDialog.dismiss()
-                Log.d("arek2", "" + t.toString() )
             }
 
         })
-
-        Log.d("arek", "" + dataList.size)
-        adapter = activity?.let { MyAdapter(it, dataList) }
-
-        listView1.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, id ->
-            sharedViewModel!!.setPokName(myObjects[position].name)
-            sharedViewModel!!.setImage(myObjects[position].img)
-        }
-
-        listView1.adapter = adapter
     }
+
 }

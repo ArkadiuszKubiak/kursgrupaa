@@ -1,6 +1,7 @@
 package com.example.homework1
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +33,7 @@ class MyAdapter(private var activity: Activity, private var items: ArrayList<Pok
         }
 
         var userDto = items[position]
+        Log.d("arek", "" + userDto.name)
         viewHolder.txtPokName?.text = userDto.name
 
         return view as View
