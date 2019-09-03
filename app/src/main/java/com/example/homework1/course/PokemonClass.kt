@@ -1,6 +1,6 @@
-package com.example.homework1.Model
+package com.example.homework1.course
 
-import com.example.homework1.Pokemon
+import com.example.homework1.course.poksrestapi.Pokemon
 import com.google.gson.annotations.SerializedName
 
 

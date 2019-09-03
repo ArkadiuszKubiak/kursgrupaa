@@ -1,15 +1,24 @@
-package com.example.homework1
+package com.example.homework1.course
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.example.homework1.course.database.PoksRecord
+import com.example.homework1.R
 
 
-class MyAdapter(private var activity: Activity, private var items: ArrayList<Pokemon>): BaseAdapter() {
+class MyAdapter(private var activity: Activity, private val mData: MutableList<PoksRecord>): BaseAdapter() {
+
+
+    fun addAll(customers: List<PoksRecord>?) {
+        mData.clear()
+        customers?.let { mData.addAll(it) }
+        notifyDataSetChanged()
+    }
 
     private class ViewHolder(row: View?) {
         var txtPokName: TextView? = null
@@ -19,28 +28,33 @@ class MyAdapter(private var activity: Activity, private var items: ArrayList<Pok
         }
     }
 
+    @SuppressLint("InflateParams")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view: View?
         val viewHolder: ViewHolder
-        if (convertView == null) {
+
+        if (convertView == null)
+        {
             val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             view = inflater.inflate(R.layout.list_view, null)
             viewHolder = ViewHolder(view)
             view?.tag = viewHolder
-        } else {
+        }
+        else
+        {
             view = convertView
             viewHolder = view.tag as ViewHolder
         }
 
-        var userDto = items[position]
-        Log.d("arek", "" + userDto.name)
+        val userDto = mData[position]
         viewHolder.txtPokName?.text = userDto.name
+
 
         return view as View
     }
 
-    override fun getItem(i: Int): Pokemon {
-        return items[i]
+    override fun getItem(i: Int): PoksRecord {
+        return mData[i]
     }
 
     override fun getItemId(i: Int): Long {
@@ -48,7 +62,7 @@ class MyAdapter(private var activity: Activity, private var items: ArrayList<Pok
     }
 
     override fun getCount(): Int {
-        return items.size
+        return mData.size
     }
 
 }

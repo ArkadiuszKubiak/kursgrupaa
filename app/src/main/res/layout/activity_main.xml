@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               android:weightSum="4"
-              tools:context=".MainActivity">
+              tools:context=".course.MainActivity">
 
     <FrameLayout
             android:id="@+id/layout_top"

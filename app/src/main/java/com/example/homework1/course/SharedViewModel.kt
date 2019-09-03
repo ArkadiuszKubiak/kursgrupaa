@@ -1,5 +1,6 @@
-package com.example.homework1
+package com.example.homework1.course
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -38,6 +39,7 @@ class SharedViewModel: ViewModel(){
 
     fun setIndex(index:Int)
     {
+        Log.d("arek","" + index )
         myIndex.value = index
     }
 

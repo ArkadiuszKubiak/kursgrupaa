@@ -1,4 +1,4 @@
-package com.example.homework1
+package com.example.homework1.course
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import com.example.homework1.R
 import kotlinx.android.synthetic.main.fragment_output.*
 
 class OutputFragment : Fragment() {

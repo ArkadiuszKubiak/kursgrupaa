@@ -1,4 +1,4 @@
-package com.example.homework1.Model
+package com.example.homework1.course
 
 class Evolution {
     var num:String?=null

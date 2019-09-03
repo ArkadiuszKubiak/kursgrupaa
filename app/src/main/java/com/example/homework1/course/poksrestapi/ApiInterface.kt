@@ -1,6 +1,6 @@
-package com.example.homework1
+package com.example.homework1.course.poksrestapi
 
-import com.example.homework1.Model.PokemonClass
+import com.example.homework1.course.PokemonClass
 import retrofit2.Call
 import retrofit2.http.GET
 

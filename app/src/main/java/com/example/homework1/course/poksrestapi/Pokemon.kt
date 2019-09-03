@@ -1,6 +1,6 @@
-package com.example.homework1
+package com.example.homework1.course.poksrestapi
 
-import com.example.homework1.Model.Evolution
+import com.example.homework1.course.Evolution
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -53,5 +53,8 @@ data class Pokemon (
     @Expose
     @SerializedName("prev_evolution")
     val prev_evolution: List<Evolution>
+
+
+
 
 )
