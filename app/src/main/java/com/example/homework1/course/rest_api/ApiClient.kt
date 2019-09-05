@@ -1,4 +1,4 @@
-package com.example.homework1.course.poksrestapi
+package com.example.homework1.course.rest_api
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

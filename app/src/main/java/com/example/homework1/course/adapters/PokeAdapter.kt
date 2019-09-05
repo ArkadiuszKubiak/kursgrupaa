@@ -1,4 +1,4 @@
-package com.example.homework1.course
+package com.example.homework1.course.adapters
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.example.homework1.course.database.PoksRecord
 import com.example.homework1.R
+import com.example.homework1.course.database.PoksRecord
 
 
-class MyAdapter(private var activity: Activity, private val mData: MutableList<PoksRecord>): BaseAdapter() {
+class PokeAdapter(private var activity: Activity, private val mData: MutableList<PoksRecord>) :
+    BaseAdapter() {
 
 
     fun addAll(customers: List<PoksRecord>?) {
