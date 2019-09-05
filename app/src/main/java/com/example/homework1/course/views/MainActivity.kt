@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
             R.id.layout_top,
             InputFragment()
         ).commit()
+
         supportFragmentManager.beginTransaction().add(
             R.id.layout_bottom,
             OutputFragment()

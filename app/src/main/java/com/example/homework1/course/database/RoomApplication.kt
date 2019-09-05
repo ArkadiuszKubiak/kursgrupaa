@@ -13,6 +13,7 @@ class RoomApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         val call: Call<PokeDex> = ApiClient.getClient.getPokemons()
+
         call.enqueue(object : Callback<PokeDex> {
             override fun onResponse(call: Call<PokeDex>?, response: Response<PokeDex>?) {
                 doAsync {
@@ -42,6 +43,7 @@ class RoomApplication : Application() {
             }
 
             override fun onFailure(call: Call<PokeDex>?, t: Throwable?) {
+                Log.d("arek", "FAIL")
             }
         })
 

@@ -13,7 +13,7 @@ data class PokeDex(
 data class Pokemon(
     @Expose
     @SerializedName("avg_spawns")
-    val avgSpawns: Int,
+    val avgSpawns: Double,
     @Expose
     @SerializedName("candy")
     val candy: String,
