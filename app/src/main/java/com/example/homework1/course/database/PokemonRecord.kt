@@ -21,13 +21,11 @@ class PokemonRecord constructor(
 
 @Entity(tableName = "pokedex")
 class PokeDexRecord constructor(
+    @PrimaryKey @ColumnInfo(name = "login") var login: String,
     @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "surname") var surname: String?,
     @ColumnInfo(name = "img") var img: String?
-) {
-    @PrimaryKey(autoGenerate = true)
-    var uid: Int = 0
-}
+)
 
 @Entity(
     tableName = "owned_pokemon", foreignKeys =
@@ -35,20 +33,20 @@ class PokeDexRecord constructor(
         ForeignKey(
             entity = PokemonRecord::class,
             parentColumns = arrayOf("num"),
-            childColumns = arrayOf("pokemon_id"),
+            childColumns = arrayOf("pokemon_num"),
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = PokeDexRecord::class,
-            parentColumns = arrayOf("uid"),
-            childColumns = arrayOf("pokedex_id"),
+            parentColumns = arrayOf("login"),
+            childColumns = arrayOf("pokedex_login"),
             onDelete = ForeignKey.CASCADE
         )
     )
 )
 class OwnedPokemonRecord constructor(
-    @ColumnInfo(name = "pokedex_id") var pokedex_id: Int,
-    @ColumnInfo(name = "pokemon_id") var pokemon_id: Int
+    @ColumnInfo(name = "pokedex_login") var pokedex_login: String,
+    @ColumnInfo(name = "pokemon_num") var pokemon_num: Int
 ) {
     @PrimaryKey(autoGenerate = true)
     var uid: Int = 0

@@ -15,6 +15,9 @@ interface PokemonDao {
     @Query("SELECT * FROM pokemons WHERE num IN (:pokemonId)")
     fun loadAllPokemonByNum(pokemonId: Array<Int>): List<PokemonRecord>
 
+    @Query("SELECT * FROM pokemons WHERE num == :pokemonId")
+    fun getPokemonByNum(pokemonId: Int): PokemonRecord
+
     @Insert
     fun insertAllPokemons(pokemons: List<PokemonRecord>)
 
@@ -27,14 +30,17 @@ interface OwnedPokemonDao {
     @Query("SELECT * FROM owned_pokemon")
     fun getAllOwnedPokemons(): List<OwnedPokemonRecord>
 
-    @Query("SELECT * FROM owned_pokemon WHERE uid IN (:trainerId)")
-    fun getPokemonsByTrainerId(trainerId: Array<Int>): List<OwnedPokemonRecord>
+    @Query("SELECT * FROM owned_pokemon WHERE pokedex_login == :trainerLogin")
+    fun getOwnedPokemonsByTrainerLogin(trainerLogin: String): List<OwnedPokemonRecord>
+
+    @Query("SELECT * FROM owned_pokemon WHERE pokemon_num == :pokemonNum")
+    fun getOwnedPokemonsByPokemonNum(pokemonNum: String): List<OwnedPokemonRecord>
 
     @Insert
-    fun insertPokemon(ownedPokemonRecord: OwnedPokemonRecord)
+    fun insertOwnedPokemon(ownedPokemonRecord: OwnedPokemonRecord)
 
     @Delete
-    fun deletePokemon(ownedPokemonRecord: OwnedPokemonRecord)
+    fun deleteOwnedPokemon(ownedPokemonRecord: OwnedPokemonRecord)
 }
 
 @Dao
@@ -42,13 +48,13 @@ interface PokeDexDao {
     @Query("SELECT * FROM pokedex")
     fun getAllPokeDexes(): List<PokeDexRecord>
 
-    @Query("SELECT * FROM pokedex WHERE uid IN (:trainerId)")
-    fun getPokeDexById(trainerId: Array<Int>): List<PokeDexRecord>
+    @Query("SELECT * FROM pokedex WHERE login == :trainerLogin")
+    fun getPokeDexByLogin(trainerLogin: String): PokeDexRecord
 
-    @Query("SELECT * FROM pokedex WHERE name == (:trainerName)")
+    @Query("SELECT * FROM pokedex WHERE name == :trainerName")
     fun getPokeDexByName(trainerName: String): List<PokeDexRecord>
 
-    @Query("SELECT * FROM pokedex WHERE surname == (:trainerSurname)")
+    @Query("SELECT * FROM pokedex WHERE surname == :trainerSurname")
     fun getPokeDexBySurname(trainerSurname: String): List<PokeDexRecord>
 
     @Insert
