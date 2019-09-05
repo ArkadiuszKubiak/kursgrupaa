@@ -18,26 +18,25 @@ class RoomApplication : Application() {
             override fun onResponse(call: Call<PokeDex>?, response: Response<PokeDex>?) {
                 doAsync {
                     val database = AppDatabase.getInstance(context = this@RoomApplication)
-                    if (database.pokemonDao().getAll().isEmpty()) {
-                        val pokemons: MutableList<PoksRecord> = mutableListOf()
+                    if (database.pokemonDao().getAllPokemons().isEmpty()) {
+                        val pokemons: MutableList<PokemonRecord> = mutableListOf()
                         for (poks in response!!.body()!!.pokemon!!) {
-                            val pokemon = PoksRecord(
-                                poks.id,
-                                poks.num,
-                                poks.name,
-                                poks.img,
-                                poks.height,
-                                poks.weight,
-                                poks.candy,
-                                poks.candyCount,
-                                poks.egg,
-                                poks.spawnChance,
-                                poks.spawnTime
+                            val pokemon = PokemonRecord(
+                                num = poks.num,
+                                name = poks.name,
+                                img = poks.img,
+                                height = poks.height,
+                                weight = poks.weight,
+                                candy = poks.candy,
+                                candy_count = poks.candyCount,
+                                egg = poks.egg,
+                                spawn_chance = poks.spawnChance,
+                                spawn_time = poks.spawnTime
                             )
                             Log.d("arek", "" + pokemon.name)
                             pokemons.add(pokemon)
                         }
-                        database.pokemonDao().insertAll(pokemons = pokemons)
+                        database.pokemonDao().insertAllPokemons(pokemons = pokemons)
                     }
                 }
             }
@@ -46,7 +45,6 @@ class RoomApplication : Application() {
                 Log.d("arek", "FAIL")
             }
         })
-
     }
 
 }

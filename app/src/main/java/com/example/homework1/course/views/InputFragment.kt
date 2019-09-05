@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.homework1.R
 import com.example.homework1.course.adapters.PokeAdapter
 import com.example.homework1.course.database.AppDatabase
-import com.example.homework1.course.database.PoksRecord
+import com.example.homework1.course.database.PokemonRecord
 import com.example.homework1.course.viewmodels.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_input.*
 import org.jetbrains.anko.doAsync
@@ -34,7 +34,7 @@ class InputFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         val model = ViewModelProviders.of(activity!!).get(SharedViewModel::class.java)
-        var customers : List<PoksRecord>? = null
+        var customers: List<PokemonRecord>? = null
 
         adapter = activity?.let {
             PokeAdapter(
@@ -47,7 +47,7 @@ class InputFragment : Fragment() {
         doAsync {
 
             val database = activity?.let { AppDatabase.getInstance(it) }
-            customers = database?.pokemonDao()?.getAll()!!
+            customers = database?.pokemonDao()?.getAllPokemons()!!
 
             uiThread {
                 adapter!!.addAll(customers)
