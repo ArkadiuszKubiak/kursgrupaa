@@ -7,13 +7,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.homework1.BR
-import com.example.homework1.pseudomodels.PseudoModelPersonList
+import com.example.homework1.models.PersonListModel
 import com.example.homework1.viewmodel.fragments.ItemsViewModel
 
 
 class MyAdapter(
     @LayoutRes val layoutId: Int, val viewModel: ItemsViewModel,
-    val personData: Array<PseudoModelPersonList>
+    val personDatumModels: Array<PersonListModel>
 ) :
     RecyclerView.Adapter<MyAdapter.GenericViewHolder>() {
 
@@ -47,7 +47,7 @@ class MyAdapter(
         holder.bind(viewModel, position)
     }
 
-    override fun getItemCount() = personData.size
+    override fun getItemCount() = personDatumModels.size
 
     override fun getItemViewType(position: Int): Int {
         return layoutId

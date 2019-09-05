@@ -4,10 +4,10 @@ import android.app.Application
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.example.homework1.R
-import com.example.homework1.pseudomodels.PseudoModelPersonList
+import com.example.homework1.models.PersonListModel
 import com.example.homework1.viewmodel.base.PersonBaseViewModel
 
-class ItemsViewModel(application: Application) : PersonBaseViewModel<PseudoModelPersonList>(
+class ItemsViewModel(application: Application) : PersonBaseViewModel<PersonListModel>(
     application,
     MutableLiveData(), MutableLiveData()
 ) {

@@ -1,6 +1,6 @@
-package com.example.homework1.pseudomodels
+package com.example.homework1.models
 
-data class PseudoModelPerson(
+data class PersonModel(
     val avatar: String,
     val current_project: String,
     val current_topic: String,
