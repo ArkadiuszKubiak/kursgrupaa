@@ -23,9 +23,11 @@ class PokemonRecord constructor(
 class PokeDexRecord constructor(
     @PrimaryKey @ColumnInfo(name = "login") var login: String,
     @ColumnInfo(name = "name") var name: String,
-    @ColumnInfo(name = "surname") var surname: String?,
-    @ColumnInfo(name = "img") var img: String?
-)
+    @ColumnInfo(name = "surname") var surname: String?
+) {
+    @ColumnInfo(name = "img")
+    var img: String? = ""
+}
 
 @Entity(
     tableName = "owned_pokemon", foreignKeys =
