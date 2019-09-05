@@ -5,10 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [(PoksRecord::class)], version = 5, exportSchema = false)
+@Database(
+    entities = [(PokemonRecord::class), (PokeDexRecord::class), (OwnedPokemonRecord::class)],
+    version = 5,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun pokemonDao(): PokemonDao
+    //abstract fun ownedPokemonsDao(): OwnedPokemonDao
+    //abstract fun pokedexDao(): PokeDexDao
+
 
     companion object {
 

@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.homework1.R
-import com.example.homework1.course.database.PoksRecord
+import com.example.homework1.course.database.PokemonRecord
 
 
-class PokeAdapter(private var activity: Activity, private val mData: MutableList<PoksRecord>) :
+class PokeAdapter(private var activity: Activity, private val mData: MutableList<PokemonRecord>) :
     BaseAdapter() {
 
 
-    fun addAll(customers: List<PoksRecord>?) {
+    fun addAll(customers: List<PokemonRecord>?) {
         mData.clear()
         customers?.let { mData.addAll(it) }
         notifyDataSetChanged()
@@ -54,7 +54,7 @@ class PokeAdapter(private var activity: Activity, private val mData: MutableList
         return view as View
     }
 
-    override fun getItem(i: Int): PoksRecord {
+    override fun getItem(i: Int): PokemonRecord {
         return mData[i]
     }
 
