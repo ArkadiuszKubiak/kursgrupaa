@@ -1,18 +1,18 @@
-package com.example.homework1.course
+package com.example.homework1.course.views
 
 
 import android.os.Bundle
-
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.example.homework1.R
+import com.example.homework1.course.adapters.PokeAdapter
 import com.example.homework1.course.database.AppDatabase
 import com.example.homework1.course.database.PoksRecord
-import com.example.homework1.R
+import com.example.homework1.course.viewmodels.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_input.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -20,7 +20,7 @@ import org.jetbrains.anko.uiThread
 
 class InputFragment : Fragment() {
 
-    var adapter: MyAdapter? = null
+    var adapter: PokeAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,13 +36,18 @@ class InputFragment : Fragment() {
         val model = ViewModelProviders.of(activity!!).get(SharedViewModel::class.java)
         var customers : List<PoksRecord>? = null
 
-        adapter = activity?.let { MyAdapter(it, mutableListOf()) }
+        adapter = activity?.let {
+            PokeAdapter(
+                it,
+                mutableListOf()
+            )
+        }
         listView1.adapter = adapter
 
         doAsync {
 
             val database = activity?.let { AppDatabase.getInstance(it) }
-            customers = database?.pokemonDao()?.all!!
+            customers = database?.pokemonDao()?.getAll()!!
 
             uiThread {
                 adapter!!.addAll(customers)
