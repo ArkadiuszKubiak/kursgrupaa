@@ -19,7 +19,7 @@ class RoomApplication : Application() {
                     val database = AppDatabase.getInstance(context = this@RoomApplication)
                     if (database.pokemonDao().getAll().isEmpty()) {
                         val pokemons: MutableList<PoksRecord> = mutableListOf()
-                        for (poks in response!!.body()!!.pokemon) {
+                        for (poks in response!!.body()!!.pokemon!!) {
                             val pokemon = PoksRecord(
                                 poks.id,
                                 poks.num,

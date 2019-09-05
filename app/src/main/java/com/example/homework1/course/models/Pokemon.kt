@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 data class PokeDex(
     @Expose
     @SerializedName("pokemon")
-    val pokemon: List<Pokemon>
+    val pokemon: List<Pokemon>?
 )
 
 data class Pokemon(
