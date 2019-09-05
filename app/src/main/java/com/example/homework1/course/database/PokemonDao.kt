@@ -9,8 +9,8 @@ import androidx.room.Query
 @Dao
 interface PokemonDao {
 
-    @get:Query("SELECT * FROM pokemons")
-    val all: List<PoksRecord>
+    @Query("SELECT * FROM pokemons")
+    fun getAll(): List<PoksRecord>
 
     @Query("SELECT * FROM pokemons WHERE uid IN (:pokemonId)")
     fun loadAllByIds(pokemonId: Array<Int>): List<PoksRecord>

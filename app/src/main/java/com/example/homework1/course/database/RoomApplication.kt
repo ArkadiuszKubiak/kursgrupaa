@@ -15,10 +15,9 @@ class RoomApplication : Application() {
         val call: Call<PokeDex> = ApiClient.getClient.getPokemons()
         call.enqueue(object : Callback<PokeDex> {
             override fun onResponse(call: Call<PokeDex>?, response: Response<PokeDex>?) {
-
                 doAsync {
                     val database = AppDatabase.getInstance(context = this@RoomApplication)
-                    if (database.pokemonDao().all.isEmpty()) {
+                    if (database.pokemonDao().getAll().isEmpty()) {
                         val pokemons: MutableList<PoksRecord> = mutableListOf()
                         for (poks in response!!.body()!!.pokemon) {
                             val pokemon = PoksRecord(
