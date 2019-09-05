@@ -47,7 +47,7 @@ class InputFragment : Fragment() {
         doAsync {
 
             val database = activity?.let { AppDatabase.getInstance(it) }
-            customers = database?.pokemonDao()?.getAll!!
+            customers = database?.pokemonDao()?.getAll()!!
 
             uiThread {
                 adapter!!.addAll(customers)
