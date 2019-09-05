@@ -13,8 +13,8 @@ import androidx.room.RoomDatabase
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun pokemonDao(): PokemonDao
-    //abstract fun ownedPokemonsDao(): OwnedPokemonDao
-    //abstract fun pokedexDao(): PokeDexDao
+    abstract fun ownedPokemonsDao(): OwnedPokemonDao
+    abstract fun pokedexDao(): PokeDexDao
 
 
     companion object {
