@@ -45,13 +45,6 @@ class RoomApplication : Application() {
                 Log.d("arek", "FAIL")
             }
         })
-
-        //val database = AppDatabase.getInstance(context = this@RoomApplication)
-        //if (database.pokedexDao().getAllPokeDexes().isEmpty()) {
-        //                database.pokedexDao().insertPokedex(PokeDexRecord(name="", surname = "", img=""))
-        //        }
-
-
     }
 
 }
