@@ -30,7 +30,8 @@ class PokeDexRecord constructor(
 }
 
 @Entity(
-    tableName = "synch_data", foreignKeys =
+    tableName = "synch_data",
+    foreignKeys =
     arrayOf(
         ForeignKey(
             entity = PokemonRecord::class,
@@ -52,7 +53,8 @@ class SynchData constructor(
 
 
 @Entity(
-    tableName = "owned_pokemon", foreignKeys =
+    tableName = "owned_pokemon",
+    foreignKeys =
     arrayOf(
         ForeignKey(
             entity = PokemonRecord::class,
