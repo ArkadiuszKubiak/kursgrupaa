@@ -32,14 +32,12 @@ class PokeDexRecord constructor(
 @Entity(
     tableName = "synch_data",
     foreignKeys =
-    arrayOf(
-        ForeignKey(
-            entity = PokemonRecord::class,
-            parentColumns = arrayOf("num"),
-            childColumns = arrayOf("poke_id"),
-            onDelete = ForeignKey.CASCADE
-        )
-    )
+    [ForeignKey(
+        entity = PokemonRecord::class,
+        parentColumns = arrayOf("num"),
+        childColumns = arrayOf("poke_id"),
+        onDelete = ForeignKey.CASCADE
+    )]
 )
 class SynchData constructor(
     @ColumnInfo(name = "timestamp_seconds") var timestamp_seconds: Long,
@@ -55,20 +53,17 @@ class SynchData constructor(
 @Entity(
     tableName = "owned_pokemon",
     foreignKeys =
-    arrayOf(
-        ForeignKey(
-            entity = PokemonRecord::class,
-            parentColumns = arrayOf("num"),
-            childColumns = arrayOf("pokemon_num"),
-            onDelete = ForeignKey.CASCADE
-        ),
-        ForeignKey(
-            entity = PokeDexRecord::class,
-            parentColumns = arrayOf("login"),
-            childColumns = arrayOf("pokedex_login"),
-            onDelete = ForeignKey.CASCADE
-        )
-    )
+    [ForeignKey(
+        entity = PokemonRecord::class,
+        parentColumns = arrayOf("num"),
+        childColumns = arrayOf("pokemon_num"),
+        onDelete = ForeignKey.CASCADE
+    ), ForeignKey(
+        entity = PokeDexRecord::class,
+        parentColumns = arrayOf("login"),
+        childColumns = arrayOf("pokedex_login"),
+        onDelete = ForeignKey.CASCADE
+    )]
 )
 class OwnedPokemonRecord constructor(
     @ColumnInfo(name = "pokedex_login") var pokedex_login: String,
