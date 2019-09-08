@@ -1,22 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:weightSum="4"
-              tools:context=".course.MainActivity">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        tools:context=".course.views.MainActivity" >
 
-    <FrameLayout
-            android:id="@+id/layout_top"
+    <ImageView
+            android:id="@+id/imageView3"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2" />
+            android:layout_height="148dp"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
 
-    <FrameLayout
-            android:id="@+id/layout_bottom"
+    <EditText
+            android:id="@+id/LoginTest"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2" />
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:text="Name" />
+
+    <EditText
+            android:id="@+id/PasswordTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword" />
+
+     <Button android:id="@+id/loginButton"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:onClick="loginInto"
+             android:text="Login" />
+
+     <Button
+             android:id="@+id/newUserButton"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:onClick="createNewUser"
+             android:text="Create new user" />
+
+
 
 </LinearLayout>

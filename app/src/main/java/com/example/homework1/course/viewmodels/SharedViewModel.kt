@@ -1,4 +1,4 @@
-package com.example.homework1.course
+package com.example.homework1.course.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
