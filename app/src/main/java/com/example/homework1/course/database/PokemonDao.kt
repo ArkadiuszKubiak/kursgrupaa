@@ -23,6 +23,12 @@ interface PokemonDao {
 
     @Delete
     fun deletePokemon(client: PokemonRecord)
+
+    @Query("DELETE FROM pokemons WHERE num in (SELECT poke_id FROM synch_data WHERE synch_data.timestamp_seconds > :oldTimestamp )")
+    fun deleteOlderDataThan(oldTimestamp: Long)
+
+    @Insert
+    fun insertSynchData(syncData: SynchData)
 }
 
 @Dao

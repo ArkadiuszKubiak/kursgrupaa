@@ -18,6 +18,11 @@ class RoomApplication : Application() {
             override fun onResponse(call: Call<PokeDex>?, response: Response<PokeDex>?) {
                 doAsync {
                     val database = AppDatabase.getInstance(context = this@RoomApplication)
+
+                    // Delete older items than one hour.
+                    val currentTimestamp = System.currentTimeMillis() / 1000
+                    database.pokemonDao().deleteOlderDataThan(currentTimestamp - 60 * 60)
+
                     if (database.pokemonDao().getAllPokemons().isEmpty()) {
                         val pokemons: MutableList<PokemonRecord> = mutableListOf()
                         for (poks in response!!.body()!!.pokemon!!) {
@@ -33,8 +38,15 @@ class RoomApplication : Application() {
                                 spawn_chance = poks.spawnChance,
                                 spawn_time = poks.spawnTime
                             )
+
+                            val synchData = SynchData(
+                                poke_id = poks.num,
+                                timestamp_seconds = currentTimestamp
+                            )
+
                             Log.d("arek", "" + pokemon.name)
                             pokemons.add(pokemon)
+                            database.pokemonDao().insertSynchData(synchData)
                         }
                         database.pokemonDao().insertAllPokemons(pokemons = pokemons)
                     }

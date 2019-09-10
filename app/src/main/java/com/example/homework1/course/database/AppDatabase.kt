@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [(PokemonRecord::class), (PokeDexRecord::class), (OwnedPokemonRecord::class)],
+    entities = [(PokemonRecord::class), (PokeDexRecord::class), (OwnedPokemonRecord::class), (SynchData::class)],
     version = 5,
     exportSchema = false
 )
