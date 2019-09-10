@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
                 Log.d("arek", "" + task.toString())
                 val toast = Toast.makeText(applicationContext, task.toString(), Toast.LENGTH_SHORT)
+
                 toast.show()
 
             }

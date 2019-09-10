@@ -12,6 +12,8 @@ import com.example.homework1.R
 import com.example.homework1.course.adapters.PokeAdapter
 import com.example.homework1.course.database.AppDatabase
 import com.example.homework1.course.database.PokemonRecord
+import com.example.homework1.course.database.PokemonRepository
+import com.example.homework1.course.rest_api.ApiClient
 import com.example.homework1.course.viewmodels.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_input.*
 import org.jetbrains.anko.doAsync
@@ -21,6 +23,8 @@ import org.jetbrains.anko.uiThread
 class InputFragment : Fragment() {
 
     var adapter: PokeAdapter? = null
+
+    val pokeRepo = PokemonRepository.getInstance(AppDatabase.getInstance(context = this.activity!!.baseContext), ApiClient.getClient)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +51,7 @@ class InputFragment : Fragment() {
         doAsync {
 
             val database = activity?.let { AppDatabase.getInstance(it) }
-            customers = database?.pokemonDao()?.getAllPokemons()!!
+            customers = pokeRepo.getAllPokemons().value
 
             uiThread {
                 adapter!!.addAll(customers)

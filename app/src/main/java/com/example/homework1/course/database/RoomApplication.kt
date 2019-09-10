@@ -20,6 +20,7 @@ class RoomApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
         val getAllPokemonsCall: Call<PokemonAll> = ApiClient.getClient.getPokemons(POKEMON_OFFSET, POKEMON_TO_DOWNLOAD)
 
         getAllPokemonsCall.enqueue(object : Callback<PokemonAll> {
@@ -30,11 +31,10 @@ class RoomApplication : Application() {
 
                     // Delete older items than the specified timeout.
                     val currentTimestamp = System.currentTimeMillis() / 1000
-                    var xd = database.pokemonDao().getAllPokemons().size
                     database.pokemonDao().deleteOlderDataThan(currentTimestamp - DELETE_TIMEOUT_SECONDS)
 
                     // Because then it will download them.
-                    if (database.pokemonDao().getAllPokemons().size < POKEMON_TO_DOWNLOAD) {
+                    if (database.pokemonDao().getAllPokemons().value!!.size < POKEMON_TO_DOWNLOAD) {
                         for (pokemonName in response!!.body()!!.results) {
                             val pokemonDataCall = ApiClient.getClient.getPokemonData(pokemonName.name)
                             val pokemonData = (pokemonDataCall.execute() as Response<PokemonData>).body()
@@ -46,7 +46,7 @@ class RoomApplication : Application() {
                             )
 
                             val synchData = SynchData(
-                                poke_num = pokemonData.order,
+                                poke_name = pokemonData.name,
                                 timestamp_seconds = currentTimestamp
                             )
 
