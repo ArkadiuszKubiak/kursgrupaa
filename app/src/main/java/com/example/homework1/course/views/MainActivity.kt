@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.homework1.R
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,19 +17,16 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
     }
 
-    fun createNewUser(view: View)
-    {
+    fun createNewUser(view: View) {
         val intent = Intent(this, CreateNewUserView::class.java)
         startActivityForResult(intent, CREATE_NEW_USER)
     }
 
-    fun loginInto(view: View)
-    {
+    fun loginInto(view: View) {
         val intent = Intent(this, PokemonView::class.java)
-        startActivity(intent);
+        startActivity(intent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -41,9 +37,9 @@ class MainActivity : AppCompatActivity() {
                 // 3
                 val task = data?.getStringExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION)
 
-                    Log.d("arek", "" + task.toString())
-                    val toast = Toast.makeText(applicationContext, task.toString(), Toast.LENGTH_SHORT)
-                    toast.show()
+                Log.d("arek", "" + task.toString())
+                val toast = Toast.makeText(applicationContext, task.toString(), Toast.LENGTH_SHORT)
+                toast.show()
 
             }
         }

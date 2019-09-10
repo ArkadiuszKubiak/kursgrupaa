@@ -58,7 +58,7 @@ class InputFragment : Fragment() {
 
         listView1.onItemClickListener = AdapterView.OnItemClickListener { adapterView, _, position, id ->
             customers?.get(position)?.name?.let { model.setPokName(it) }
-            customers?.get(position)?.img?.let { model.setImage(it) }
+            customers?.get(position)?.pokemon_data!!.sprites.frontDefault.let { model.setImage(it) }
             model.setIndex(position)
             model.IncClick()
         }
