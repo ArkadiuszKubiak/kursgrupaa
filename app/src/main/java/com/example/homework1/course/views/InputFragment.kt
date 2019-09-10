@@ -24,14 +24,14 @@ class InputFragment : Fragment() {
 
     var adapter: PokeAdapter? = null
 
-    val pokeRepo = PokemonRepository.getInstance(AppDatabase.getInstance(context = this.activity!!.baseContext), ApiClient.getClient)
+    lateinit var pokeRepo: PokemonRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        pokeRepo = PokemonRepository.getInstance(AppDatabase.getInstance(context = this.activity!!.baseContext), ApiClient.getClient)
         return inflater.inflate(R.layout.fragment_input, container, false)
     }
 

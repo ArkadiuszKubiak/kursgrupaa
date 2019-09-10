@@ -34,7 +34,8 @@ class RoomApplication : Application() {
                     database.pokemonDao().deleteOlderDataThan(currentTimestamp - DELETE_TIMEOUT_SECONDS)
 
                     // Because then it will download them.
-                    if (database.pokemonDao().getAllPokemons().value!!.size < POKEMON_TO_DOWNLOAD) {
+                    val allPokemons = database.pokemonDao().getAllPokemons()
+                    if (allPokemons.value == null || allPokemons.value?.size!! < POKEMON_TO_DOWNLOAD) {
                         for (pokemonName in response!!.body()!!.results) {
                             val pokemonDataCall = ApiClient.getClient.getPokemonData(pokemonName.name)
                             val pokemonData = (pokemonDataCall.execute() as Response<PokemonData>).body()
