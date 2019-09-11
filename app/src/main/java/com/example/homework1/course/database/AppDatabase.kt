@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
 @Database(
-    entities = [(PokemonRecord::class), (PokeDexRecord::class), (OwnedPokemonRecord::class)],
-    version = 5,
+    entities = [(PokemonRecord::class), (PokeDexRecord::class), (OwnedPokemonRecord::class), (SynchData::class)],
+    version = 6,
     exportSchema = false
 )
+@TypeConverters(PokemonDataConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun pokemonDao(): PokemonDao

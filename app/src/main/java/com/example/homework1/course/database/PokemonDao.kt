@@ -9,20 +9,26 @@ import androidx.room.Query
 @Dao
 interface PokemonDao {
 
-    @Query("SELECT * FROM pokemons")
+    @Query("SELECT * FROM pokemon_all")
     fun getAllPokemons(): List<PokemonRecord>
 
-    @Query("SELECT * FROM pokemons WHERE num IN (:pokemonId)")
-    fun loadAllPokemonByNum(pokemonId: Array<Int>): List<PokemonRecord>
-
-    @Query("SELECT * FROM pokemons WHERE num == :pokemonId")
+    @Query("SELECT * FROM pokemon_all WHERE num == :pokemonId")
     fun getPokemonByNum(pokemonId: Int): PokemonRecord
 
     @Insert
     fun insertAllPokemons(pokemons: List<PokemonRecord>)
 
+    @Insert
+    fun insertPokemon(pokemon: PokemonRecord)
+
     @Delete
-    fun deletePokemon(client: PokemonRecord)
+    fun deletePokemon(pokemon: PokemonRecord)
+
+    @Query("DELETE FROM pokemon_all WHERE num in (SELECT poke_num FROM synch_data WHERE synch_data.timestamp_seconds < :oldTimestamp )")
+    fun deleteOlderDataThan(oldTimestamp: Long)
+
+    @Insert
+    fun insertSynchData(syncData: SynchData)
 }
 
 @Dao
@@ -33,7 +39,7 @@ interface OwnedPokemonDao {
     @Query("SELECT * FROM owned_pokemon WHERE pokedex_login == :trainerLogin")
     fun getOwnedPokemonsByTrainerLogin(trainerLogin: String): List<OwnedPokemonRecord>
 
-    @Query("SELECT * FROM owned_pokemon WHERE pokemon_num == :pokemonNum")
+    @Query("SELECT * FROM owned_pokemon WHERE poke_num == :pokemonNum")
     fun getOwnedPokemonsByPokemonNum(pokemonNum: String): List<OwnedPokemonRecord>
 
     @Insert
