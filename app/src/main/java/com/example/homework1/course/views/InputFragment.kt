@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.homework1.R
 import com.example.homework1.course.adapters.PokeAdapter
@@ -16,8 +17,6 @@ import com.example.homework1.course.database.PokemonRepository
 import com.example.homework1.course.rest_api.ApiClient
 import com.example.homework1.course.viewmodels.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_input.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 
 class InputFragment : Fragment() {
@@ -48,17 +47,14 @@ class InputFragment : Fragment() {
         }
         listView1.adapter = adapter
 
-        doAsync {
-
-            val database = activity?.let { AppDatabase.getInstance(it) }
-            customers = pokeRepo.getAllPokemons().value
-
-            uiThread {
-                adapter!!.addAll(customers)
+        pokeRepo.getAllPokemons().observe(this, Observer { it ->
+            run {
+                customers = it
+                adapter!!.addAll(it)
                 model.setNumItems(adapter!!.getCount())
                 model.setClickArray()
             }
-        }
+        })
 
         listView1.onItemClickListener = AdapterView.OnItemClickListener { adapterView, _, position, id ->
             customers?.get(position)?.name?.let { model.setPokName(it) }

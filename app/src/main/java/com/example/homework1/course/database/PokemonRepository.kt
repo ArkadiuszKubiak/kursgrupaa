@@ -21,13 +21,7 @@ class PokemonRepository(private val appDatabase: AppDatabase, private val webSer
     }
 
     fun getAllPokemons(): LiveData<List<PokemonRecord>> {
-        val pokemons = appDatabase.pokemonDao().getAllPokemons()
-
-        for (pokemon in pokemons.value!!.iterator()) {
-            refreshPokemonData(pokemon.name)
-        }
-
-        return pokemons
+        return appDatabase.pokemonDao().getAllPokemons()
     }
 
     fun getTrainer(name: String): LiveData<PokeDexRecord> {

@@ -14,8 +14,11 @@ interface PokemonDao {
     @Query("SELECT * FROM pokemon_all")
     fun getAllPokemons(): LiveData<List<PokemonRecord>>
 
+    @Query("SELECT * FROM pokemon_all")
+    fun getAllPokemonsNormal(): List<PokemonRecord>
+
     @Query("SELECT * FROM pokemon_all WHERE num == :pokemonId")
-    fun getPokemonByNum(pokemonId: Int): PokemonRecord
+    fun getPokemonByNum(pokemonId: Int): LiveData<PokemonRecord>
 
     @Query("SELECT * FROM pokemon_all WHERE name == :pokemonName")
     fun getPokemonByName(pokemonName: Int): PokemonRecord
