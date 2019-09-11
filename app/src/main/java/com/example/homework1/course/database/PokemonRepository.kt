@@ -21,6 +21,7 @@ class PokemonRepository(private val appDatabase: AppDatabase, private val webSer
     }
 
     fun getAllPokemons(): LiveData<List<PokemonRecord>> {
+        // Need to do refreshing, but well, it shouldn't be modifiable though.
         return appDatabase.pokemonDao().getAllPokemons()
     }
 

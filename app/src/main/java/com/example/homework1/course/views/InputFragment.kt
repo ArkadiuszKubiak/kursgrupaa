@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_input.*
 class InputFragment : Fragment() {
 
     var adapter: PokeAdapter? = null
+    var customers: List<PokemonRecord>? = null
 
     lateinit var pokeRepo: PokemonRepository
 
@@ -37,7 +38,7 @@ class InputFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         val model = ViewModelProviders.of(activity!!).get(SharedViewModel::class.java)
-        var customers: List<PokemonRecord>? = null
+
 
         adapter = activity?.let {
             PokeAdapter(

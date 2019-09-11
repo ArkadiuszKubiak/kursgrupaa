@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
     private val CREATE_NEW_USER = 1
 
     companion object {
-        const val DELETE_TIMEOUT_SECONDS = 60 * 60
-        const val POKEMON_TO_DOWNLOAD = 200
+        const val DELETE_TIMEOUT_SECONDS = 1
+        const val POKEMON_TO_DOWNLOAD = 151
         const val POKEMON_OFFSET = 0
     }
 
@@ -85,9 +85,9 @@ class MainActivity : AppCompatActivity() {
                     database.pokemonDao().deleteOlderDataThan(currentTimestamp - DELETE_TIMEOUT_SECONDS)
 
                     // Because then it will download them.
-                    var xd = database.pokemonDao().getAllPokemonsNormal()
-                    val allPokemons = database.pokemonDao().getAllPokemons()
-                    if (allPokemons.value == null || allPokemons.value?.size!! < POKEMON_TO_DOWNLOAD) {
+                    val pokemonDatabase = database.pokemonDao().getAllPokemonsNormal()
+
+                    if (pokemonDatabase.size != POKEMON_TO_DOWNLOAD) {
                         for (pokemonName in response!!.body()!!.results) {
                             val pokemonDataCall = ApiClient.getClient.getPokemonData(pokemonName.name)
                             val pokemonData = (pokemonDataCall.execute() as Response<PokemonData>).body()
