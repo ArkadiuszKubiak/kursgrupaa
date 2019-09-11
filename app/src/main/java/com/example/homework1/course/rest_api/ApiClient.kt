@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiClient {
 
     private var BASE_URL: String =
-        "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/"
+        "https://pokeapi.co/api/"
 
     val getClient: ApiInterface
         get() {
