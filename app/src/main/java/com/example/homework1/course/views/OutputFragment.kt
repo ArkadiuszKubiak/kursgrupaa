@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.homework1.R
+import com.example.homework1.course.viewmodels.MyViewModelFactory
 import com.example.homework1.course.viewmodels.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_output.*
 
@@ -21,7 +22,7 @@ class OutputFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val model = ViewModelProviders.of(activity!!).get(SharedViewModel::class.java)
+        val model = ViewModelProviders.of(activity!!, MyViewModelFactory(activity!!.application)).get(SharedViewModel::class.java)
 
         model.pokName.observe(this, Observer {
             it?.let {

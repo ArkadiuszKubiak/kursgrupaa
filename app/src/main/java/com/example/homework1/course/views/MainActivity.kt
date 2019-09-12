@@ -27,8 +27,9 @@ class MainActivity : AppCompatActivity() {
     private val CREATE_NEW_USER = 1
 
     lateinit var progerssProgressDialog: ProgressDialog
+
     companion object {
-        const val DELETE_TIMEOUT_SECONDS = 1
+        const val DELETE_TIMEOUT_SECONDS = 3600
         const val POKEMON_TO_DOWNLOAD = 151
         const val POKEMON_OFFSET = 0
     }
@@ -90,12 +91,12 @@ class MainActivity : AppCompatActivity() {
 
                     // Delete older items than the specified timeout.
                     val currentTimestamp = System.currentTimeMillis() / 1000
-                    database.pokemonDao().deleteOlderDataThan(currentTimestamp - DELETE_TIMEOUT_SECONDS)
+                    //database.pokemonDao().deleteOlderDataThan(currentTimestamp - DELETE_TIMEOUT_SECONDS)
 
                     // Because then it will download them.
                     val pokemonDatabase = database.pokemonDao().getAllPokemonsNormal()
 
-                    if (pokemonDatabase.size != POKEMON_TO_DOWNLOAD) {
+                    if (pokemonDatabase.size < POKEMON_TO_DOWNLOAD) {
                         for (pokemonName in response!!.body()!!.results) {
                             val pokemonDataCall = ApiClient.getClient.getPokemonData(pokemonName.name)
                             val pokemonData = (pokemonDataCall.execute() as Response<PokemonData>).body()

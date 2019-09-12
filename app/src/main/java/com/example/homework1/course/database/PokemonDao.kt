@@ -50,11 +50,14 @@ interface PokemonDao {
 
 @Dao
 interface OwnedPokemonDao {
-    @Query("SELECT * FROM owned_pokemon")
-    fun getAllOwnedPokemons(): List<OwnedPokemonRecord>
+    //@Query("SELECT * FROM owned_pokemon")
+    //fun getAllOwnedPokemons(): List<OwnedPokemonRecord>
 
-    @Query("SELECT * FROM owned_pokemon WHERE pokedex_login == :trainerLogin")
-    fun getOwnedPokemonsByTrainerLogin(trainerLogin: String): LiveData<List<OwnedPokemonRecord>>
+    //@Query("SELECT * FROM owned_pokemon WHERE pokedex_login == :trainerLogin")
+    //fun getOwnedPokemonsByTrainerLogin(trainerLogin: String): LiveData<List<OwnedPokemonRecord>>
+
+    @Query("SELECT pokemon_all.* FROM pokemon_all, owned_pokemon WHERE owned_pokemon.pokedex_login == :trainerName AND pokemon_all.name == owned_pokemon.poke_name")
+    fun getPokemonsByTrainerLogin(trainerName: String): LiveData<List<PokemonRecord>>
 
     @Query("SELECT * FROM owned_pokemon WHERE poke_name == :pokemonName")
     fun getOwnedPokemonsByPokemonName(pokemonName: String): List<OwnedPokemonRecord>

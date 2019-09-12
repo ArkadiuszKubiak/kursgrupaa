@@ -24,15 +24,20 @@ class PokemonRepository(private val appDatabase: AppDatabase, private val webSer
         return appDatabase.pokemonDao().getAllPokemons()
     }
 
+    fun createTrainer(login: String, name: String = "", surname: String = "", img: String = "") {
+        val pokeTrainer = PokeDexRecord(login, name, surname)
+        pokeTrainer.img = img
+        appDatabase.pokedexDao().insertPokedex(pokeTrainer)
+    }
 
     fun getTrainer(name: String): LiveData<PokeDexRecord> {
         // Doesn't need refreshing, since it's internal DB.
         return appDatabase.pokedexDao().getPokeDexByLogin(name)
     }
 
-    fun getOwnedPokemons(name: String): LiveData<List<OwnedPokemonRecord>> {
+    fun getOwnedPokemons(name: String): LiveData<List<PokemonRecord>> {
         // Doesn't need refreshing, since it's internal DB.
-        return appDatabase.ownedPokemonsDao().getOwnedPokemonsByTrainerLogin(name)
+        return appDatabase.ownedPokemonsDao().getPokemonsByTrainerLogin(name)
     }
 
     private fun refreshPokemonData() {

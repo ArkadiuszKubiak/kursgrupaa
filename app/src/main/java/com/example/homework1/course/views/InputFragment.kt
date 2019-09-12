@@ -11,9 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.homework1.R
 import com.example.homework1.course.adapters.PokeAdapter
-import com.example.homework1.course.database.OwnedPokemonRecord
 import com.example.homework1.course.database.PokeDexRecord
 import com.example.homework1.course.database.PokemonRecord
+import com.example.homework1.course.viewmodels.MyViewModelFactory
 import com.example.homework1.course.viewmodels.PokeDexViewModel
 import com.example.homework1.course.viewmodels.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_input.*
@@ -32,9 +32,8 @@ class InputFragment : Fragment() {
     }
 
     var adapter: PokeAdapter? = null
-    var allPokemons: List<PokemonRecord>? = null
 
-    var trainersPokemon: List<OwnedPokemonRecord>? = null
+    var trainersPokemon: List<PokemonRecord>? = null
     var trainerData: PokeDexRecord? = null
 
     lateinit var viewModel: PokeDexViewModel
@@ -42,7 +41,7 @@ class InputFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = activity?.run {
-            ViewModelProviders.of(this)[PokeDexViewModel::class.java]
+            ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(PokeDexViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
     }
 
@@ -56,8 +55,7 @@ class InputFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val model = ViewModelProviders.of(activity!!).get(SharedViewModel::class.java)
-
+        val model = ViewModelProviders.of(activity!!, MyViewModelFactory(activity!!.application)).get(SharedViewModel::class.java)
 
         adapter = activity?.let {
             PokeAdapter(
@@ -76,9 +74,12 @@ class InputFragment : Fragment() {
         viewModel.getOwnedPokemonsByTrainer(arguments!!.getString("login")!!).observe(this, Observer { it ->
             run {
                 trainersPokemon = it
+                adapter!!.addAll(it)
+                model.setNumItems(adapter!!.getCount())
+                model.setClickArray()
             }
         })
-
+/*
         viewModel.pokemonRepository.getAllPokemons().observe(this, Observer { it ->
             run {
                 allPokemons = it
@@ -87,10 +88,10 @@ class InputFragment : Fragment() {
                 model.setClickArray()
             }
         })
-
+*/
         listView1.onItemClickListener = AdapterView.OnItemClickListener { adapterView, _, position, id ->
-            allPokemons?.get(position)?.name?.let { model.setPokName(it) }
-            allPokemons?.get(position)?.pokemon_data!!.sprites.frontDefault.let { model.setImage(it) }
+            trainersPokemon?.get(position)?.name?.let { model.setPokName(it) }
+            trainersPokemon?.get(position)?.pokemon_data!!.sprites.frontDefault.let { model.setImage(it) }
             model.setIndex(position)
             model.IncClick()
         }
