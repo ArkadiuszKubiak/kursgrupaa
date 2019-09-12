@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+                name="model"
+                type="com.example.homework1.course.viewmodels.PokemonCatchingViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="4">
+
+        <LinearLayout
+                android:id="@+id/topBar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="0.5"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+            <Button
+                    android:id="@+id/nextPokemon"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Next Pokemon">
+
+            </Button>
+
+            <Button
+                    android:id="@+id/goBack"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Back">
+
+            </Button>
+        </LinearLayout>
+
+        <ImageView
+                android:id="@+id/wildPokemon"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:imageUrl="@{model.getRandomWildPokemon().pokemon_data.sprites.frontDefault}" />
+
+        <ImageView
+                android:id="@+id/terrainImage"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/backgrounds/scenic[2]" />
+
+        <ImageView
+                android:id="@+id/pokemonImage"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:imageUrl="@{model.getTrainerData().pokemon_data.sprites.frontDefault}" />
+
+        <LinearLayout
+                android:id="@+id/bottomBar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+            <Button
+                    android:id="@+id/attackButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ATTACK">
+
+            </Button>
+
+            <Button
+                    android:id="@+id/catchButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="CATCH"></Button>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

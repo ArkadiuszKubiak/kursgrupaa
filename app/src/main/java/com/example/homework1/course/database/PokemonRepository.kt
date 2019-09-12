@@ -19,6 +19,16 @@ class PokemonRepository(private val appDatabase: AppDatabase, private val webSer
         }
     }
 
+    fun getRandomPokemon(): LiveData<PokemonRecord> {
+        refreshPokemonData()
+        return appDatabase.pokemonDao().getRandomPokemon()
+    }
+
+    fun getPokemonByName(name: String): LiveData<PokemonRecord> {
+        refreshPokemonData()
+        return appDatabase.pokemonDao().getPokemonByName(name)
+    }
+
     fun getAllPokemons(): LiveData<List<PokemonRecord>> {
         refreshPokemonData()
         return appDatabase.pokemonDao().getAllPokemons()
