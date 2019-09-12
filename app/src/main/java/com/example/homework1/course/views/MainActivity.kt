@@ -48,6 +48,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
         // 1
         if (requestCode == CREATE_NEW_USER) {
             // 2
@@ -70,11 +72,18 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, CREATE_NEW_USER)
     }
 
+    //fun goCatchPokemons(view: View) {
     fun startPokemonViewActivity(view: View) {
-        val intent = Intent(this, PokemonView::class.java)
+        val intent = Intent(this, CatchingPokemonActivity::class.java)
         intent.putExtra("LOGIN", LoginTest.text.toString())
         startActivity(intent)
     }
+
+/*fun startPokemonViewActivity(view: View) {
+    val intent = Intent(this, PokemonView::class.java)
+    intent.putExtra("LOGIN", LoginTest.text.toString())
+    startActivity(intent)
+}*/
 
     fun populateDatabase() {
         val getAllPokemonsCall: Call<PokemonAll> = ApiClient.getClient.getPokemons(

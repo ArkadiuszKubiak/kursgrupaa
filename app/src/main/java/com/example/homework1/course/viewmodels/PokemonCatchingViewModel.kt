@@ -2,46 +2,52 @@ package com.example.homework1.course.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.homework1.course.database.PokeDexRecord
 import com.example.homework1.course.database.PokemonRecord
 import com.example.homework1.course.database.PokemonRepository
 
-class PokemonCatchingViewModel(repository: PokemonRepository, application: Application) : ViewModelBase(repository, application) {
+abstract class PokemonCatchingViewModel(repository: PokemonRepository, application: Application) : ViewModelBase(repository, application) {
 
+    
     companion object {
         private val MIN_CHANCE_TO_CATCH: Int = 30
     }
 
+    var loginTrainer: String = "UNKNOWN"
+
     var currentChanceToCatchPokemon = MIN_CHANCE_TO_CATCH
 
-    var currentTrainerData: MutableLiveData<PokeDexRecord> = MutableLiveData()
-    var trainerPokemons: MutableLiveData<List<PokemonRecord>> = MutableLiveData()
+    lateinit var currentTrainerData: LiveData<PokeDexRecord>
 
-    var currentWildPokemon: MutableLiveData<PokemonRecord> = MutableLiveData()
-    var currentTrainerPokemon: MutableLiveData<PokemonRecord> = MutableLiveData()
+    lateinit var trainerPokemons: LiveData<List<PokemonRecord>>
 
-    fun getTrainerData(name: String): MutableLiveData<PokeDexRecord> {
-        currentTrainerData.value = repository.getTrainer(name).value
+    lateinit var currentWildPokemon: LiveData<PokemonRecord>
+    lateinit var currentTrainerPokemon: LiveData<PokemonRecord>
+
+    fun setAndLoadTrainerData(loginName: String) {
+        loginTrainer = loginName
+        currentTrainerData = repository.getTrainer(loginName)
+    }
+
+    fun getTrainerData(): LiveData<PokeDexRecord> {
         return currentTrainerData
     }
 
-    fun getCurrentTrainerPokemon(): LiveData<PokemonRecord> {
-        return currentTrainerPokemon
-    }
-
-    fun setCurrentTrainerPokemon(poke: PokemonRecord) {
-        currentTrainerPokemon.value = poke
-    }
-
-    fun getCurrentTrainerPokemonsData(name: String): MutableLiveData<List<PokemonRecord>> {
-        trainerPokemons.value = repository.getOwnedPokemons(name).value
+    fun getCurrentTrainerPokemonsData(): LiveData<List<PokemonRecord>> {
         return trainerPokemons
+    }
+
+    fun getPokemonByName(name: String): LiveData<PokemonRecord> {
+        return repository.getPokemonByName(name)
+    }
+
+    fun loadCurrentPokemonsTrainer() {
+        trainerPokemons = repository.getOwnedPokemons(loginTrainer)
     }
 
     fun getRandomWildPokemon(): LiveData<PokemonRecord> {
         currentChanceToCatchPokemon = MIN_CHANCE_TO_CATCH
-        currentWildPokemon.value = repository.getRandomPokemon().value
+        // currentWildPokemon.value = repository.getRandomPokemon().value
         return currentWildPokemon
     }
 
@@ -56,4 +62,6 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
     fun onAttack() {
         currentChanceToCatchPokemon += 5
     }
+
+
 }

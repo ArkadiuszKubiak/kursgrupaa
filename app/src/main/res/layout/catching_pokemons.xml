@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,8 +10,7 @@
                 type="com.example.homework1.course.viewmodels.PokemonCatchingViewModel" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -45,11 +46,11 @@
 
         <ImageView
                 android:id="@+id/wildPokemon"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:imageUrl="@{model.getRandomWildPokemon().pokemon_data.sprites.frontDefault}" />
+                app:imageUrl="@{model.randomWildPokemon.pokemon_data.sprites.frontDefault}" />
 
         <ImageView
                 android:id="@+id/terrainImage"
@@ -62,11 +63,11 @@
 
         <ImageView
                 android:id="@+id/pokemonImage"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:imageUrl="@{model.getTrainerData().pokemon_data.sprites.frontDefault}" />
+                app:imageUrl="@{model.currentTrainerPokemon.pokemon_data.sprites.frontDefault}" />
 
         <LinearLayout
                 android:id="@+id/bottomBar"
