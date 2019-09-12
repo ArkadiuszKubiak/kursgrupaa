@@ -6,9 +6,9 @@ import com.example.homework1.course.database.PokeDexRecord
 import com.example.homework1.course.database.PokemonRecord
 import com.example.homework1.course.database.PokemonRepository
 
-abstract class PokemonCatchingViewModel(repository: PokemonRepository, application: Application) : ViewModelBase(repository, application) {
+class PokemonCatchingViewModel(repository: PokemonRepository, application: Application) : ViewModelBase(repository, application) {
 
-    
+
     companion object {
         private val MIN_CHANCE_TO_CATCH: Int = 30
     }
