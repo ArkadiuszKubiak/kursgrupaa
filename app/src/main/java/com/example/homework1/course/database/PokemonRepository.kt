@@ -40,6 +40,14 @@ class PokemonRepository(private val appDatabase: AppDatabase, private val webSer
         return appDatabase.ownedPokemonsDao().getPokemonsByTrainerLogin(name)
     }
 
+    fun addPokemonToPokedex(pokeName: String, trainerName: String) {
+        appDatabase.ownedPokemonsDao().insertOwnedPokemon(OwnedPokemonRecord(pokeName, trainerName))
+    }
+
+    fun removePokemonFromPokedex(pokeName: String, trainerName: String) {
+        appDatabase.ownedPokemonsDao().deleteOwnedPokemon(OwnedPokemonRecord(pokeName, trainerName))
+    }
+
     private fun refreshPokemonData() {
         doAsync {
             val oldPokes = appDatabase.pokemonDao().getPokemonsOlderThan(DELETE_TIMEOUT_SECONDS)
