@@ -1,37 +1,30 @@
 package com.example.homework1.course.viewmodels
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.homework1.course.database.OwnedPokemonRecord
+import android.app.Application
+import androidx.lifecycle.LiveData
 import com.example.homework1.course.database.PokeDexRecord
 import com.example.homework1.course.database.PokemonRecord
+import com.example.homework1.course.database.PokemonRepository
 
-class PokeDexViewModel : ViewModel() {
-    val trainerName = MutableLiveData<String>()
-    val trainerSurname = MutableLiveData<String>()
-    val trainerLogin = MutableLiveData<String>()
+class PokeDexViewModel(repository: PokemonRepository, application: Application) : ViewModelBase(repository, application) {
 
-    val trainerOwnedPokemons = MutableLiveData<List<OwnedPokemonRecord>>()
-    val allPokemonDataSet = MutableLiveData<List<PokemonRecord>>()
+    //var currentTrainerData = MutableLiveData<PokeDexRecord>()
+    //var trainerOwnedPokemons = MutableLiveData<List<PokemonRecord>>()
 
-    var currentTrainer: PokeDexRecord
-        get() = PokeDexRecord(trainerName.value!!, trainerSurname.value!!, trainerLogin.value!!)
-        set(trainer) {
-            trainerName.value = trainer.name
-            trainerSurname.value = trainer.surname
-            trainerLogin.value = trainer.login
-        }
+    fun createNewTrainer(login: String, name: String = "", surname: String = "", img: String = "") {
+        repository.createTrainer(login, name, surname, img)
+    }
 
-    var ownedPokemons: List<OwnedPokemonRecord>
-        get() = trainerOwnedPokemons.value!!
-        set(pokemonData) {
-            trainerOwnedPokemons.value = pokemonData
-        }
 
-    var pokemonDataSet: List<PokemonRecord>
-        get() = allPokemonDataSet.value!!
-        set(pokemonData) {
-            allPokemonDataSet.value = pokemonData
-        }
+    fun getTrainerByName(name: String): LiveData<PokeDexRecord> {
+        //currentTrainerData = repository.getTrainer(name) as MutableLiveData<PokeDexRecord>
+        //return currentTrainerData
+        return repository.getTrainer(name)
+    }
 
+    fun getOwnedPokemonsByTrainer(name: String): LiveData<List<PokemonRecord>> {
+        //trainerOwnedPokemons = repository.getOwnedPokemons(name) as MutableLiveData<List<PokemonRecord>>
+        //return trainerOwnedPokemons
+        return repository.getOwnedPokemons(name)
+    }
 }

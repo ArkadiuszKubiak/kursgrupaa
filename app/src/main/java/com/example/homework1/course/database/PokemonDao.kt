@@ -1,8 +1,10 @@
 package com.example.homework1.course.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 
 
@@ -10,39 +12,57 @@ import androidx.room.Query
 interface PokemonDao {
 
     @Query("SELECT * FROM pokemon_all")
-    fun getAllPokemons(): List<PokemonRecord>
+    fun getAllPokemons(): LiveData<List<PokemonRecord>>
+
+    @Query("SELECT * FROM pokemon_all")
+    fun getAllPokemonsNormal(): List<PokemonRecord>
 
     @Query("SELECT * FROM pokemon_all WHERE num == :pokemonId")
-    fun getPokemonByNum(pokemonId: Int): PokemonRecord
+    fun getPokemonByNum(pokemonId: Int): LiveData<PokemonRecord>
 
-    @Insert
+    @Query("SELECT * FROM pokemon_all LIMIT 1 OFFSET :offset")
+    fun getPokemonWithOffset(offset: Int): LiveData<PokemonRecord>
+
+    @Query("SELECT * FROM pokemon_all WHERE name == :pokemonName")
+    fun getPokemonByName(pokemonName: Int): PokemonRecord
+
+    @Insert(onConflict = REPLACE)
     fun insertAllPokemons(pokemons: List<PokemonRecord>)
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     fun insertPokemon(pokemon: PokemonRecord)
 
     @Delete
     fun deletePokemon(pokemon: PokemonRecord)
 
-    @Query("DELETE FROM pokemon_all WHERE num in (SELECT poke_num FROM synch_data WHERE synch_data.timestamp_seconds < :oldTimestamp )")
+    @Query("DELETE FROM pokemon_all WHERE num in (SELECT poke_name FROM synch_data WHERE synch_data.timestamp_seconds < :oldTimestamp )")
     fun deleteOlderDataThan(oldTimestamp: Long)
 
-    @Insert
+    @Query("SELECT * FROM pokemon_all WHERE num in (SELECT poke_name FROM synch_data WHERE synch_data.timestamp_seconds < :oldTimestamp )")
+    fun getPokemonsOlderThan(oldTimestamp: Long): List<PokemonRecord>
+
+    @Insert(onConflict = REPLACE)
     fun insertSynchData(syncData: SynchData)
+
+    @Query("SELECT * FROM synch_data WHERE poke_name == :pokemonName")
+    fun getSyncDataByPokemonId(pokemonName: String): SynchData
 }
 
 @Dao
 interface OwnedPokemonDao {
-    @Query("SELECT * FROM owned_pokemon")
-    fun getAllOwnedPokemons(): List<OwnedPokemonRecord>
+    //@Query("SELECT * FROM owned_pokemon")
+    //fun getAllOwnedPokemons(): List<OwnedPokemonRecord>
 
-    @Query("SELECT * FROM owned_pokemon WHERE pokedex_login == :trainerLogin")
-    fun getOwnedPokemonsByTrainerLogin(trainerLogin: String): List<OwnedPokemonRecord>
+    //@Query("SELECT * FROM owned_pokemon WHERE pokedex_login == :trainerLogin")
+    //fun getOwnedPokemonsByTrainerLogin(trainerLogin: String): LiveData<List<OwnedPokemonRecord>>
 
-    @Query("SELECT * FROM owned_pokemon WHERE poke_num == :pokemonNum")
-    fun getOwnedPokemonsByPokemonNum(pokemonNum: String): List<OwnedPokemonRecord>
+    @Query("SELECT pokemon_all.* FROM pokemon_all, owned_pokemon WHERE owned_pokemon.pokedex_login == :trainerName AND pokemon_all.name == owned_pokemon.poke_name")
+    fun getPokemonsByTrainerLogin(trainerName: String): LiveData<List<PokemonRecord>>
 
-    @Insert
+    @Query("SELECT * FROM owned_pokemon WHERE poke_name == :pokemonName")
+    fun getOwnedPokemonsByPokemonName(pokemonName: String): List<OwnedPokemonRecord>
+
+    @Insert(onConflict = REPLACE)
     fun insertOwnedPokemon(ownedPokemonRecord: OwnedPokemonRecord)
 
     @Delete
@@ -55,7 +75,7 @@ interface PokeDexDao {
     fun getAllPokeDexes(): List<PokeDexRecord>
 
     @Query("SELECT * FROM pokedex WHERE login == :trainerLogin")
-    fun getPokeDexByLogin(trainerLogin: String): PokeDexRecord
+    fun getPokeDexByLogin(trainerLogin: String): LiveData<PokeDexRecord>
 
     @Query("SELECT * FROM pokedex WHERE name == :trainerName")
     fun getPokeDexByName(trainerName: String): List<PokeDexRecord>
@@ -63,7 +83,7 @@ interface PokeDexDao {
     @Query("SELECT * FROM pokedex WHERE surname == :trainerSurname")
     fun getPokeDexBySurname(trainerSurname: String): List<PokeDexRecord>
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     fun insertPokedex(pokedex: PokeDexRecord)
 
     @Delete

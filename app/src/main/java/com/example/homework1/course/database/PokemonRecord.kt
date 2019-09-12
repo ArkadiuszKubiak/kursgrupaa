@@ -8,8 +8,8 @@ import com.example.homework1.course.models.PokemonData
 
 @Entity(tableName = "pokemon_all")
 class PokemonRecord(
-    @PrimaryKey val num: Int,
-    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "num") val num: Int,
+    @PrimaryKey @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "pokemon_data") val pokemon_data: PokemonData
 )
 
@@ -30,14 +30,14 @@ class PokeDexRecord constructor(
     [
         ForeignKey(
             entity = PokemonRecord::class,
-            parentColumns = arrayOf("num"),
-            childColumns = arrayOf("poke_num"),
+            parentColumns = arrayOf("name"),
+            childColumns = arrayOf("poke_name"),
             onDelete = ForeignKey.CASCADE
         )]
 )
 class SynchData constructor(
     @ColumnInfo(name = "timestamp_seconds") var timestamp_seconds: Long,
-    @ColumnInfo(name = "poke_num") var poke_num: Int
+    @ColumnInfo(name = "poke_name") var poke_name: String
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "uid")
@@ -52,8 +52,8 @@ class SynchData constructor(
     [
         ForeignKey(
             entity = PokemonRecord::class,
-            parentColumns = arrayOf("num"),
-            childColumns = arrayOf("poke_num"),
+            parentColumns = arrayOf("name"),
+            childColumns = arrayOf("poke_name"),
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
@@ -65,7 +65,7 @@ class SynchData constructor(
 )
 class OwnedPokemonRecord constructor(
     @ColumnInfo(name = "pokedex_login") var pokedex_login: String,
-    @ColumnInfo(name = "poke_num") var poke_num: Long
+    @ColumnInfo(name = "poke_name") var poke_name: String
 ) {
     @PrimaryKey(autoGenerate = true)
     var uid: Long = 0

@@ -1,11 +1,13 @@
 package com.example.homework1.course.viewmodels
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.homework1.course.database.PokemonRepository
 
 
-class SharedViewModel: ViewModel(){
+class SharedViewModel(repository: PokemonRepository, application: Application) : ViewModelBase(repository, application) {
+
     val pokName = MutableLiveData<String>()
     val pokImg = MutableLiveData<String>()
     var numClicks = ArrayList<Int>()
