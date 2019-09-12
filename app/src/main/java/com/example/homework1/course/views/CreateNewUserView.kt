@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.homework1.R
 import com.example.homework1.course.utilities.TAG
@@ -14,6 +15,7 @@ import com.example.homework1.course.viewmodels.MyViewModelFactory
 import com.example.homework1.course.viewmodels.PokeDexViewModel
 import kotlinx.android.synthetic.main.activity_main.LoginTest
 import kotlinx.android.synthetic.main.create_new_user_view.*
+import org.jetbrains.anko.doAsync
 
 class CreateNewUserView : AppCompatActivity() {
 
@@ -40,19 +42,33 @@ class CreateNewUserView : AppCompatActivity() {
 
     fun createNewUser(view: View) {
         if (!login?.text?.isEmpty()!! && !name?.text?.isEmpty()!! && !surname?.text?.isEmpty()!!) {
-            model.createNewTrainer(login!!.text.toString(), name!!.text.toString(), surname!!.text.toString())
-            val msg = "User added: {}:{}:{}".format(login!!.text, name!!.text, surname!!.text)
-            Log.d(TAG, msg)
-            Toast.makeText(applicationContext, msg, Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, "Creating user...", Toast.LENGTH_SHORT).show()
 
+            val loginText = login!!.text.toString()
+            val nameText = name!!.text.toString()
+            val surnameText = surname!!.text.toString()
+
+            model.getTrainerByName(loginText).observe(this, Observer { trainerData ->
+                trainerData?.let {
+                    Toast.makeText(applicationContext, "User already exists!", Toast.LENGTH_SHORT).show()
+                } ?: doAsync {
+                    model.createNewTrainer(loginText, nameText, surnameText)
+                    Log.d(TAG, "User added: {}:{}:{}".format(loginText, nameText, surnameText))
+                    onUserCreatedSuccessfully(loginText)
+                }
+            })
+        } else {
+            Toast.makeText(applicationContext, "User name or password is empty!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun onUserCreatedSuccessfully(loginText: String) {
+        runOnUiThread {
             val result = this.intent
-            result.putExtra(CREATE_NEW_USER_DESCRIPTION, login?.text.toString())
-
+            result.putExtra(CREATE_NEW_USER_DESCRIPTION, loginText)
             setResult(Activity.RESULT_OK, result)
             finish()
-        } else {
-            val toast = Toast.makeText(applicationContext, "User name or password is empty!", Toast.LENGTH_SHORT)
-            toast.show()
+            Toast.makeText(applicationContext, "User added: {}".format(loginText), Toast.LENGTH_LONG).show()
         }
     }
 }

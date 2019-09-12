@@ -79,16 +79,7 @@ class InputFragment : Fragment() {
                 model.setClickArray()
             }
         })
-/*
-        viewModel.pokemonRepository.getAllPokemons().observe(this, Observer { it ->
-            run {
-                allPokemons = it
-                adapter!!.addAll(it)
-                model.setNumItems(adapter!!.getCount())
-                model.setClickArray()
-            }
-        })
-*/
+
         listView1.onItemClickListener = AdapterView.OnItemClickListener { adapterView, _, position, id ->
             trainersPokemon?.get(position)?.name?.let { model.setPokName(it) }
             trainersPokemon?.get(position)?.pokemon_data!!.sprites.frontDefault.let { model.setImage(it) }
