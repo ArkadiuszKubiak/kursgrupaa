@@ -64,18 +64,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun createNewUser(view: View) {
+    fun createNewUserActivity(view: View) {
         val intent = Intent(this, CreateNewUserView::class.java)
         intent.putExtra("LOGIN", LoginTest.text.toString())
         startActivityForResult(intent, CREATE_NEW_USER)
     }
 
-    fun loginInto(view: View) {
+    fun startPokemonViewActivity(view: View) {
         val intent = Intent(this, PokemonView::class.java)
         intent.putExtra("LOGIN", LoginTest.text.toString())
         startActivity(intent)
     }
-
 
     fun populateDatabase() {
         val getAllPokemonsCall: Call<PokemonAll> = ApiClient.getClient.getPokemons(
@@ -91,7 +90,7 @@ class MainActivity : AppCompatActivity() {
 
                     // Delete older items than the specified timeout.
                     val currentTimestamp = System.currentTimeMillis() / 1000
-                    //database.pokemonDao().deleteOlderDataThan(currentTimestamp - DELETE_TIMEOUT_SECONDS)
+                    database.pokemonDao().deleteOlderDataThan(currentTimestamp - DELETE_TIMEOUT_SECONDS)
 
                     // Because then it will download them.
                     val pokemonDatabase = database.pokemonDao().getAllPokemonsNormal()

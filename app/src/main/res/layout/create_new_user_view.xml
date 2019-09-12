@@ -1,34 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/linearLayout"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:context=".course.views.CreateNewUserView">
+
+    <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            tools:context=".course.views.CreateNewUserView" >
+            android:text="Login:"
+            android:textSize="20dp" />
 
     <EditText
-            android:id="@+id/UserName"
+            android:id="@+id/LoginTest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:background="@color/cardview_light_background"
             android:ems="10"
+            android:gravity="center"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="" />
 
-    <EditText
-            android:id="@+id/Password"
+    <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Name:"
+            android:textSize="20dp" />
+
+    <EditText
+            android:id="@+id/NameTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:background="@color/cardview_light_background"
             android:ems="10"
-            android:inputType="textPassword" />
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:text="" />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Surname:"
+            android:textSize="20dp" />
+
+    <EditText
+            android:id="@+id/SurnameTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:background="@color/cardview_light_background"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:text="" />
 
     <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
-            android:onClick="createNewUser"
             android:layout_height="wrap_content"
+            android:onClick="createNewUser"
             android:text="Create new user" />
 
 </LinearLayout>

@@ -7,6 +7,7 @@ import com.example.homework1.course.database.PokemonRepository
 
 
 class SharedViewModel(repository: PokemonRepository, application: Application) : ViewModelBase(repository, application) {
+
     val pokName = MutableLiveData<String>()
     val pokImg = MutableLiveData<String>()
     var numClicks = ArrayList<Int>()
