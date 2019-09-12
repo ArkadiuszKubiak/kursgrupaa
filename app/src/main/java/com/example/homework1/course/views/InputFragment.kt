@@ -11,27 +11,46 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.homework1.R
 import com.example.homework1.course.adapters.PokeAdapter
-import com.example.homework1.course.database.AppDatabase
+import com.example.homework1.course.database.OwnedPokemonRecord
+import com.example.homework1.course.database.PokeDexRecord
 import com.example.homework1.course.database.PokemonRecord
-import com.example.homework1.course.database.PokemonRepository
-import com.example.homework1.course.rest_api.ApiClient
+import com.example.homework1.course.viewmodels.PokeDexViewModel
 import com.example.homework1.course.viewmodels.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_input.*
 
 
 class InputFragment : Fragment() {
 
-    var adapter: PokeAdapter? = null
-    var customers: List<PokemonRecord>? = null
+    companion object {
+        fun newInstance(login: String): InputFragment {
+            val fragment = InputFragment()
+            val args = Bundle()
+            args.putString("login", login)
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
-    lateinit var pokeRepo: PokemonRepository
+    var adapter: PokeAdapter? = null
+    var allPokemons: List<PokemonRecord>? = null
+
+    var trainersPokemon: List<OwnedPokemonRecord>? = null
+    var trainerData: PokeDexRecord? = null
+
+    lateinit var viewModel: PokeDexViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = activity?.run {
+            ViewModelProviders.of(this)[PokeDexViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        pokeRepo = PokemonRepository.getInstance(AppDatabase.getInstance(context = this.activity!!.baseContext), ApiClient.getClient)
         return inflater.inflate(R.layout.fragment_input, container, false)
     }
 
@@ -48,9 +67,21 @@ class InputFragment : Fragment() {
         }
         listView1.adapter = adapter
 
-        pokeRepo.getAllPokemons().observe(this, Observer { it ->
+        viewModel.getTrainerByName(arguments!!.getString("login")!!).observe(this, Observer { it ->
             run {
-                customers = it
+                trainerData = it
+            }
+        })
+
+        viewModel.getOwnedPokemonsByTrainer(arguments!!.getString("login")!!).observe(this, Observer { it ->
+            run {
+                trainersPokemon = it
+            }
+        })
+
+        viewModel.pokemonRepository.getAllPokemons().observe(this, Observer { it ->
+            run {
+                allPokemons = it
                 adapter!!.addAll(it)
                 model.setNumItems(adapter!!.getCount())
                 model.setClickArray()
@@ -58,8 +89,8 @@ class InputFragment : Fragment() {
         })
 
         listView1.onItemClickListener = AdapterView.OnItemClickListener { adapterView, _, position, id ->
-            customers?.get(position)?.name?.let { model.setPokName(it) }
-            customers?.get(position)?.pokemon_data!!.sprites.frontDefault.let { model.setImage(it) }
+            allPokemons?.get(position)?.name?.let { model.setPokName(it) }
+            allPokemons?.get(position)?.pokemon_data!!.sprites.frontDefault.let { model.setImage(it) }
             model.setIndex(position)
             model.IncClick()
         }

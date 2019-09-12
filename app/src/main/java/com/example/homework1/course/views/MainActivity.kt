@@ -15,6 +15,8 @@ import com.example.homework1.course.database.SynchData
 import com.example.homework1.course.models.PokemonAll
 import com.example.homework1.course.models.PokemonData
 import com.example.homework1.course.rest_api.ApiClient
+import com.example.homework1.course.utilities.TAG
+import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,6 +25,7 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private val CREATE_NEW_USER = 1
+
     lateinit var progerssProgressDialog: ProgressDialog
     companion object {
         const val DELETE_TIMEOUT_SECONDS = 1
@@ -34,15 +37,13 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        progerssProgressDialog= ProgressDialog(this@MainActivity)
-        progerssProgressDialog.setTitle("Loading pokemons")
+
+        progerssProgressDialog = ProgressDialog(this)
+        progerssProgressDialog.setTitle("Loading Pokemons")
         progerssProgressDialog.setCancelable(false)
         progerssProgressDialog.show()
-        populateDatabase()
-    }
 
-    fun onCreatedCallback() {
-        Thread(Runnable { Toast.makeText(applicationContext, "Stuff Loaded!", Toast.LENGTH_LONG).show() }).start()
+        populateDatabase()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                 // 3
                 val task = data?.getStringExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION)
 
-                Log.d("arek", "" + task.toString())
+                Log.d(TAG, "" + task.toString())
                 val toast = Toast.makeText(applicationContext, task.toString(), Toast.LENGTH_SHORT)
 
                 toast.show()
@@ -64,11 +65,13 @@ class MainActivity : AppCompatActivity() {
 
     fun createNewUser(view: View) {
         val intent = Intent(this, CreateNewUserView::class.java)
+        intent.putExtra("LOGIN", LoginTest.text.toString())
         startActivityForResult(intent, CREATE_NEW_USER)
     }
 
     fun loginInto(view: View) {
         val intent = Intent(this, PokemonView::class.java)
+        intent.putExtra("LOGIN", LoginTest.text.toString())
         startActivity(intent)
     }
 
@@ -108,7 +111,7 @@ class MainActivity : AppCompatActivity() {
                                 timestamp_seconds = currentTimestamp
                             )
 
-                            Log.d("arek", "" + pokemon.name)
+                            Log.d(TAG, "Successfully retrieved " + pokemon.name + "from PokeApi.")
 
                             database.pokemonDao().insertPokemon(pokemon)
                             database.pokemonDao().insertSynchData(synchData)
@@ -119,7 +122,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<PokemonAll>?, t: Throwable?) {
-                Log.d("arek", "FAIL")
+                Log.d(TAG, "Sadly, the call for getting Pokemons failed :(.")
             }
         })
     }

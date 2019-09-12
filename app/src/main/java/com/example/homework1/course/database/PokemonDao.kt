@@ -20,6 +20,9 @@ interface PokemonDao {
     @Query("SELECT * FROM pokemon_all WHERE num == :pokemonId")
     fun getPokemonByNum(pokemonId: Int): LiveData<PokemonRecord>
 
+    @Query("SELECT * FROM pokemon_all LIMIT 1 OFFSET :offset")
+    fun getPokemonWithOffset(offset: Int): LiveData<PokemonRecord>
+
     @Query("SELECT * FROM pokemon_all WHERE name == :pokemonName")
     fun getPokemonByName(pokemonName: Int): PokemonRecord
 
@@ -34,6 +37,9 @@ interface PokemonDao {
 
     @Query("DELETE FROM pokemon_all WHERE num in (SELECT poke_name FROM synch_data WHERE synch_data.timestamp_seconds < :oldTimestamp )")
     fun deleteOlderDataThan(oldTimestamp: Long)
+
+    @Query("SELECT * FROM pokemon_all WHERE num in (SELECT poke_name FROM synch_data WHERE synch_data.timestamp_seconds < :oldTimestamp )")
+    fun getPokemonsOlderThan(oldTimestamp: Long): List<PokemonRecord>
 
     @Insert(onConflict = REPLACE)
     fun insertSynchData(syncData: SynchData)
