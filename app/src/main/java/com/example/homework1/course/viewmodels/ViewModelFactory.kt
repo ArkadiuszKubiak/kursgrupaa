@@ -24,6 +24,4 @@ class MyViewModelFactory(val application: Application) : ViewModelProvider.Facto
         return modelClass.getDeclaredConstructor(PokemonRepository::class.java, Application::class.java)
             .newInstance(PokemonRepository.getInstance(AppDatabase.getInstance(application), ApiClient.getClient), application)
     }
-
-
 }

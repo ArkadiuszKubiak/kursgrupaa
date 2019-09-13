@@ -8,7 +8,9 @@ object MyBindingAdapters {
     @BindingAdapter("imageUrl")
     @JvmStatic
     fun bindRecyclerViewAdapter(imageView: ImageView, url: String) {
-        Glide.with(imageView.context).load(url).into(imageView)
+        if (url != null) {
+            Glide.with(imageView.context).load(url).into(imageView)
+        }
 
     }
 }

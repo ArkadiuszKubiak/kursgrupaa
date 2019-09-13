@@ -13,6 +13,13 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
         private val MIN_CHANCE_TO_CATCH: Int = 30
     }
 
+    fun initViewModel(trainerName: String) {
+        loginTrainer = trainerName
+        setTrainerData(trainerName)
+        loadCurrentPokemonsTrainer()
+        loadRandomWildPokemon()
+    }
+
     var loginTrainer: String = "UNKNOWN"
 
     var currentChanceToCatchPokemon = MIN_CHANCE_TO_CATCH
@@ -22,10 +29,10 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
     lateinit var trainerPokemons: LiveData<List<PokemonRecord>>
 
     lateinit var currentWildPokemon: LiveData<PokemonRecord>
-    lateinit var currentTrainerPokemon: LiveData<PokemonRecord>
 
-    fun setAndLoadTrainerData(loginName: String) {
-        loginTrainer = loginName
+    var currentTrainerPokemon: PokemonRecord? = null
+
+    fun setTrainerData(loginName: String) {
         currentTrainerData = repository.getTrainer(loginName)
     }
 
@@ -37,18 +44,23 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
         return trainerPokemons
     }
 
-    fun getPokemonByName(name: String): LiveData<PokemonRecord> {
-        return repository.getPokemonByName(name)
-    }
-
     fun loadCurrentPokemonsTrainer() {
         trainerPokemons = repository.getOwnedPokemons(loginTrainer)
     }
 
+    fun getPokemonByName(name: String): LiveData<PokemonRecord> {
+        return repository.getPokemonByName(name)
+    }
+
+
     fun getRandomWildPokemon(): LiveData<PokemonRecord> {
-        currentChanceToCatchPokemon = MIN_CHANCE_TO_CATCH
-        // currentWildPokemon.value = repository.getRandomPokemon().value
+        loadRandomWildPokemon()
         return currentWildPokemon
+    }
+
+    fun loadRandomWildPokemon() {
+        currentChanceToCatchPokemon = MIN_CHANCE_TO_CATCH
+        currentWildPokemon = repository.getRandomPokemon()
     }
 
     fun tryToCatchPokemon() {

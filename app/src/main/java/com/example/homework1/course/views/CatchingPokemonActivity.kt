@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
 import com.example.homework1.R
 import com.example.homework1.course.viewmodels.MyViewModelFactory
 import com.example.homework1.course.viewmodels.PokemonCatchingViewModel
@@ -21,57 +22,20 @@ class CatchingPokemonActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.catching_pokemons)
-
         loginName = intent.getStringExtra("LOGIN")!!
 
+        binding = DataBindingUtil.setContentView(this, R.layout.catching_pokemons)
         model = ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(PokemonCatchingViewModel::class.java)
 
-        /*model.currentTrainerPokemon.value = PokemonRecord(
-            -1, "EMPTY",
-            PokemonData(
-                listOf(Ability(AbilityX("a", ""))),
-                listOf(Form("", "")),
-                1,
-                1,
-                "a",
-                5,
-                Sprites(""),
-                listOf(Stat(5, StatX(""))),
-                listOf(Type(TypeX(""))),
-                5
-            )
-        )
-        model.currentWildPokemon.value = PokemonRecord(
-            -1, "EMPTY",
-            PokemonData(
-                listOf(Ability(AbilityX("a", ""))),
-                listOf(Form("", "")),
-                1,
-                1,
-                "a",
-                5,
-                Sprites(""),
-                listOf(Stat(5, StatX(""))),
-                listOf(Type(TypeX(""))),
-                5
-            )
-        )*/
-
-
-
-
-        model.setAndLoadTrainerData(loginName)
-        model.getRandomWildPokemon()
-
-        model.loadCurrentPokemonsTrainer()
+        model.initViewModel(loginName)
 
         binding.model = model
-        //binding.setVariable(BR.model,model)
         binding.lifecycleOwner = this
 
         model.currentWildPokemon.observe(this, Observer { it ->
-            {}
+            if (it != null) {
+                Glide.with(this).load(it.pokemon_data.sprites.frontDefault).into(binding.wildPokemon)
+            }
         })
 
         model.currentTrainerData.observe(this, Observer { it ->
@@ -80,8 +44,9 @@ class CatchingPokemonActivity : AppCompatActivity() {
 
         model.trainerPokemons.observe(this, Observer { it ->
             run {
-                if (it != null) {
-                    model.currentTrainerPokemon = model.getPokemonByName(it[0].name)
+                if (it != null && it.size > 0) {
+                    model.currentTrainerPokemon = it[0]
+                    Glide.with(this).load(model.currentTrainerPokemon!!.pokemon_data.sprites.frontDefault).into(binding.pokemonImage)
                 }
             }
         })
