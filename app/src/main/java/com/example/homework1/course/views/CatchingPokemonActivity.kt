@@ -41,7 +41,7 @@ class CatchingPokemonActivity : AppCompatActivity() {
         model.currentTrainerData.observe(this, Observer { it ->
             run {
                 if (it != null) {
-                    Toast.makeText(applicationContext, "New trainer Pokemon: %s!".format(it.name), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "New trainer Pokemon: %s!".format(it.login), Toast.LENGTH_SHORT).show()
                 }
             }
         })

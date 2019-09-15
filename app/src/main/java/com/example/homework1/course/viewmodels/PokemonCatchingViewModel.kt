@@ -72,7 +72,7 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
         val success = randomChance > currentChanceToCatchPokemon
 
         if (success) {
-            repository.addPokemonToPokedex(currentWildPokemon.value!!.name, currentTrainerData.value!!.name)
+            repository.addPokemonToPokedex(currentWildPokemon.value!!.name, currentTrainerData.value!!.login)
         }
 
         return success

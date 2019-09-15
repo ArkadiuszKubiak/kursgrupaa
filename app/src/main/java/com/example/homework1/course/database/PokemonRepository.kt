@@ -40,9 +40,9 @@ class PokemonRepository(private val appDatabase: AppDatabase, private val webSer
         appDatabase.pokedexDao().insertPokedex(pokeTrainer)
     }
 
-    fun getTrainer(name: String): LiveData<PokeDexRecord> {
+    fun getTrainer(trainerLogin: String): LiveData<PokeDexRecord> {
         // Doesn't need refreshing, since it's internal DB.
-        return appDatabase.pokedexDao().getPokeDexByLogin(name)
+        return appDatabase.pokedexDao().getPokeDexByLogin(trainerLogin)
     }
 
     fun getOwnedPokemons(name: String): LiveData<List<PokemonRecord>> {
