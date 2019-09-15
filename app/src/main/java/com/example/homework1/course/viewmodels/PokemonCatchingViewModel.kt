@@ -2,6 +2,7 @@ package com.example.homework1.course.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import com.example.homework1.course.database.PokeDexRecord
 import com.example.homework1.course.database.PokemonRecord
 import com.example.homework1.course.database.PokemonRepository
@@ -11,6 +12,7 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
 
     companion object {
         private val MIN_CHANCE_TO_CATCH: Int = 30
+        private val CHANCE_TO_ESCAPE_DURING_ATTACK: Int = 25
     }
 
     fun initViewModel(trainerName: String) {
@@ -28,7 +30,7 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
 
     lateinit var trainerPokemons: LiveData<List<PokemonRecord>>
 
-    lateinit var currentWildPokemon: LiveData<PokemonRecord>
+    var currentWildPokemon: MediatorLiveData<PokemonRecord> = MediatorLiveData()
 
     var currentTrainerPokemon: PokemonRecord? = null
 
@@ -60,19 +62,30 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
 
     fun loadRandomWildPokemon() {
         currentChanceToCatchPokemon = MIN_CHANCE_TO_CATCH
-        currentWildPokemon = repository.getRandomPokemon()
-    }
-
-    fun tryToCatchPokemon() {
-        val randomChance = (0..100).random()
-
-        if (randomChance > currentChanceToCatchPokemon) {
-            repository.addPokemonToPokedex(currentWildPokemon.value!!.name, currentTrainerData.value!!.name)
+        currentWildPokemon.addSource(repository.getRandomPokemon()) { result ->
+            result?.let { currentWildPokemon.value = it }
         }
     }
 
-    fun onAttack() {
-        currentChanceToCatchPokemon += 5
+    fun tryToCatchPokemon(): Boolean {
+        val randomChance = (0..100).random()
+        val success = randomChance > currentChanceToCatchPokemon
+
+        if (success) {
+            repository.addPokemonToPokedex(currentWildPokemon.value!!.name, currentTrainerData.value!!.name)
+        }
+
+        return success
+    }
+
+    fun onAttack(): Boolean {
+        val randomChance = (0..100).random()
+        val success = randomChance > CHANCE_TO_ESCAPE_DURING_ATTACK
+        if (success) {
+            currentChanceToCatchPokemon += 5
+        }
+
+        return success
     }
 
 

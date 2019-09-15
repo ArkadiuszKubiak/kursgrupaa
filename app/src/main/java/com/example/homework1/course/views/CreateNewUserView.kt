@@ -53,7 +53,7 @@ class CreateNewUserView : AppCompatActivity() {
                     Toast.makeText(applicationContext, "User already exists!", Toast.LENGTH_SHORT).show()
                 } ?: doAsync {
                     model.createNewTrainer(loginText, nameText, surnameText)
-                    Log.d(TAG, "User added: {}:{}:{}".format(loginText, nameText, surnameText))
+                    Log.d(TAG, "User added: %s:%s:%s".format(loginText, nameText, surnameText))
                     onUserCreatedSuccessfully(loginText)
                 }
             })
@@ -68,7 +68,7 @@ class CreateNewUserView : AppCompatActivity() {
             result.putExtra(CREATE_NEW_USER_DESCRIPTION, loginText)
             setResult(Activity.RESULT_OK, result)
             finish()
-            Toast.makeText(applicationContext, "User added: {}".format(loginText), Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, "User added: %s".format(loginText), Toast.LENGTH_LONG).show()
         }
     }
 }

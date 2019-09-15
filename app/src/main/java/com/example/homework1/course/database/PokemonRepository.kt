@@ -51,11 +51,15 @@ class PokemonRepository(private val appDatabase: AppDatabase, private val webSer
     }
 
     fun addPokemonToPokedex(pokeName: String, trainerName: String) {
-        appDatabase.ownedPokemonsDao().insertOwnedPokemon(OwnedPokemonRecord(pokeName, trainerName))
+        doAsync {
+            appDatabase.ownedPokemonsDao().insertOwnedPokemon(OwnedPokemonRecord(trainerName, pokeName))
+        }
     }
 
     fun removePokemonFromPokedex(pokeName: String, trainerName: String) {
-        appDatabase.ownedPokemonsDao().deleteOwnedPokemon(OwnedPokemonRecord(pokeName, trainerName))
+        doAsync {
+            appDatabase.ownedPokemonsDao().deleteOwnedPokemon(OwnedPokemonRecord(trainerName, pokeName))
+        }
     }
 
     private fun refreshPokemonData() {
