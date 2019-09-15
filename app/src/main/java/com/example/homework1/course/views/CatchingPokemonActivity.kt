@@ -1,7 +1,10 @@
 package com.example.homework1.course.views
 
+import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -43,7 +46,7 @@ class CatchingPokemonActivity : AppCompatActivity() {
         model.currentTrainerData.observe(this, Observer { it ->
             run {
                 if (it != null) {
-                    Toast.makeText(applicationContext, "New trainer Pokemon: %s!".format(it.login), Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(applicationContext, "New trainer Pokemon: %s!".format(it.login), Toast.LENGTH_SHORT).show()
                 }
             }
         })
@@ -62,48 +65,88 @@ class CatchingPokemonActivity : AppCompatActivity() {
             run {
                 if (it != null) {
                     Glide.with(this).load(it.pokemon_data.sprites.frontDefault).into(binding.wildPokemon)
-                    Toast.makeText(applicationContext, "New wild Pokemon: %s!".format(it.name), Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(applicationContext, "New wild Pokemon: %s!".format(it.name), Toast.LENGTH_SHORT).show()
                 }
 
             }
         })
 
         binding.attackButton.setOnClickListener { view ->
-            animateAction(AnimateActions.ATTACK)
-            if (model.onAttack()) {
-                Toast.makeText(
-                    applicationContext,
-                    "Attacked! Success! Chance to catch increased: %s.".format(model.currentChanceToCatchPokemon),
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-            } else {
-                model.loadRandomWildPokemon()
-                Toast.makeText(applicationContext, "Attacked! Failure! Pokemon ran away!", Toast.LENGTH_SHORT)
-                    .show()
-            }
+            model.interactionEnabled.value = false
+            loadImage(AnimateActions.ATTACK)
+
+            doAnimation(
+                AnimationsDifferent.THROW,
+                { Toast.makeText(applicationContext, "Suffer, you dirty something!!!.", Toast.LENGTH_SHORT).show() },
+                {
+                    if (model.onAttack()) {
+                        Toast.makeText(
+                            applicationContext,
+                            "Attacked! Success! Chance to catch increased: %s.".format(model.currentChanceToCatchPokemon),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    } else {
+                        model.loadRandomWildPokemon()
+                        Toast.makeText(applicationContext, "Attacked! Failure! Pokemon ran away!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    model.interactionEnabled.value = true
+                },
+                binding.terrainImage
+            )
+
+
         }
 
 
         binding.catchButton.setOnClickListener { view ->
-            animateAction(AnimateActions.CATCH)
-            if (model.tryToCatchPokemon()) {
-                Toast.makeText(
-                    applicationContext,
-                    "Caught Pokemon %s with Chance to catch: %s.".format(model.currentWildPokemon.value!!.name, model.currentChanceToCatchPokemon),
-                    Toast.LENGTH_SHORT
+            model.interactionEnabled.value = false
+            loadImage(AnimateActions.CATCH)
+            doAnimation(
+                AnimationsDifferent.THROW,
+                { Toast.makeText(applicationContext, "Go, Pokeball!!!.", Toast.LENGTH_SHORT).show() },
+                {
+                    if (model.tryToCatchPokemon()) {
+                        Toast.makeText(
+                            applicationContext,
+                            "Caught Pokemon %s with Chance to catch: %s.".format(
+                                model.currentWildPokemon.value!!.name,
+                                model.currentChanceToCatchPokemon
+                            ),
+                            Toast.LENGTH_SHORT
 
-                ).show()
-            } else {
-                Toast.makeText(applicationContext, "Failed to catch. Pokemon ran.", Toast.LENGTH_SHORT).show()
-            }
-            model.loadRandomWildPokemon()
+                        ).show()
+                        loadImage(AnimateActions.SUCCESS)
+                        doAnimation(AnimationsDifferent.RESIZE)
+
+                        loadImage(AnimateActions.SUCCESS)
+                        doAnimation(AnimationsDifferent.RESIZE, null, {model.interactionEnabled.value = true})
+                    } else {
+                        Toast.makeText(applicationContext, "Failed to catch. Pokemon ran.", Toast.LENGTH_SHORT).show()
+                        loadImage(AnimateActions.FAILURE)
+                        doAnimation(AnimationsDifferent.RESIZE, null, {model.interactionEnabled.value = true})
+                    }
+                    model.loadRandomWildPokemon()
+                },
+                binding.terrainImage,
+                false
+            )
         }
 
         binding.nextPokemon.setOnClickListener { view ->
-            animateAction(AnimateActions.NEXT_POKEMON)
-            model.getRandomWildPokemon()
-            Toast.makeText(applicationContext, "Going for the next wild Pokemon!.", Toast.LENGTH_SHORT).show()
+            model.interactionEnabled.value = false
+            loadImage(AnimateActions.NEXT_POKEMON)
+            doAnimation(
+                AnimationsDifferent.ROTATE,
+                { Toast.makeText(applicationContext, "Going for the next wild Pokemon!.", Toast.LENGTH_SHORT).show() },
+                {
+                    model.loadRandomWildPokemon()
+                    model.interactionEnabled.value = true
+                },
+                binding.wildPokemon,
+                false
+            )
         }
 
         binding.goBack.setOnClickListener { view ->
@@ -114,77 +157,112 @@ class CatchingPokemonActivity : AppCompatActivity() {
 
     // ToDo: Better animation and actions.
     // ToDo: Make an animation class and synchronize actions.
-    fun animateAction(action: AnimateActions) {
+    fun loadImage(action: AnimateActions) {
         when (action) {
             AnimateActions.ATTACK -> {
                 Glide.with(this).load(resources.getDrawable(R.drawable.stone)).into(binding.terrainImage)
-                throwAnimation()
             }
             AnimateActions.CATCH -> {
                 Glide.with(this).load(resources.getDrawable(R.drawable.pokeball)).into(binding.terrainImage)
-                throwAnimation()
             }
             AnimateActions.NEXT_POKEMON -> {
                 Glide.with(this).load(resources.getDrawable(R.drawable.logo)).into(binding.terrainImage)
-                rotateAnimation()
             }
             AnimateActions.SUCCESS -> {
                 Glide.with(this).load(resources.getDrawable(R.drawable.success)).into(binding.terrainImage)
-                resizeAnimation()
             }
             AnimateActions.FAILURE -> {
                 Glide.with(this).load(resources.getDrawable(R.drawable.failure)).into(binding.terrainImage)
-                rotateAnimation()
+            }
+        }
+    }
+
+    enum class AnimationsDifferent {
+        ROTATE, RESIZE, THROW
+    }
+
+    fun restore(viewToAnimate: ImageView = binding.terrainImage) {
+        //Glide.with(this).load(resources.getDrawable(R.drawable.logo)).into(viewToAnimate)
+        viewToAnimate.visibility = View.INVISIBLE
+    }
+
+    fun doAnimation(
+        actionAnimation: AnimationsDifferent,
+        animationStartCallback: (() -> Unit)? = null,
+        animationEndCallback: (() -> Unit)? = null,
+        viewToAnimate: ImageView = binding.terrainImage,
+        doCleanUp : Boolean = true
+    ) {
+
+        viewToAnimate.visibility = View.VISIBLE
+
+        val animation: ObjectAnimator
+
+        when (actionAnimation) {
+            AnimationsDifferent.ROTATE -> {
+                animation = if (viewToAnimate.rotation == 360.0f) {
+                    ObjectAnimator.ofFloat(
+                        viewToAnimate,
+                        "rotation", 0.0f
+                    )
+                } else {
+                    ObjectAnimator.ofFloat(
+                        viewToAnimate,
+                        "rotation", 360.0f
+                    )
+                }
+            }
+
+            AnimationsDifferent.RESIZE -> {
+                animation = ObjectAnimator.ofFloat(
+                    viewToAnimate,
+                    "scaleX", 2.0f
+                )
+
+            }
+
+            AnimationsDifferent.THROW -> {
+                animation = ObjectAnimator.ofFloat(
+                    viewToAnimate,
+                    "translationY", binding.pokemonImage.y + binding.pokemonImage.height, binding.wildPokemon.y - binding.wildPokemon.height
+                )
+
             }
         }
 
 
+        animation.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(p0: Animator?) {
+                // Nothing.
+            }
+
+            override fun onAnimationEnd(p0: Animator?) {
+                animationEndCallback?.let { animationEndCallback() }
+
+                // Visibility clean-up
+                if(doCleanUp) {
+                    restore(viewToAnimate)
+                }
+
+                // Restore old options.
+                when(actionAnimation)
+                {
+                    AnimationsDifferent.ROTATE -> {}
+                    AnimationsDifferent.RESIZE -> {viewToAnimate.scaleX = 1.0f}
+                    AnimationsDifferent.THROW -> {}
+                }
+            }
+
+            override fun onAnimationCancel(p0: Animator?) {
+                // Nothing
+            }
+
+            override fun onAnimationStart(p0: Animator?) {
+                animationStartCallback?.let { animationStartCallback() }
+            }
+        })
+        animation.duration = 2500
+        animation.start()
     }
-
-    fun rotateAnimation() {
-        val aniView = binding.terrainImage
-        if (aniView.rotation == 360.0f) {
-            val animation1 = ObjectAnimator.ofFloat(
-                aniView,
-                "rotation", 0.0f
-            )
-            animation1.duration = 2000
-            animation1.start()
-        } else {
-            val animation1 = ObjectAnimator.ofFloat(
-                aniView,
-                "rotation", 360.0f
-            )
-            animation1.duration = 2000
-            animation1.start()
-        }
-    }
-
-    fun resizeAnimation() {
-        val aniView = binding.terrainImage
-        val animation1 = ObjectAnimator.ofFloat(
-            aniView,
-            "scaleX", 2.0f
-        )
-        val animation2 = ObjectAnimator.ofFloat(
-            aniView,
-            "scaleY", 2.0f
-        )
-        animation1.duration = 2000
-        animation2.duration = 2000
-        animation1.start()
-        animation2.start()
-    }
-
-    fun throwAnimation() {
-        val aniView = binding.terrainImage
-        val animation1 = ObjectAnimator.ofFloat(
-            aniView,
-            "translationY", binding.pokemonImage.y, binding.wildPokemon.y
-        )
-        animation1.duration = 2000
-        animation1.start()
-
-    }
-
 }
+

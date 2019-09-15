@@ -25,6 +25,7 @@
                 android:weightSum="2">
 
             <Button
+                    interactionEnabled="@{model.interactionEnabled}"
                     android:id="@+id/nextPokemon"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -34,6 +35,7 @@
             </Button>
 
             <Button
+                    interactionEnabled="@{model.interactionEnabled}"
                     android:id="@+id/goBack"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -45,10 +47,10 @@
 
         <ImageView
                 android:id="@+id/wildPokemon"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:layout_weight="1" />
         <!--app:imageUrl="@{model.randomWildPokemon.pokemon_data.sprites.frontDefault}" !-->
 
 
@@ -70,6 +72,12 @@
         <!-- app:imageUrl="@{model.currentTrainerPokemon.pokemon_data.sprites.frontDefault}" !-->
 
 
+        <TextView
+                android:id="@+id/availablePokeballs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text='@{String.format("Available PokeBalls: %s",model.availablePokeballs)}' />
+
         <LinearLayout
                 android:id="@+id/bottomBar"
                 android:layout_width="match_parent"
@@ -79,6 +87,7 @@
                 android:orientation="horizontal">
 
             <Button
+                    interactionEnabled="@{model.interactionEnabled}"
                     android:id="@+id/attackButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -88,11 +97,12 @@
             </Button>
 
             <Button
+                    interactionEnabled="@{model.interactionEnabled &amp;&amp; model.availablePokeballs > 0}"
                     android:id="@+id/catchButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="CATCH"></Button>
+                    android:text="CATCH" />
         </LinearLayout>
 
     </LinearLayout>

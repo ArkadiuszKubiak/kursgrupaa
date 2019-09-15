@@ -3,6 +3,7 @@ package com.example.homework1.course.viewmodels
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.homework1.course.database.PokeDexRecord
 import com.example.homework1.course.database.PokemonRecord
 import com.example.homework1.course.database.PokemonRepository
@@ -20,7 +21,11 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
         setTrainerData(trainerName)
         loadCurrentPokemonsTrainer()
         loadRandomWildPokemon()
+        interactionEnabled.value = true
+        availablePokeballs.value = 5
     }
+    var availablePokeballs : MutableLiveData<Int> = MutableLiveData()
+    var interactionEnabled : MutableLiveData<Boolean> = MutableLiveData()
 
     var loginTrainer: String = "UNKNOWN"
 
@@ -68,6 +73,8 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
     }
 
     fun tryToCatchPokemon(): Boolean {
+        availablePokeballs.value = availablePokeballs.value?.minus(1)
+
         val randomChance = (0..100).random()
         val success = randomChance > currentChanceToCatchPokemon
 
