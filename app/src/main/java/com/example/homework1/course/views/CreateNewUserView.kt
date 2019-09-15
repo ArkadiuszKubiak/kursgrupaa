@@ -41,6 +41,7 @@ class CreateNewUserView : AppCompatActivity() {
     }
 
     fun createNewUser(view: View) {
+        // ToDo: Some better handling of values.
         if (!login?.text?.isEmpty()!! && !name?.text?.isEmpty()!! && !surname?.text?.isEmpty()!!) {
             Toast.makeText(applicationContext, "Creating user...", Toast.LENGTH_SHORT).show()
 
@@ -48,6 +49,7 @@ class CreateNewUserView : AppCompatActivity() {
             val nameText = name!!.text.toString()
             val surnameText = surname!!.text.toString()
 
+            // ToDo: Fix it, because it creates many observers I think and does it like many times.
             model.getTrainerByName(loginText).observe(this, Observer { trainerData ->
                 trainerData?.let {
                     Toast.makeText(applicationContext, "User already exists!", Toast.LENGTH_SHORT).show()

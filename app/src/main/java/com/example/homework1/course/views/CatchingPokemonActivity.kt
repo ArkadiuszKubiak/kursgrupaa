@@ -24,6 +24,8 @@ class CatchingPokemonActivity : AppCompatActivity() {
         ATTACK, CATCH, NEXT_POKEMON, SUCCESS, FAILURE
     }
 
+    // ToDo: Better messages for Toasts (they are now closed by each other)
+    // ToDo: Better nulls and bad values handling.
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
@@ -110,7 +112,8 @@ class CatchingPokemonActivity : AppCompatActivity() {
         }
     }
 
-
+    // ToDo: Better animation and actions.
+    // ToDo: Make an animation class and synchronize actions.
     fun animateAction(action: AnimateActions) {
         when (action) {
             AnimateActions.ATTACK -> {
