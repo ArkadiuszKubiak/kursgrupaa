@@ -1,6 +1,7 @@
 package com.example.homework1.course.database
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -24,7 +25,10 @@ interface PokemonDao {
     fun getPokemonWithOffset(offset: Int): LiveData<PokemonRecord>
 
     @Query("SELECT * FROM pokemon_all WHERE name == :pokemonName")
-    fun getPokemonByName(pokemonName: Int): PokemonRecord
+    fun getPokemonByName(pokemonName: String): LiveData<PokemonRecord>
+
+    @Query("SELECT * FROM pokemon_all ORDER BY RANDOM() LIMIT 1")
+    fun getRandomPokemon(): LiveData<PokemonRecord>
 
     @Insert(onConflict = REPLACE)
     fun insertAllPokemons(pokemons: List<PokemonRecord>)

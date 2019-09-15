@@ -19,6 +19,16 @@ class PokemonRepository(private val appDatabase: AppDatabase, private val webSer
         }
     }
 
+    fun getRandomPokemon(): LiveData<PokemonRecord> {
+        refreshPokemonData()
+        return appDatabase.pokemonDao().getRandomPokemon()
+    }
+
+    fun getPokemonByName(name: String): LiveData<PokemonRecord> {
+        refreshPokemonData()
+        return appDatabase.pokemonDao().getPokemonByName(name)
+    }
+
     fun getAllPokemons(): LiveData<List<PokemonRecord>> {
         refreshPokemonData()
         return appDatabase.pokemonDao().getAllPokemons()
@@ -30,9 +40,9 @@ class PokemonRepository(private val appDatabase: AppDatabase, private val webSer
         appDatabase.pokedexDao().insertPokedex(pokeTrainer)
     }
 
-    fun getTrainer(name: String): LiveData<PokeDexRecord> {
+    fun getTrainer(trainerLogin: String): LiveData<PokeDexRecord> {
         // Doesn't need refreshing, since it's internal DB.
-        return appDatabase.pokedexDao().getPokeDexByLogin(name)
+        return appDatabase.pokedexDao().getPokeDexByLogin(trainerLogin)
     }
 
     fun getOwnedPokemons(name: String): LiveData<List<PokemonRecord>> {
@@ -41,11 +51,15 @@ class PokemonRepository(private val appDatabase: AppDatabase, private val webSer
     }
 
     fun addPokemonToPokedex(pokeName: String, trainerName: String) {
-        appDatabase.ownedPokemonsDao().insertOwnedPokemon(OwnedPokemonRecord(pokeName, trainerName))
+        doAsync {
+            appDatabase.ownedPokemonsDao().insertOwnedPokemon(OwnedPokemonRecord(trainerName, pokeName))
+        }
     }
 
     fun removePokemonFromPokedex(pokeName: String, trainerName: String) {
-        appDatabase.ownedPokemonsDao().deleteOwnedPokemon(OwnedPokemonRecord(pokeName, trainerName))
+        doAsync {
+            appDatabase.ownedPokemonsDao().deleteOwnedPokemon(OwnedPokemonRecord(trainerName, pokeName))
+        }
     }
 
     private fun refreshPokemonData() {

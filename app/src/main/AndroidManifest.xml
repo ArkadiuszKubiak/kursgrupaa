@@ -26,6 +26,7 @@
         </activity>
         <activity android:name=".course.views.CreateNewUserView" />
         <activity android:name=".course.views.PokemonView" />
+        <activity android:name=".course.views.CatchingPokemonActivity" />
     </application>
 
 </manifest>

@@ -48,6 +48,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
         // 1
         if (requestCode == CREATE_NEW_USER) {
             // 2
@@ -69,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("LOGIN", LoginTest.text.toString())
         startActivityForResult(intent, CREATE_NEW_USER)
     }
+
 
     fun startPokemonViewActivity(view: View) {
         val intent = Intent(this, PokemonView::class.java)
