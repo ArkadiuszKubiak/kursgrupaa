@@ -51,8 +51,8 @@ class PokeAdapter(private var activity: Activity, private val pokemon_data: Muta
 
         val userDto = pokemon_data[position]
         currentIndex = position
-        viewHolder.pokemonName?.text = userDto.name
-        viewHolder.pokemonIndex?.text = currentIndex.toString()
+        viewHolder.pokemonName?.text = userDto.name.capitalize()
+        viewHolder.pokemonIndex?.text = "$currentIndex. "
 
 
         return view as View

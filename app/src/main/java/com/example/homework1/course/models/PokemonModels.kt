@@ -140,7 +140,17 @@ data class PokemonPokedex(
 data class PokemonEntry(
     @Expose
     @SerializedName("entry_number")
-    val entryNumber: Int
+    val entryNumber: Int,
+
+    @Expose
+    @SerializedName("pokemon_species")
+    val pokemonSpecies: PokemonSpecies
+)
+
+data class PokemonSpecies(
+    @Expose
+    @SerializedName("name")
+    val name: String
 )
 
 data class Region(

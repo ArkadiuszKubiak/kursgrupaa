@@ -16,8 +16,8 @@ import com.example.homework1.R
 import com.example.homework1.course.database.AppDatabase
 import com.example.homework1.course.database.PokemonRecord
 import com.example.homework1.course.database.SynchData
-import com.example.homework1.course.models.PokemonAll
 import com.example.homework1.course.models.PokemonData
+import com.example.homework1.course.models.PokemonPokedex
 import com.example.homework1.course.rest_api.ApiClient
 import com.example.homework1.course.utilities.TAG
 import com.example.homework1.course.viewmodels.MyViewModelFactory
@@ -35,10 +35,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var progerssProgressDialog: ProgressDialog
     private lateinit var model: UserCreationViewModel
 
+    private var pendingCreation : Boolean = false
+
     companion object {
         const val DELETE_TIMEOUT_SECONDS = 3600
-        const val POKEMON_TO_DOWNLOAD = 151
-        const val POKEMON_OFFSET = 0
+        const val REGION = "kanto"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +52,15 @@ class MainActivity : AppCompatActivity() {
         progerssProgressDialog.setCancelable(false)
         progerssProgressDialog.show()
 
+
         populateDatabase()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        PasswordText.text.clear()
+        LoginTest.text.clear()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -72,13 +81,17 @@ class MainActivity : AppCompatActivity() {
                 passwordText = data?.getStringExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_PASSWORD)
 
                 if ((loginText != null) && (nameText != null) && (surnameText != null) && (passwordText != null)) {
+                    pendingCreation = true
                     model.getTrainerByLogin(loginText).observe(this, Observer { trainerData ->
-                        trainerData?.let {
-                            Toast.makeText(applicationContext, "User already exists!", Toast.LENGTH_SHORT).show()
-                        } ?: doAsync {
-                            model.createNewTrainer(loginText, nameText, surnameText, passwordText)
-                            Toast.makeText(applicationContext, "User added: %s".format(loginText), Toast.LENGTH_LONG).show()
+                        if(pendingCreation) {
+                            trainerData?.let {
+                                Toast.makeText(applicationContext, "User already exists!", Toast.LENGTH_SHORT).show()
+                            } ?: doAsync {
+                                model.createNewTrainer(loginText, nameText, surnameText, passwordText)
+                                Toast.makeText(applicationContext, "User added: %s".format(loginText), Toast.LENGTH_LONG).show()
+                            }
                         }
+                        pendingCreation = false
                     })
                 } else {
                     Toast.makeText(applicationContext, "User name or password is empty!", Toast.LENGTH_SHORT).show()
@@ -89,7 +102,6 @@ class MainActivity : AppCompatActivity() {
 
 
     fun createNewUserActivity(view: View) {
-
         val intent = Intent(this, CreateNewUserView::class.java)
         intent.putExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_LOGIN_TEXT, LoginTest.text.toString())
         startActivityForResult(intent, CREATE_NEW_USER)
@@ -97,7 +109,6 @@ class MainActivity : AppCompatActivity() {
 
 
     fun startPokemonViewActivity(view: View) {
-
         if ((LoginTest.text.toString() != "") && ((PasswordText.text.toString() != ""))) {
             model.getTrainerByLogin(LoginTest.text.toString()).observe(this, Observer { trainerData ->
                 trainerData?.let {
@@ -116,10 +127,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun populateDatabase() {
-        val getAllPokemonsCall: Call<PokemonAll> = ApiClient.getClient.getPokemons(
-            offset = POKEMON_OFFSET,
-            limit = POKEMON_TO_DOWNLOAD
+        val getAllPokemonFromGivenRegion: Call<PokemonPokedex> = ApiClient.getClient.getPokedex(
+            region = REGION
         )
+
         val wakeLock: PowerManager.WakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                 newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
@@ -127,8 +138,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-        getAllPokemonsCall.enqueue(object : Callback<PokemonAll> {
-            override fun onResponse(call: Call<PokemonAll>?, response: Response<PokemonAll>?) {
+        getAllPokemonFromGivenRegion.enqueue(object : Callback<PokemonPokedex> {
+            override fun onResponse(call: Call<PokemonPokedex>?, response: Response<PokemonPokedex>?) {
                 doAsync {
 
                     val database = AppDatabase.getInstance(context = this@MainActivity)
@@ -140,14 +151,17 @@ class MainActivity : AppCompatActivity() {
                     // Because then it will download them.
                     val pokemonDatabase = database.pokemonDao().getAllPokemonsNormal()
 
-                    if (pokemonDatabase.size < POKEMON_TO_DOWNLOAD) {
-                        for (pokemonName in response!!.body()!!.results) {
-                            val pokemonDataCall = ApiClient.getClient.getPokemonData(pokemonName.name)
+                    val pokemonEntries = response!!.body()!!.pokemonEntries
+
+                    if (pokemonDatabase.size < pokemonEntries.size) {
+                        for (pokeData in pokemonEntries) {
+                            val pokemonName = pokeData.pokemonSpecies.name
+                            val pokemonDataCall = ApiClient.getClient.getPokemonData(pokemonName)
                             val pokemonData = (pokemonDataCall.execute() as Response<PokemonData>).body()
 
                             val pokemon = PokemonRecord(
                                 num = pokemonData!!.order,
-                                name = pokemonName.name,
+                                name = pokemonName,
                                 pokemon_data = pokemonData
                             )
 
@@ -166,7 +180,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<PokemonAll>?, t: Throwable?) {
+            override fun onFailure(call: Call<PokemonPokedex>?, t: Throwable?) {
                 Log.d(TAG, "Sadly, the call for getting Pokemons failed :(.")
             }
         })
