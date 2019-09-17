@@ -33,8 +33,24 @@ class OutputFragment : Fragment() {
 
         viewModel.selectedPokemon.observe(this, Observer {
             it?.let {
-                pokemon_name.text = it.name
-                context?.let { it1 -> Glide.with(it1).load(it.pokemon_data.sprites.frontDefault).into(pokemon_Image) }
+                pokemon_name.text = it.name.capitalize()
+                pokemon_height_weight.text = "H:%s, W:%s".format(it.pokemon_data.height, it.pokemon_data.weight)
+                pokemon_stats.text =
+                    "Stats: " + it.pokemon_data.stats.joinToString { statData -> "%s=%s".format(statData.stat.name, statData.baseStat) }
+                pokemon_abilities.text = "Abilities: " + it.pokemon_data.abilities.joinToString { ability -> "%s".format(ability.ability.name) }
+                pokemon_types.text = "Types: " + it.pokemon_data.types.joinToString { type -> "%s".format(type.type.name) }
+
+                context?.let { it1 -> Glide.with(it1).load(it.pokemon_data.sprites.frontDefault).into(pokemon_Image_front) }
+                context?.let { it1 -> Glide.with(it1).load(it.pokemon_data.sprites.backDefault).into(pokemon_Image_back) }
+                context?.let { it1 -> Glide.with(it1).load(it.pokemon_data.sprites.frontShiny).into(pokemon_Image_front_shiny) }
+            }
+
+        })
+
+        viewModel.selectedPokemonOwnedData.observe(this, Observer {
+            it?.let {
+                pokemon_owned_by.text = "Owned by: " + it.joinToString { data -> data.pokedex_login }
+                pokemon_owned_count.text = "Total owned count: " + it.size.toString()
             }
         })
     }

@@ -1,33 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#81c1d4"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="10dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#81c1d4"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
 
-    <ImageView
-        android:id="@+id/pokemon_Image"
-        android:scaleType="fitXY"
-        android:layout_width="150dp"
-        android:layout_height="150dp"/>
+    <LinearLayout
+            android:layout_width="96dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/pokemon_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:textStyle="bold"
-        android:textSize="16sp" />
-    <TextView
-            android:id="@+id/clicks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:textStyle="bold"
-            android:textSize="16sp" />
+        <ImageView
+                android:id="@+id/pokemon_Image_front"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:scaleType="fitXY" />
 
+        <ImageView
+                android:id="@+id/pokemon_Image_back"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:scaleType="fitXY" />
+
+        <ImageView
+                android:id="@+id/pokemon_Image_front_shiny"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:scaleType="fitXY" />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/pokemon_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        <TextView
+                android:id="@+id/pokemon_height_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        <TextView
+                android:id="@+id/pokemon_stats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        <TextView
+                android:id="@+id/pokemon_abilities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        <TextView
+                android:id="@+id/pokemon_types"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        <TextView
+                android:id="@+id/pokemon_owned_by"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        <TextView
+                android:id="@+id/pokemon_owned_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+    </LinearLayout>
 </LinearLayout>

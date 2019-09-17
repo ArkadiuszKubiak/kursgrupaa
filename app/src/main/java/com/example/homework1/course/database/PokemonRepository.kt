@@ -1,6 +1,7 @@
 package com.example.homework1.course.database
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.homework1.course.models.PokemonData
 import com.example.homework1.course.rest_api.ApiInterface
 import org.jetbrains.anko.doAsync
@@ -40,6 +41,10 @@ class PokemonRepository(private val appDatabase: AppDatabase, private val webSer
         appDatabase.pokedexDao().insertPokedex(pokeTrainer)
     }
 
+    fun removeTrainer(trainerData: PokeDexRecord) {
+        appDatabase.pokedexDao().deletePokedex(trainerData)
+    }
+
     fun getTrainer(trainerLogin: String): LiveData<PokeDexRecord> {
         // Doesn't need refreshing, since it's internal DB.
         return appDatabase.pokedexDao().getPokeDexByLogin(trainerLogin)
@@ -48,6 +53,11 @@ class PokemonRepository(private val appDatabase: AppDatabase, private val webSer
     fun getOwnedPokemons(name: String): LiveData<List<PokemonRecord>> {
         // Doesn't need refreshing, since it's internal DB.
         return appDatabase.ownedPokemonsDao().getPokemonsByTrainerLogin(name)
+    }
+
+    fun getPokemonOwners(name: String): LiveData<List<OwnedPokemonRecord>>{
+        // Doesn't need refreshing, since it's internal DB.
+        return appDatabase.ownedPokemonsDao().getOwnedPokemonsByPokemonName(name)
     }
 
     fun addPokemonToPokedex(pokeName: String, trainerName: String) {

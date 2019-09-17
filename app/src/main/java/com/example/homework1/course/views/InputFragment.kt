@@ -37,8 +37,6 @@ class InputFragment : Fragment() {
         viewModel = activity?.run {
             ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(PokeDexViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
-
-        viewModel.loadTrainerData(login)
     }
 
     override fun onCreateView(
@@ -46,6 +44,7 @@ class InputFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel.loadTrainerData(login)
         return inflater.inflate(R.layout.fragment_input, container, false)
     }
 
@@ -60,7 +59,7 @@ class InputFragment : Fragment() {
 
         viewModel.trainerData.observe(this, Observer { it ->
             run {
-                viewModel.loadTrainerData(it.login)
+                //viewModel.loadTrainerData(it.login)
             }
         })
 
@@ -71,7 +70,10 @@ class InputFragment : Fragment() {
         })
 
         pokemonListView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, _, position, id ->
-            viewModel.selectedPokemon.value = viewModel.trainerPokemons.value?.get(position)
+            viewModel.selectedPokemon.value = adapter?.getItem(position)
+            if (viewModel.selectedPokemon.value != null) {
+                viewModel.loadPokemonOwnedData(viewModel.selectedPokemon.value!!.name)
+            }
         }
     }
 }

@@ -15,12 +15,12 @@ import com.example.homework1.course.database.PokemonRecord
 class PokeAdapter(private var activity: Activity, private val pokemon_data: MutableList<PokemonRecord>) :
     BaseAdapter() {
 
-    var currentIndex: Int? = null
+    var currentIndex: Int = 0
 
-    fun reloadPokemonData(customers: List<PokemonRecord>?) {
+    fun reloadPokemonData(pokeData: List<PokemonRecord>?) {
         pokemon_data.clear()
-        currentIndex = null
-        customers?.let { pokemon_data.addAll(it) }
+        currentIndex = 0
+        pokeData?.let { pokemon_data.addAll(it) }
         notifyDataSetChanged()
     }
 
@@ -50,14 +50,15 @@ class PokeAdapter(private var activity: Activity, private val pokemon_data: Muta
         }
 
         val userDto = pokemon_data[position]
+        currentIndex = position
         viewHolder.pokemonName?.text = userDto.name
         viewHolder.pokemonIndex?.text = currentIndex.toString()
+
 
         return view as View
     }
 
     override fun getItem(i: Int): PokemonRecord {
-        currentIndex = i
         return pokemon_data[i]
     }
 

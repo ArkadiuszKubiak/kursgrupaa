@@ -87,7 +87,15 @@ data class Form(
 data class Sprites(
     @Expose
     @SerializedName("front_default")
-    val frontDefault: String
+    val frontDefault: String,
+
+    @Expose
+    @SerializedName("back_default")
+    val backDefault: String,
+
+    @Expose
+    @SerializedName("front_shiny")
+    val frontShiny: String
 )
 
 data class Stat(

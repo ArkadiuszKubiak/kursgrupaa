@@ -71,5 +71,3 @@ class OwnedPokemonRecord constructor(
     @PrimaryKey(autoGenerate = true)
     var uid: Long = 0
 }
-
-

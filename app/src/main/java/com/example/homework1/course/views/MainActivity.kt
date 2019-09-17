@@ -56,10 +56,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        var loginText:String?=null
-        var surnameText:String?=null
-        var nameText:String?=null
-        var passwordText:String?=null
+
+        var loginText: String? = null
+        var surnameText: String? = null
+        var nameText: String? = null
+        var passwordText: String? = null
+
         if (requestCode == CREATE_NEW_USER) {
             // 2
             if (resultCode == Activity.RESULT_OK) {
@@ -68,20 +70,17 @@ class MainActivity : AppCompatActivity() {
                 surnameText = data?.getStringExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_SURNAME)
                 nameText = data?.getStringExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_NAME)
                 passwordText = data?.getStringExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_PASSWORD)
-                if ((loginText != null) && (nameText != null) && (surnameText != null) && (passwordText != null))
-                {
-                    model.getTrainerByName(loginText).observe(this, Observer { trainerData ->
+
+                if ((loginText != null) && (nameText != null) && (surnameText != null) && (passwordText != null)) {
+                    model.getTrainerByLogin(loginText).observe(this, Observer { trainerData ->
                         trainerData?.let {
                             Toast.makeText(applicationContext, "User already exists!", Toast.LENGTH_SHORT).show()
-                        } ?:
-                        doAsync {
+                        } ?: doAsync {
                             model.createNewTrainer(loginText, nameText, surnameText, passwordText)
                             Toast.makeText(applicationContext, "User added: %s".format(loginText), Toast.LENGTH_LONG).show()
                         }
                     })
-                }
-                else
-                {
+                } else {
                     Toast.makeText(applicationContext, "User name or password is empty!", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -99,25 +98,19 @@ class MainActivity : AppCompatActivity() {
 
     fun startPokemonViewActivity(view: View) {
 
-        if ((LoginTest.text.toString() != "") && ((PasswordText.text.toString() != "")))
-        {
-            model.getTrainerByName(LoginTest.text.toString()).observe(this, Observer { trainerData ->
+        if ((LoginTest.text.toString() != "") && ((PasswordText.text.toString() != ""))) {
+            model.getTrainerByLogin(LoginTest.text.toString()).observe(this, Observer { trainerData ->
                 trainerData?.let {
-                    if(trainerData.password == PasswordText.text.toString())
-                    {
+                    if (trainerData.password == PasswordText.text.toString()) {
                         val intent = Intent(this, PokemonView::class.java)
                         intent.putExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_LOGIN_TEXT, LoginTest.text.toString())
                         startActivity(intent)
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(applicationContext, "User not exists or wrong password!", Toast.LENGTH_SHORT).show()
                     }
                 } ?: Toast.makeText(applicationContext, "User not exists or wrong password!", Toast.LENGTH_SHORT).show()
             })
-        }
-        else
-        {
+        } else {
             Toast.makeText(applicationContext, "Wrong user name or password", Toast.LENGTH_LONG).show()
         }
     }
