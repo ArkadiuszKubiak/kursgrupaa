@@ -63,6 +63,23 @@
             android:inputType="textPersonName"
             android:text="" />
 
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Password:"
+            android:textSize="20dp" />
+
+    <EditText
+            android:id="@+id/PasswordText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_marginHorizontal="50dp"
+            android:gravity="center"
+            android:background="@color/cardview_light_background"
+            android:inputType="textPassword" />
+
     <Button
             android:id="@+id/button"
             android:layout_width="match_parent"

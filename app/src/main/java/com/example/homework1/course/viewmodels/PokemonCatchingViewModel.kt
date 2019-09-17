@@ -24,6 +24,7 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
         interactionEnabled.value = true
         availablePokeballs.value = 5
     }
+
     var availablePokeballs : MutableLiveData<Int> = MutableLiveData()
     var interactionEnabled : MutableLiveData<Boolean> = MutableLiveData()
 

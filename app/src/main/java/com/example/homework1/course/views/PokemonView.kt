@@ -18,7 +18,7 @@ class PokemonView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pokemon_view)
 
-        loginName = intent.getStringExtra("LOGIN")!!
+        loginName = intent.getStringExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_LOGIN_TEXT)!!
 
         val model = ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(PokeDexViewModel::class.java)
 
@@ -35,7 +35,7 @@ class PokemonView : AppCompatActivity() {
 
     fun goCatchPokemons(view: View) {
         val intent = Intent(this, CatchingPokemonActivity::class.java)
-        intent.putExtra("LOGIN", loginName)
+        intent.putExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_LOGIN_TEXT, loginName)
         startActivity(intent)
     }
 

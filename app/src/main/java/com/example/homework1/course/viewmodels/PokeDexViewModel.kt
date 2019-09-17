@@ -13,8 +13,9 @@ class PokeDexViewModel(repository: PokemonRepository, application: Application) 
     {
         val DEFAULT_POKE_TO_ADD = listOf("charmander", "bulbasaur", "pikachu")
     }
-    fun createNewTrainer(login: String, name: String = "", surname: String = "", img: String = "") {
-        repository.createTrainer(login, name, surname, img)
+
+    fun createNewTrainer(login: String, name: String = "", surname: String = "", password: String = "", img: String = "") {
+        repository.createTrainer(login, name, surname, password, img)
         val randomPoke = DEFAULT_POKE_TO_ADD.random()
         repository.addPokemonToPokedex(randomPoke, login)
     }

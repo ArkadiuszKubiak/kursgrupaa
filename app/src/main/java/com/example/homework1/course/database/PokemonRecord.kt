@@ -18,7 +18,8 @@ class PokemonRecord(
 class PokeDexRecord constructor(
     @PrimaryKey @ColumnInfo(name = "login") var login: String,
     @ColumnInfo(name = "name") var name: String,
-    @ColumnInfo(name = "surname") var surname: String?
+    @ColumnInfo(name = "surname") var surname: String?,
+    @ColumnInfo(name = "password") var password: String?
 ) {
     @ColumnInfo(name = "img")
     var img: String? = ""

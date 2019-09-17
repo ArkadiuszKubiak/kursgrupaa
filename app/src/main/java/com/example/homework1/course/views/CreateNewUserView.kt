@@ -19,58 +19,44 @@ import org.jetbrains.anko.doAsync
 
 class CreateNewUserView : AppCompatActivity() {
 
-    private lateinit var model: PokeDexViewModel
 
     var login: TextView? = null
     var name: TextView? = null
     var surname: TextView? = null
+    var password: TextView? = null
 
     companion object {
-        var CREATE_NEW_USER_DESCRIPTION = "CREATE_NEW_USER_DESCRIPTION"
+        var CREATE_NEW_USER_DESCRIPTION_LOGIN_TEXT = "CREATE_NEW_USER_DESCRIPTION_login_Text"
+        var CREATE_NEW_USER_DESCRIPTION_SURNAME = "CREATE_NEW_USER_DESCRIPTION_SURNAME"
+        var CREATE_NEW_USER_DESCRIPTION_NAME = "CREATE_NEW_USER_DESCRIPTION_NAME"
+        var CREATE_NEW_USER_DESCRIPTION_PASSWORD = "CREATE_NEW_USER_DESCRIPTION_PASSWORD"
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.create_new_user_view)
-
-        model = ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(PokeDexViewModel::class.java)
-
         login = LoginTest
         name = NameTest
         surname = SurnameTest
+        password = PasswordText
     }
 
     fun createNewUser(view: View) {
-        // ToDo: Some better handling of values.
-        if (!login?.text?.isEmpty()!! && !name?.text?.isEmpty()!! && !surname?.text?.isEmpty()!!) {
+        if (!login?.text?.isEmpty()!! && !name?.text?.isEmpty()!! && !surname?.text?.isEmpty()!! && !password?.text?.isEmpty()!!) {
             Toast.makeText(applicationContext, "Creating user...", Toast.LENGTH_SHORT).show()
 
             val loginText = login!!.text.toString()
             val nameText = name!!.text.toString()
             val surnameText = surname!!.text.toString()
-
-            // ToDo: Fix it, because it creates many observers I think and does it like many times.
-            model.getTrainerByName(loginText).observe(this, Observer { trainerData ->
-                trainerData?.let {
-                    Toast.makeText(applicationContext, "User already exists!", Toast.LENGTH_SHORT).show()
-                } ?: doAsync {
-                    model.createNewTrainer(loginText, nameText, surnameText)
-                    Log.d(TAG, "User added: %s:%s:%s".format(loginText, nameText, surnameText))
-                    onUserCreatedSuccessfully(loginText)
-                }
-            })
-        } else {
-            Toast.makeText(applicationContext, "User name or password is empty!", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun onUserCreatedSuccessfully(loginText: String) {
-        runOnUiThread {
+            val passwordText = password!!.text.toString()
             val result = this.intent
-            result.putExtra(CREATE_NEW_USER_DESCRIPTION, loginText)
+            result.putExtra(CREATE_NEW_USER_DESCRIPTION_LOGIN_TEXT, loginText)
+            result.putExtra(CREATE_NEW_USER_DESCRIPTION_NAME, nameText)
+            result.putExtra(CREATE_NEW_USER_DESCRIPTION_SURNAME, surnameText)
+            result.putExtra(CREATE_NEW_USER_DESCRIPTION_PASSWORD, passwordText)
             setResult(Activity.RESULT_OK, result)
             finish()
-            Toast.makeText(applicationContext, "User added: %s".format(loginText), Toast.LENGTH_LONG).show()
         }
     }
 }

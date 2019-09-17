@@ -33,7 +33,7 @@ class CatchingPokemonActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
-        loginName = intent.getStringExtra("LOGIN")!!
+        loginName = intent.getStringExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_LOGIN_TEXT)!!
 
         binding = DataBindingUtil.setContentView(this, R.layout.catching_pokemons)
         model = ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(PokemonCatchingViewModel::class.java)
