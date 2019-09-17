@@ -73,9 +73,10 @@ class MainActivity : AppCompatActivity() {
                     model.getTrainerByName(loginText).observe(this, Observer { trainerData ->
                         trainerData?.let {
                             Toast.makeText(applicationContext, "User already exists!", Toast.LENGTH_SHORT).show()
-                        } ?: doAsync {
+                        } ?:
+                        doAsync {
                             model.createNewTrainer(loginText, nameText, surnameText, passwordText)
-                            Log.d(TAG, "User added: %s".format(loginText))
+                            Toast.makeText(applicationContext, "User added: %s".format(loginText), Toast.LENGTH_LONG).show()
                         }
                     })
                 }
@@ -84,7 +85,6 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "User name or password is empty!", Toast.LENGTH_SHORT).show()
                 }
             }
-            Toast.makeText(applicationContext, "User added: %s".format(loginText), Toast.LENGTH_LONG).show()
         }
     }
 
