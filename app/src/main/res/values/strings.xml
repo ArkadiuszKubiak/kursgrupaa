@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Homework1</string>
+    <string name="app_name">Pokedex GL</string>
     <string name="action_settings">Settings</string>
     <string name="Default_textView">Second activity counter: 0</string>
     <string name="Default_text_content">Second activity counter: %1$d</string>
