@@ -39,10 +39,10 @@ interface PokemonDao {
     @Delete
     fun deletePokemon(pokemon: PokemonRecord)
 
-    @Query("DELETE FROM pokemon_all WHERE num in (SELECT poke_name FROM synch_data WHERE synch_data.timestamp_seconds < :oldTimestamp )")
+    @Query("DELETE FROM pokemon_all WHERE name in (SELECT poke_name FROM synch_data WHERE synch_data.timestamp_seconds < :oldTimestamp )")
     fun deleteOlderDataThan(oldTimestamp: Long)
 
-    @Query("SELECT * FROM pokemon_all WHERE num in (SELECT poke_name FROM synch_data WHERE synch_data.timestamp_seconds < :oldTimestamp )")
+    @Query("SELECT * FROM pokemon_all WHERE name in (SELECT poke_name FROM synch_data WHERE synch_data.timestamp_seconds < :oldTimestamp )")
     fun getPokemonsOlderThan(oldTimestamp: Long): List<PokemonRecord>
 
     @Insert(onConflict = REPLACE)
@@ -64,7 +64,7 @@ interface OwnedPokemonDao {
     fun getPokemonsByTrainerLogin(trainerName: String): LiveData<List<PokemonRecord>>
 
     @Query("SELECT * FROM owned_pokemon WHERE poke_name == :pokemonName")
-    fun getOwnedPokemonsByPokemonName(pokemonName: String): List<OwnedPokemonRecord>
+    fun getOwnedPokemonsByPokemonName(pokemonName: String): LiveData<List<OwnedPokemonRecord>>
 
     @Insert(onConflict = REPLACE)
     fun insertOwnedPokemon(ownedPokemonRecord: OwnedPokemonRecord)
@@ -80,12 +80,6 @@ interface PokeDexDao {
 
     @Query("SELECT * FROM pokedex WHERE login == :trainerLogin")
     fun getPokeDexByLogin(trainerLogin: String): LiveData<PokeDexRecord>
-
-    @Query("SELECT * FROM pokedex WHERE name == :trainerName")
-    fun getPokeDexByName(trainerName: String): List<PokeDexRecord>
-
-    @Query("SELECT * FROM pokedex WHERE surname == :trainerSurname")
-    fun getPokeDexBySurname(trainerSurname: String): List<PokeDexRecord>
 
     @Insert(onConflict = REPLACE)
     fun insertPokedex(pokedex: PokeDexRecord)

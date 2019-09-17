@@ -19,7 +19,7 @@ class PokemonView : AppCompatActivity() {
         loginName = intent.getStringExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_LOGIN_TEXT)!!
 
         val ab = supportActionBar
-        ab!!.setTitle("Trainer " + loginName + " " )
+        ab!!.setTitle("Trainer: $loginName")
 
         supportFragmentManager.beginTransaction().add(
             com.example.homework1.R.id.layout_top,

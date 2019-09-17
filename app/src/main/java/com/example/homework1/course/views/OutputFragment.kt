@@ -10,35 +10,47 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.homework1.R
 import com.example.homework1.course.viewmodels.MyViewModelFactory
-import com.example.homework1.course.viewmodels.SharedViewModel
+import com.example.homework1.course.viewmodels.PokeDexViewModel
 import kotlinx.android.synthetic.main.fragment_output.*
 
 class OutputFragment : Fragment() {
 
+    lateinit var viewModel: PokeDexViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = activity?.run {
+            ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(PokeDexViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val myView = LayoutInflater.from(container!!.context).inflate(R.layout.fragment_output,container,false)
-        return myView
+
+        return inflater.inflate(R.layout.fragment_output, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val model = ViewModelProviders.of(activity!!, MyViewModelFactory(activity!!.application)).get(SharedViewModel::class.java)
-
-        model.pokName.observe(this, Observer {
+        viewModel.selectedPokemon.observe(this, Observer {
             it?.let {
-                pokemon_name.text = model.pokName.value
+                pokemon_name.text = it.name.capitalize()
+                pokemon_height_weight.text = "H:%s, W:%s".format(it.pokemon_data.height, it.pokemon_data.weight)
+                pokemon_stats.text =
+                    "Stats: " + it.pokemon_data.stats.joinToString { statData -> "%s=%s".format(statData.stat.name, statData.baseStat) }
+                pokemon_abilities.text = "Abilities: " + it.pokemon_data.abilities.joinToString { ability -> "%s".format(ability.ability.name) }
+                pokemon_types.text = "Types: " + it.pokemon_data.types.joinToString { type -> "%s".format(type.type.name) }
+
+                context?.let { it1 -> Glide.with(it1).load(it.pokemon_data.sprites.frontDefault).into(pokemon_Image_front) }
+                context?.let { it1 -> Glide.with(it1).load(it.pokemon_data.sprites.backDefault).into(pokemon_Image_back) }
+                context?.let { it1 -> Glide.with(it1).load(it.pokemon_data.sprites.frontShiny).into(pokemon_Image_front_shiny) }
             }
+
         })
 
-        model.pokImg.observe(this, Observer {
+        viewModel.selectedPokemonOwnedData.observe(this, Observer {
             it?.let {
-                context?.let { it1 -> Glide.with(it1).load(model.pokImg.value).into(pokemon_Image) }
-            }
-        })
-
-        model.myIndex.observe(this, Observer {
-            it?.let {
-                clicks.text = model.numClicks[model.myIndex.value!!].toString()
+                pokemon_owned_by.text = "Owned by: " + it.joinToString { data -> data.pokedex_login }
+                pokemon_owned_count.text = "Total owned count: " + it.size.toString()
             }
         })
     }

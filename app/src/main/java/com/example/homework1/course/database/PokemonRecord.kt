@@ -55,7 +55,7 @@ class SynchData constructor(
             entity = PokemonRecord::class,
             parentColumns = arrayOf("name"),
             childColumns = arrayOf("poke_name"),
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.NO_ACTION
         ),
         ForeignKey(
             entity = PokeDexRecord::class,
@@ -71,5 +71,3 @@ class OwnedPokemonRecord constructor(
     @PrimaryKey(autoGenerate = true)
     var uid: Long = 0
 }
-
-

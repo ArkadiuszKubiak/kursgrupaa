@@ -95,8 +95,6 @@ class CatchingPokemonActivity : AppCompatActivity() {
                 },
                 binding.terrainImage
             )
-
-
         }
 
 
@@ -121,11 +119,11 @@ class CatchingPokemonActivity : AppCompatActivity() {
                         doAnimation(AnimationsDifferent.RESIZE)
 
                         loadImage(AnimateActions.SUCCESS)
-                        doAnimation(AnimationsDifferent.RESIZE, null, {model.interactionEnabled.value = true})
+                        doAnimation(AnimationsDifferent.RESIZE, null, { model.interactionEnabled.value = true })
                     } else {
                         Toast.makeText(applicationContext, "Failed to catch. Pokemon ran.", Toast.LENGTH_SHORT).show()
                         loadImage(AnimateActions.FAILURE)
-                        doAnimation(AnimationsDifferent.RESIZE, null, {model.interactionEnabled.value = true})
+                        doAnimation(AnimationsDifferent.RESIZE, null, { model.interactionEnabled.value = true })
                     }
                     model.loadRandomWildPokemon()
                 },
@@ -191,7 +189,7 @@ class CatchingPokemonActivity : AppCompatActivity() {
         animationStartCallback: (() -> Unit)? = null,
         animationEndCallback: (() -> Unit)? = null,
         viewToAnimate: ImageView = binding.terrainImage,
-        doCleanUp : Boolean = true
+        doCleanUp: Boolean = true
     ) {
 
         viewToAnimate.visibility = View.VISIBLE
@@ -240,16 +238,19 @@ class CatchingPokemonActivity : AppCompatActivity() {
                 animationEndCallback?.let { animationEndCallback() }
 
                 // Visibility clean-up
-                if(doCleanUp) {
+                if (doCleanUp) {
                     restore(viewToAnimate)
                 }
 
                 // Restore old options.
-                when(actionAnimation)
-                {
-                    AnimationsDifferent.ROTATE -> {}
-                    AnimationsDifferent.RESIZE -> {viewToAnimate.scaleX = 1.0f}
-                    AnimationsDifferent.THROW -> {}
+                when (actionAnimation) {
+                    AnimationsDifferent.ROTATE -> {
+                    }
+                    AnimationsDifferent.RESIZE -> {
+                        viewToAnimate.scaleX = 1.0f
+                    }
+                    AnimationsDifferent.THROW -> {
+                    }
                 }
             }
 

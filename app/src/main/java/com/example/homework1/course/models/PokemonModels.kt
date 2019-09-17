@@ -87,7 +87,15 @@ data class Form(
 data class Sprites(
     @Expose
     @SerializedName("front_default")
-    val frontDefault: String
+    val frontDefault: String,
+
+    @Expose
+    @SerializedName("back_default")
+    val backDefault: String,
+
+    @Expose
+    @SerializedName("front_shiny")
+    val frontShiny: String
 )
 
 data class Stat(
@@ -132,7 +140,17 @@ data class PokemonPokedex(
 data class PokemonEntry(
     @Expose
     @SerializedName("entry_number")
-    val entryNumber: Int
+    val entryNumber: Int,
+
+    @Expose
+    @SerializedName("pokemon_species")
+    val pokemonSpecies: PokemonSpecies
+)
+
+data class PokemonSpecies(
+    @Expose
+    @SerializedName("name")
+    val name: String
 )
 
 data class Region(

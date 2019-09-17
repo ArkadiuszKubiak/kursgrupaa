@@ -10,6 +10,7 @@
     </data>
 
     <LinearLayout
+            android:background="@drawable/background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -25,8 +26,8 @@
                 android:weightSum="2">
 
             <Button
-                    interactionEnabled="@{model.interactionEnabled}"
                     android:id="@+id/nextPokemon"
+                    interactionEnabled="@{model.interactionEnabled}"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -35,8 +36,8 @@
             </Button>
 
             <Button
-                    interactionEnabled="@{model.interactionEnabled}"
                     android:id="@+id/goBack"
+                    interactionEnabled="@{model.interactionEnabled}"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -51,7 +52,6 @@
                 android:layout_height="0dp"
                 android:layout_margin="10dp"
                 android:layout_weight="1" />
-        <!--app:imageUrl="@{model.randomWildPokemon.pokemon_data.sprites.frontDefault}" !-->
 
 
         <ImageView
@@ -69,7 +69,6 @@
                 android:layout_height="0dp"
                 android:layout_margin="10dp"
                 android:layout_weight="1" />
-        <!-- app:imageUrl="@{model.currentTrainerPokemon.pokemon_data.sprites.frontDefault}" !-->
 
 
         <TextView
@@ -87,8 +86,8 @@
                 android:orientation="horizontal">
 
             <Button
-                    interactionEnabled="@{model.interactionEnabled}"
                     android:id="@+id/attackButton"
+                    interactionEnabled="@{model.interactionEnabled}"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -97,8 +96,8 @@
             </Button>
 
             <Button
-                    interactionEnabled="@{model.interactionEnabled &amp;&amp; model.availablePokeballs > 0}"
                     android:id="@+id/catchButton"
+                    interactionEnabled="@{model.interactionEnabled &amp;&amp; model.availablePokeballs > 0}"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
