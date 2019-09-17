@@ -163,7 +163,7 @@ class CatchingPokemonActivity : AppCompatActivity() {
                 Glide.with(this).load(resources.getDrawable(R.drawable.stone)).into(binding.terrainImage)
             }
             AnimateActions.CATCH -> {
-                Glide.with(this).load(resources.getDrawable(R.drawable.pokeball)).into(binding.terrainImage)
+                Glide.with(this).load(resources.getDrawable(R.drawable.pokeball_png)).into(binding.terrainImage)
             }
             AnimateActions.NEXT_POKEMON -> {
                 Glide.with(this).load(resources.getDrawable(R.drawable.logo)).into(binding.terrainImage)
