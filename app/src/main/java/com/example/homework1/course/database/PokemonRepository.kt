@@ -34,7 +34,7 @@ class PokemonRepository(private val appDatabase: AppDatabase, private val webSer
         return appDatabase.pokemonDao().getAllPokemons()
     }
 
-    fun createTrainer(login: String, name: String = "", surname: String = "", img: String = "", password: String = "") {
+    fun createTrainer(login: String, name: String = "", surname: String = "", password: String = "", img: String = "") {
         val pokeTrainer = PokeDexRecord(login, name, surname, password)
         pokeTrainer.img = img
         appDatabase.pokedexDao().insertPokedex(pokeTrainer)

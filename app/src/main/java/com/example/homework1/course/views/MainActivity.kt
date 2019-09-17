@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
         val wakeLock: PowerManager.WakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                 newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
-                    acquire()
+                    acquire(10*60*1000L /*10 minutes*/)
                 }
             }
 
