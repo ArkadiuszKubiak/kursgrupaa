@@ -10,8 +10,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.homework1.R
@@ -23,9 +21,7 @@ import com.example.homework1.course.models.PokemonData
 import com.example.homework1.course.rest_api.ApiClient
 import com.example.homework1.course.utilities.TAG
 import com.example.homework1.course.viewmodels.MyViewModelFactory
-import com.example.homework1.course.viewmodels.PokeDexViewModel
-import com.example.homework1.course.views.MainActivity.Companion.POKEMON_OFFSET
-import com.example.homework1.course.views.MainActivity.Companion.POKEMON_TO_DOWNLOAD
+import com.example.homework1.course.viewmodels.UserCreationViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import retrofit2.Call
@@ -37,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private val CREATE_NEW_USER = 1
 
     lateinit var progerssProgressDialog: ProgressDialog
-    private lateinit var model: PokeDexViewModel
+    private lateinit var model: UserCreationViewModel
 
     companion object {
         const val DELETE_TIMEOUT_SECONDS = 3600
@@ -49,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        model = ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(PokeDexViewModel::class.java)
+        model = ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(UserCreationViewModel::class.java)
         progerssProgressDialog = ProgressDialog(this)
         progerssProgressDialog.setTitle("Loading Pokemons")
         progerssProgressDialog.setCancelable(false)

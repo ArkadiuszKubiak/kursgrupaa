@@ -4,4 +4,5 @@
     <string name="Default_textView">Second activity counter: 0</string>
     <string name="Default_text_content">Second activity counter: %1$d</string>
     <string name="Second_Activity">Second Activity</string>
+    <string name="catch_more_pokemons">Catch more Pokemons!</string>
 </resources>

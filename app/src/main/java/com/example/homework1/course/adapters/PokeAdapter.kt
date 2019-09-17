@@ -1,4 +1,5 @@
 package com.example.homework1.course.adapters
+
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
@@ -11,21 +12,25 @@ import com.example.homework1.R
 import com.example.homework1.course.database.PokemonRecord
 
 
-class PokeAdapter(private var activity: Activity, private val mData: MutableList<PokemonRecord>) :
+class PokeAdapter(private var activity: Activity, private val pokemon_data: MutableList<PokemonRecord>) :
     BaseAdapter() {
 
+    var currentIndex: Int? = null
 
-    fun addAll(customers: List<PokemonRecord>?) {
-        mData.clear()
-        customers?.let { mData.addAll(it) }
+    fun reloadPokemonData(customers: List<PokemonRecord>?) {
+        pokemon_data.clear()
+        currentIndex = null
+        customers?.let { pokemon_data.addAll(it) }
         notifyDataSetChanged()
     }
 
     private class ViewHolder(row: View?) {
-        var txtPokName: TextView? = null
+        var pokemonIndex: TextView? = null
+        var pokemonName: TextView? = null
 
         init {
-            this.txtPokName = row?.findViewById<TextView>(R.id.title)
+            pokemonIndex = row?.findViewById<TextView>(R.id.pokemonIndex)
+            pokemonName = row?.findViewById<TextView>(R.id.pokemonName)
         }
     }
 
@@ -34,28 +39,26 @@ class PokeAdapter(private var activity: Activity, private val mData: MutableList
         val view: View?
         val viewHolder: ViewHolder
 
-        if (convertView == null)
-        {
+        if (convertView == null) {
             val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             view = inflater.inflate(R.layout.list_view, null)
             viewHolder = ViewHolder(view)
             view?.tag = viewHolder
-        }
-        else
-        {
+        } else {
             view = convertView
             viewHolder = view.tag as ViewHolder
         }
 
-        val userDto = mData[position]
-        viewHolder.txtPokName?.text = userDto.name
-
+        val userDto = pokemon_data[position]
+        viewHolder.pokemonName?.text = userDto.name
+        viewHolder.pokemonIndex?.text = currentIndex.toString()
 
         return view as View
     }
 
     override fun getItem(i: Int): PokemonRecord {
-        return mData[i]
+        currentIndex = i
+        return pokemon_data[i]
     }
 
     override fun getItemId(i: Int): Long {
@@ -63,7 +66,7 @@ class PokeAdapter(private var activity: Activity, private val mData: MutableList
     }
 
     override fun getCount(): Int {
-        return mData.size
+        return pokemon_data.size
     }
 
 }

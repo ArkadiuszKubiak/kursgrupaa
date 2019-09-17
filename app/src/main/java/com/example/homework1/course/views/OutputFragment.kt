@@ -10,35 +10,31 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.homework1.R
 import com.example.homework1.course.viewmodels.MyViewModelFactory
-import com.example.homework1.course.viewmodels.SharedViewModel
+import com.example.homework1.course.viewmodels.PokeDexViewModel
 import kotlinx.android.synthetic.main.fragment_output.*
 
 class OutputFragment : Fragment() {
 
+    lateinit var viewModel: PokeDexViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = activity?.run {
+            ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(PokeDexViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val myView = LayoutInflater.from(container!!.context).inflate(R.layout.fragment_output,container,false)
-        return myView
+
+        return inflater.inflate(R.layout.fragment_output, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val model = ViewModelProviders.of(activity!!, MyViewModelFactory(activity!!.application)).get(SharedViewModel::class.java)
-
-        model.pokName.observe(this, Observer {
+        viewModel.selectedPokemon.observe(this, Observer {
             it?.let {
-                pokemon_name.text = model.pokName.value
-            }
-        })
-
-        model.pokImg.observe(this, Observer {
-            it?.let {
-                context?.let { it1 -> Glide.with(it1).load(model.pokImg.value).into(pokemon_Image) }
-            }
-        })
-
-        model.myIndex.observe(this, Observer {
-            it?.let {
-                clicks.text = model.numClicks[model.myIndex.value!!].toString()
+                pokemon_name.text = it.name
+                context?.let { it1 -> Glide.with(it1).load(it.pokemon_data.sprites.frontDefault).into(pokemon_Image) }
             }
         })
     }

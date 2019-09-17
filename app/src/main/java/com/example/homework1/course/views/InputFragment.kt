@@ -11,11 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.homework1.R
 import com.example.homework1.course.adapters.PokeAdapter
-import com.example.homework1.course.database.PokeDexRecord
-import com.example.homework1.course.database.PokemonRecord
 import com.example.homework1.course.viewmodels.MyViewModelFactory
 import com.example.homework1.course.viewmodels.PokeDexViewModel
-import com.example.homework1.course.viewmodels.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_input.*
 
 
@@ -24,17 +21,14 @@ class InputFragment : Fragment() {
     companion object {
         fun newInstance(login: String): InputFragment {
             val fragment = InputFragment()
-            val args = Bundle()
-            args.putString("login", login)
-            fragment.arguments = args
+            fragment.login = login
             return fragment
         }
     }
 
-    var adapter: PokeAdapter? = null
+    private var login: String = ""
 
-    var trainersPokemon: List<PokemonRecord>? = null
-    var trainerData: PokeDexRecord? = null
+    var adapter: PokeAdapter? = null
 
     lateinit var viewModel: PokeDexViewModel
 
@@ -43,6 +37,8 @@ class InputFragment : Fragment() {
         viewModel = activity?.run {
             ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(PokeDexViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
+
+        viewModel.loadTrainerData(login)
     }
 
     override fun onCreateView(
@@ -54,37 +50,28 @@ class InputFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        val model = ViewModelProviders.of(activity!!, MyViewModelFactory(activity!!.application)).get(SharedViewModel::class.java)
-
         adapter = activity?.let {
             PokeAdapter(
                 it,
                 mutableListOf()
             )
         }
-        listView1.adapter = adapter
+        pokemonListView.adapter = adapter
 
-        viewModel.getTrainerByName(arguments!!.getString("login")!!).observe(this, Observer { it ->
+        viewModel.trainerData.observe(this, Observer { it ->
             run {
-                trainerData = it
+                viewModel.loadTrainerData(it.login)
             }
         })
 
-        viewModel.getOwnedPokemonsByTrainer(arguments!!.getString("login")!!).observe(this, Observer { it ->
+        viewModel.trainerPokemons.observe(this, Observer { trainersPokemon ->
             run {
-                trainersPokemon = it
-                adapter!!.addAll(it)
-                model.setNumItems(adapter!!.getCount())
-                model.setClickArray()
+                adapter!!.reloadPokemonData(trainersPokemon)
             }
         })
 
-        listView1.onItemClickListener = AdapterView.OnItemClickListener { adapterView, _, position, id ->
-            trainersPokemon?.get(position)?.name?.let { model.setPokName(it) }
-            trainersPokemon?.get(position)?.pokemon_data!!.sprites.frontDefault.let { model.setImage(it) }
-            model.setIndex(position)
-            model.IncClick()
+        pokemonListView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, _, position, id ->
+            viewModel.selectedPokemon.value = viewModel.trainerPokemons.value?.get(position)
         }
     }
 }

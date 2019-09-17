@@ -21,6 +21,8 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
         setTrainerData(trainerName)
         loadCurrentPokemonsTrainer()
         loadRandomWildPokemon()
+
+        // Not DB-related.
         interactionEnabled.value = true
         availablePokeballs.value = 5
     }
