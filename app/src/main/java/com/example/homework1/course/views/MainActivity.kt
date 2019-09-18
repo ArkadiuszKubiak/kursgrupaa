@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
         val wakeLock: PowerManager.WakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                 newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
-                    acquire()
+                    acquire(10*60*1000L /*10 minutes*/)
                 }
             }
 
@@ -177,6 +177,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     progerssProgressDialog.dismiss()
+                    wakeLock.release()
                 }
             }
 
@@ -184,7 +185,6 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "Sadly, the call for getting Pokemons failed :(.")
             }
         })
-        wakeLock.release()
     }
 
 }
