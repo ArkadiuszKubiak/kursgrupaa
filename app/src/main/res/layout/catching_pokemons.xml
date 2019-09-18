@@ -29,6 +29,8 @@
                     android:id="@+id/nextPokemon"
                     interactionEnabled="@{model.interactionEnabled}"
                     android:layout_width="0dp"
+                    android:textColor="#ffffffff"
+                    android:background="@drawable/buttonshape_catch"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Next Pokemon">
@@ -39,6 +41,8 @@
                     android:id="@+id/goBack"
                     interactionEnabled="@{model.interactionEnabled}"
                     android:layout_width="0dp"
+                    android:textColor="#ffffffff"
+                    android:background="@drawable/buttonshape_catch"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Back">
@@ -89,6 +93,8 @@
                     android:id="@+id/attackButton"
                     interactionEnabled="@{model.interactionEnabled}"
                     android:layout_width="0dp"
+                    android:textColor="#ffffffff"
+                    android:background="@drawable/buttonshape_catch"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="ATTACK">
@@ -99,6 +105,8 @@
                     android:id="@+id/catchButton"
                     interactionEnabled="@{model.interactionEnabled &amp;&amp; model.availablePokeballs > 0}"
                     android:layout_width="0dp"
+                    android:textColor="#ffffffff"
+                    android:background="@drawable/buttonshape_catch"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="CATCH" />

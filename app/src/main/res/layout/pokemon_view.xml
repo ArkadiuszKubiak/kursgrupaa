@@ -9,11 +9,13 @@
 
     <Button
             android:id="@+id/catchPokemonButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@drawable/buttonshape_catch"
             android:onClick="goCatchPokemons"
-            android:text="@string/catch_more_pokemons" />
+            android:text="@string/catch_more_pokemons"
+            android:textColor="#ffffffff" />
 
     <FrameLayout
             android:id="@+id/layout_top"
