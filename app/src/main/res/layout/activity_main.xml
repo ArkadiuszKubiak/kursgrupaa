@@ -22,9 +22,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Login:"
+            android:text="@string/login_text"
             android:textColor="#ffffffff"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
     <EditText
             android:id="@+id/LoginTest"
@@ -43,9 +43,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Password:"
+            android:text="@string/password"
             android:textColor="#ffffffff"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
     <EditText
             android:id="@+id/PasswordText"
@@ -66,7 +66,7 @@
             android:layout_weight="0.5"
             android:background="@drawable/buttonshape"
             android:onClick="startPokemonViewActivity"
-            android:text="Login"
+            android:text="@string/login_button_text"
             android:textColor="#ffffffff" />
 
     <Button
@@ -77,7 +77,7 @@
             android:layout_weight="0.5"
             android:background="@drawable/buttonshape"
             android:onClick="createNewUserActivity"
-            android:text="Create new user"
+            android:text="@string/create_new_user"
             android:textColor="#ffffffff" />
 
 

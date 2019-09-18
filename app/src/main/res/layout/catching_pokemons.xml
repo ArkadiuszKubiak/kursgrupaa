@@ -32,7 +32,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/buttonshape"
-                    android:text="Next Pokemon"
+                    android:text="@string/next_pokemon"
                     android:textColor="#ffffffff">
 
             </Button>
@@ -44,7 +44,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/buttonshape"
-                    android:text="Back"
+                    android:text="@string/back"
                     android:textColor="#ffffffff">
 
             </Button>
@@ -79,7 +79,7 @@
                 android:id="@+id/availablePokeballs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text='@{String.format("Available PokeBalls: %s",model.availablePokeballs)}' />
+                android:text='@{String.format("PokeBall: %s",model.availablePokeballs)}' />
 
         <LinearLayout
                 android:id="@+id/bottomBar"
@@ -96,7 +96,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/buttonshape"
-                    android:text="ATTACK"
+                    android:text="@string/attack"
                     android:textColor="#ffffffff">
 
             </Button>
@@ -108,7 +108,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/buttonshape"
-                    android:text="CATCH"
+                    android:text="@string/catch_button"
                     android:textColor="#ffffffff" />
         </LinearLayout>
 

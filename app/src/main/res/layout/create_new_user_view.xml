@@ -16,9 +16,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="center"
-            android:text="Login:"
+            android:text="@string/login_text"
             android:textColor="#ffffffff"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
     <EditText
             android:id="@+id/LoginTest"
@@ -38,9 +38,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="center"
-            android:text="Name:"
+            android:text="@string/name"
             android:textColor="#ffffffff"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
     <EditText
             android:id="@+id/NameTest"
@@ -60,9 +60,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="center"
-            android:text="Surname:"
+            android:text="@string/surname"
             android:textColor="#ffffffff"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
     <EditText
             android:id="@+id/SurnameTest"
@@ -82,9 +82,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="center"
-            android:text="Password:"
+            android:text="@string/password"
             android:textColor="#ffffffff"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
     <EditText
             android:id="@+id/PasswordText"
@@ -106,7 +106,7 @@
             android:layout_weight="0.5"
             android:background="@drawable/buttonshape"
             android:onClick="createNewUser"
-            android:text="Create new user"
+            android:text="@string/create_new_user"
             android:textColor="#ffffffff" />
 
 </LinearLayout>

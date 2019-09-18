@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         Thread.sleep(1500)
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
         model = ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(UserCreationViewModel::class.java)
         progressProgressDialog = ProgressDialog(this)
