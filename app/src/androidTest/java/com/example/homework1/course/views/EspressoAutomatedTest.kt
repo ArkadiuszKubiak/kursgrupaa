@@ -135,47 +135,6 @@ class EspressoAutomatedTest {
 
     @Test
     fun espressoAutomatedTest() {
-        /*onView(isRoot()).perform(waitId(android.R.id.progress, 5000, true))
-
-        val progressBar = onView(
-            allOf(
-                withId(android.R.id.progress),
-                childAtPosition(
-                    allOf(
-                        IsInstanceOf.instanceOf(android.widget.LinearLayout::class.java),
-                        childAtPosition(
-                            IsInstanceOf.instanceOf(android.widget.FrameLayout::class.java),
-                            0
-                        )
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        progressBar.check(matches(isDisplayed()))
-
-        val textView = onView(
-            allOf(
-                IsInstanceOf.instanceOf(android.widget.TextView::class.java), withText("Ładowanie pokemonów…"),
-                childAtPosition(
-                    allOf(
-                        IsInstanceOf.instanceOf(android.widget.LinearLayout::class.java),
-                        childAtPosition(
-                            IsInstanceOf.instanceOf(android.widget.LinearLayout::class.java),
-                            0
-                        )
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        textView.check(matches(withText("Ładowanie pokemonów…")))
-
-        onView(isRoot()).perform(waitString("Ładowanie pokemonów…", 360 * 1000, false))
-         */
-
         val appCompatEditText = onView(
             allOf(
                 withId(R.id.LoginTest),
@@ -780,19 +739,18 @@ class EspressoAutomatedTest {
         )
         appCompatButton6.perform(click())
 
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+        Thread.sleep(6000)
+
         val textView5 = onView(
             allOf(
                 withId(R.id.availablePokeballs), withText("PokeBall: 4"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(android.R.id.content),
-                        0
-                    ),
-                    3
-                ),
                 isDisplayed()
             )
         )
+
         textView5.check(matches(withText("PokeBall: 4")))
 
         val appCompatButton7 = onView(
@@ -813,16 +771,15 @@ class EspressoAutomatedTest {
         )
         appCompatButton7.perform(click())
 
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+        Thread.sleep(6000)
+
+
         val textView6 = onView(
             allOf(
                 withId(R.id.availablePokeballs), withText("PokeBall: 3"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(android.R.id.content),
-                        0
-                    ),
-                    3
-                ),
                 isDisplayed()
             )
         )
