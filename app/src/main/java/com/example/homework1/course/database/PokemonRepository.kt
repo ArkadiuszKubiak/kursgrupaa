@@ -1,7 +1,6 @@
 package com.example.homework1.course.database
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.homework1.course.models.PokemonData
 import com.example.homework1.course.rest_api.ApiInterface
 import org.jetbrains.anko.doAsync
@@ -55,7 +54,7 @@ class PokemonRepository(private val appDatabase: AppDatabase, private val webSer
         return appDatabase.ownedPokemonsDao().getPokemonsByTrainerLogin(name)
     }
 
-    fun getPokemonOwners(name: String): LiveData<List<OwnedPokemonRecord>>{
+    fun getPokemonOwners(name: String): LiveData<List<OwnedPokemonRecord>> {
         // Doesn't need refreshing, since it's internal DB.
         return appDatabase.ownedPokemonsDao().getOwnedPokemonsByPokemonName(name)
     }

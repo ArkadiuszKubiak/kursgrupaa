@@ -5,19 +5,19 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/cardview_dark_background"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="@color/cardview_dark_background"
         android:weightSum="10"
         tools:context=".course.views.CreateNewUserView">
 
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="#ffffffff"
             android:layout_weight="0.5"
+            android:gravity="center"
             android:text="Login:"
+            android:textColor="#ffffffff"
             android:textSize="20dp" />
 
     <EditText
@@ -36,19 +36,19 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="#ffffffff"
             android:layout_weight="0.5"
+            android:gravity="center"
             android:text="Name:"
+            android:textColor="#ffffffff"
             android:textSize="20dp" />
 
     <EditText
             android:id="@+id/NameTest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginHorizontal="50dp"
             android:layout_marginVertical="20dp"
+            android:layout_weight="1"
             android:background="@color/cardview_light_background"
             android:ems="10"
             android:gravity="center"
@@ -58,10 +58,10 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_weight="0.5"
-            android:textColor="#ffffffff"
+            android:gravity="center"
             android:text="Surname:"
+            android:textColor="#ffffffff"
             android:textSize="20dp" />
 
     <EditText
@@ -80,33 +80,33 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_weight="0.5"
-            android:textColor="#ffffffff"
+            android:gravity="center"
             android:text="Password:"
+            android:textColor="#ffffffff"
             android:textSize="20dp" />
 
     <EditText
             android:id="@+id/PasswordText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:layout_marginHorizontal="50dp"
             android:layout_marginVertical="20dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:background="@color/cardview_light_background"
+            android:ems="10"
+            android:gravity="center"
             android:inputType="textPassword" />
 
     <Button
-            android:layout_marginHorizontal="50dp"
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_weight="0.5"
             android:background="@drawable/buttonshape"
             android:onClick="createNewUser"
             android:text="Create new user"
-            android:layout_weight="0.5"
             android:textColor="#ffffffff" />
 
 </LinearLayout>

@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var progerssProgressDialog: ProgressDialog
     private lateinit var model: UserCreationViewModel
 
-    private var pendingCreation : Boolean = false
+    private var pendingCreation: Boolean = false
 
     companion object {
         const val DELETE_TIMEOUT_SECONDS = 3600
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
                 if ((loginText != null) && (nameText != null) && (surnameText != null) && (passwordText != null)) {
                     pendingCreation = true
                     model.getTrainerByLogin(loginText).observe(this, Observer { trainerData ->
-                        if(pendingCreation) {
+                        if (pendingCreation) {
                             trainerData?.let {
                                 Toast.makeText(applicationContext, "User already exists!", Toast.LENGTH_SHORT).show()
                             } ?: doAsync {

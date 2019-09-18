@@ -36,7 +36,7 @@ class CatchingPokemonActivity : AppCompatActivity() {
         loginName = intent.getStringExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_LOGIN_TEXT)!!
 
         val ab = supportActionBar
-        ab!!.setTitle("Trainer: $loginName")
+        ab!!.title = "Trainer: $loginName"
 
         binding = DataBindingUtil.setContentView(this, R.layout.catching_pokemons)
         model = ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(PokemonCatchingViewModel::class.java)

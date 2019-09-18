@@ -3,9 +3,9 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/cardview_dark_background"
         android:orientation="vertical"
         android:weightSum="4"
-        android:background="@color/cardview_dark_background"
         tools:context=".course.views.PokemonView">
 
     <FrameLayout
@@ -31,8 +31,6 @@
             android:onClick="goCatchPokemons"
             android:text="@string/catch_more_pokemons"
             android:textColor="#ffffffff" />
-
-
 
 
 </LinearLayout>

@@ -27,8 +27,8 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
         availablePokeballs.value = 5
     }
 
-    var availablePokeballs : MutableLiveData<Int> = MutableLiveData()
-    var interactionEnabled : MutableLiveData<Boolean> = MutableLiveData()
+    var availablePokeballs: MutableLiveData<Int> = MutableLiveData()
+    var interactionEnabled: MutableLiveData<Boolean> = MutableLiveData()
 
     var loginTrainer: String = "UNKNOWN"
 

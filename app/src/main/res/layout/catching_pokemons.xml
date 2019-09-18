@@ -10,9 +10,9 @@
     </data>
 
     <LinearLayout
-            android:background="@drawable/background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/background"
             android:orientation="vertical"
             android:weightSum="4">
 
@@ -29,11 +29,11 @@
                     android:id="@+id/nextPokemon"
                     interactionEnabled="@{model.interactionEnabled}"
                     android:layout_width="0dp"
-                    android:textColor="#ffffffff"
-                    android:background="@drawable/buttonshape"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Next Pokemon">
+                    android:background="@drawable/buttonshape"
+                    android:text="Next Pokemon"
+                    android:textColor="#ffffffff">
 
             </Button>
 
@@ -41,11 +41,11 @@
                     android:id="@+id/goBack"
                     interactionEnabled="@{model.interactionEnabled}"
                     android:layout_width="0dp"
-                    android:textColor="#ffffffff"
-                    android:background="@drawable/buttonshape"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Back">
+                    android:background="@drawable/buttonshape"
+                    android:text="Back"
+                    android:textColor="#ffffffff">
 
             </Button>
         </LinearLayout>
@@ -93,11 +93,11 @@
                     android:id="@+id/attackButton"
                     interactionEnabled="@{model.interactionEnabled}"
                     android:layout_width="0dp"
-                    android:textColor="#ffffffff"
-                    android:background="@drawable/buttonshape"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="ATTACK">
+                    android:background="@drawable/buttonshape"
+                    android:text="ATTACK"
+                    android:textColor="#ffffffff">
 
             </Button>
 
@@ -105,11 +105,11 @@
                     android:id="@+id/catchButton"
                     interactionEnabled="@{model.interactionEnabled &amp;&amp; model.availablePokeballs > 0}"
                     android:layout_width="0dp"
-                    android:textColor="#ffffffff"
-                    android:background="@drawable/buttonshape"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="CATCH" />
+                    android:background="@drawable/buttonshape"
+                    android:text="CATCH"
+                    android:textColor="#ffffffff" />
         </LinearLayout>
 
     </LinearLayout>

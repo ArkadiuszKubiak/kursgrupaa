@@ -6,7 +6,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
 
-
 class PokemonView : AppCompatActivity() {
 
     var loginName: String = ""
@@ -19,7 +18,7 @@ class PokemonView : AppCompatActivity() {
         loginName = intent.getStringExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_LOGIN_TEXT)!!
 
         val ab = supportActionBar
-        ab!!.setTitle("Trainer: $loginName")
+        ab!!.title = "Trainer: $loginName"
 
         supportFragmentManager.beginTransaction().add(
             com.example.homework1.R.id.layout_top,

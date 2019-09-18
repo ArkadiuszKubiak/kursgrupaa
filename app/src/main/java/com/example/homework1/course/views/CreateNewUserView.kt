@@ -2,20 +2,13 @@ package com.example.homework1.course.views
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.homework1.R
-import com.example.homework1.course.utilities.TAG
-import com.example.homework1.course.viewmodels.MyViewModelFactory
-import com.example.homework1.course.viewmodels.PokeDexViewModel
 import kotlinx.android.synthetic.main.activity_main.LoginTest
 import kotlinx.android.synthetic.main.create_new_user_view.*
-import org.jetbrains.anko.doAsync
 
 class CreateNewUserView : AppCompatActivity() {
 

@@ -14,6 +14,7 @@ object MyBindingAdapters {
         }
 
     }
+
     @BindingAdapter("interactionEnabled")
     @JvmStatic
     fun manageInteraction(view: View, value: Boolean) {

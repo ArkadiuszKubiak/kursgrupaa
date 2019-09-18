@@ -17,13 +17,11 @@ class UserCreationViewModel(repository: PokemonRepository, application: Applicat
         repository.addPokemonToPokedex(randomPoke, login)
     }
 
-    fun getTrainerByLogin(login: String) : LiveData<PokeDexRecord>
-    {
+    fun getTrainerByLogin(login: String): LiveData<PokeDexRecord> {
         return repository.getTrainer(login)
     }
 
-    fun removeTrainer(trainerData: PokeDexRecord)
-    {
+    fun removeTrainer(trainerData: PokeDexRecord) {
         repository.removeTrainer(trainerData)
     }
 }
