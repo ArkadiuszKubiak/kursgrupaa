@@ -36,7 +36,7 @@ import java.util.concurrent.TimeoutException
  * @param text The id of the view to wait for.
  * @param millis The timeout of until when to wait for.
  */
-fun waitId(text: String, millis: Long, shouldBeFound: Boolean): ViewAction {
+fun waitString(text: String, millis: Long, shouldBeFound: Boolean): ViewAction {
     return object : ViewAction {
         override fun getConstraints(): Matcher<View> {
             return isRoot()
@@ -75,6 +75,46 @@ fun waitId(text: String, millis: Long, shouldBeFound: Boolean): ViewAction {
     }
 }
 
+fun waitId(id: Int, millis: Long, shouldBeFound: Boolean): ViewAction {
+    return object : ViewAction {
+        override fun getConstraints(): Matcher<View> {
+            return isRoot()
+        }
+
+        override fun getDescription(): String {
+            return "wait for a specific view with text <$id> during $millis millis."
+        }
+
+        override fun perform(uiController: UiController, view: View) {
+            uiController.loopMainThreadUntilIdle()
+            val startTime = System.currentTimeMillis()
+            val endTime = startTime + millis
+            val viewMatcher = withId(id)
+
+            do {
+                for (child in TreeIterables.breadthFirstViewTraversal(view)) {
+                    // found view with required ID
+                    if (viewMatcher.matches(child)) {
+                        if (shouldBeFound) return
+                    }
+                }
+
+                uiController.loopMainThreadForAtLeast(50)
+            } while (System.currentTimeMillis() < endTime)
+
+            if (!shouldBeFound) return
+
+            // timeout happens
+            throw PerformException.Builder()
+                .withActionDescription(this.description)
+                .withViewDescription(HumanReadables.describe(view))
+                .withCause(TimeoutException())
+                .build()
+        }
+    }
+}
+
+
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
@@ -89,14 +129,13 @@ class EspressoAutomatedTest {
 
     }
 
-
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Test
     fun espressoAutomatedTest() {
-        onView(isRoot()).perform(waitId("Ładowanie pokemonów…", 5000, true))
+        /*onView(isRoot()).perform(waitId(android.R.id.progress, 5000, true))
 
         val progressBar = onView(
             allOf(
@@ -134,7 +173,8 @@ class EspressoAutomatedTest {
         )
         textView.check(matches(withText("Ładowanie pokemonów…")))
 
-        onView(isRoot()).perform(waitId("Ładowanie pokemonów…", 360 * 1000, false))
+        onView(isRoot()).perform(waitString("Ładowanie pokemonów…", 360 * 1000, false))
+         */
 
         val appCompatEditText = onView(
             allOf(
@@ -606,6 +646,7 @@ class EspressoAutomatedTest {
                 isDisplayed()
             )
         )
+
         appCompatButton4.perform(click())
 
         // Added a sleep statement to match the app's execution delay.
@@ -615,7 +656,7 @@ class EspressoAutomatedTest {
 
         val textView2 = onView(
             allOf(
-                withId(R.id.pokemonName), withText("Bulbasaur"),
+                withId(R.id.pokemonName),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.pokemonListView),
@@ -643,7 +684,7 @@ class EspressoAutomatedTest {
 
         val textView3 = onView(
             allOf(
-                withId(R.id.pokemon_name), withText("Bulbasaur"),
+                withId(R.id.pokemon_name),
                 childAtPosition(
                     childAtPosition(
                         IsInstanceOf.instanceOf(android.widget.LinearLayout::class.java),
