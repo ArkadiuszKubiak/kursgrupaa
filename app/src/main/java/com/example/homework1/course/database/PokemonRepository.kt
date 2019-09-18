@@ -9,7 +9,7 @@ import retrofit2.Response
 class PokemonRepository(private val appDatabase: AppDatabase, private val webService: ApiInterface) {
 
     companion object {
-        const val DELETE_TIMEOUT_SECONDS: Long = 60 * 60
+        const val DELETE_TIMEOUT_SECONDS: Long = 60 * 60 * 10
 
         lateinit var instance: PokemonRepository
 

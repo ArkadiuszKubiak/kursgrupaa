@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     private var pendingCreation: Boolean = false
 
     companion object {
-        private const val DELETE_TIMEOUT_SECONDS = 3600
+        private const val DELETE_TIMEOUT_SECONDS = 60 * 60 * 10
         private const val REGION = "kanto"
         private const val CREATE_NEW_USER = 1
     }
