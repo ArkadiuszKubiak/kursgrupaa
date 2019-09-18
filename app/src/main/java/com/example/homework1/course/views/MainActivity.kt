@@ -140,43 +140,48 @@ class MainActivity : AppCompatActivity() {
         getAllPokemonFromGivenRegion.enqueue(object : Callback<PokemonPokedex> {
             override fun onResponse(call: Call<PokemonPokedex>?, response: Response<PokemonPokedex>?) {
                 doAsync {
+                    try {
 
-                    val database = AppDatabase.getInstance(context = this@MainActivity)
 
-                    // Delete older items than the specified timeout.
-                    val currentTimestamp = System.currentTimeMillis() / 1000
-                    database.pokemonDao().deleteOlderDataThan(currentTimestamp - DELETE_TIMEOUT_SECONDS)
+                        val database = AppDatabase.getInstance(context = this@MainActivity)
 
-                    // Because then it will download them.
-                    val pokemonDatabase = database.pokemonDao().getAllPokemonsNormal()
+                        // Delete older items than the specified timeout.
+                        val currentTimestamp = System.currentTimeMillis() / 1000
+                        database.pokemonDao().deleteOlderDataThan(currentTimestamp - DELETE_TIMEOUT_SECONDS)
 
-                    val pokemonEntries = response!!.body()!!.pokemonEntries
+                        // Because then it will download them.
+                        val pokemonDatabase = database.pokemonDao().getAllPokemonsNormal()
 
-                    if (pokemonDatabase.size < pokemonEntries.size) {
-                        for (pokeData in pokemonEntries) {
-                            val pokemonName = pokeData.pokemonSpecies.name
-                            val pokemonDataCall = ApiClient.getClient.getPokemonData(pokemonName)
-                            val pokemonData = (pokemonDataCall.execute() as Response<PokemonData>).body()
+                        val pokemonEntries = response!!.body()!!.pokemonEntries
 
-                            val pokemon = PokemonRecord(
-                                num = pokemonData!!.order,
-                                name = pokemonName,
-                                pokemon_data = pokemonData
-                            )
+                        if (pokemonDatabase.size < pokemonEntries.size) {
+                            for (pokeData in pokemonEntries) {
+                                val pokemonName = pokeData.pokemonSpecies.name
+                                val pokemonDataCall = ApiClient.getClient.getPokemonData(pokemonName)
+                                val pokemonData = (pokemonDataCall.execute() as Response<PokemonData>).body()
 
-                            val synchData = SynchData(
-                                poke_name = pokemonData.name,
-                                timestamp_seconds = currentTimestamp
-                            )
+                                val pokemon = PokemonRecord(
+                                    num = pokemonData!!.order,
+                                    name = pokemonName,
+                                    pokemon_data = pokemonData
+                                )
 
-                            Log.d(TAG, "Successfully retrieved " + pokemon.name + "from PokeApi.")
+                                val synchData = SynchData(
+                                    poke_name = pokemonData.name,
+                                    timestamp_seconds = currentTimestamp
+                                )
 
-                            database.pokemonDao().insertPokemon(pokemon)
-                            database.pokemonDao().insertSynchData(synchData)
+                                Log.d(TAG, "Successfully retrieved " + pokemon.name + "from PokeApi.")
+
+                                database.pokemonDao().insertPokemon(pokemon)
+                                database.pokemonDao().insertSynchData(synchData)
+                            }
                         }
+                        progerssProgressDialog.dismiss()
+                        wakeLock.release()
+                    } catch (e: Exception) {
+                        Toast.makeText(applicationContext, "Failed to load the Pokemons:%s. :(.".format(e.message), Toast.LENGTH_SHORT).show()
                     }
-                    progerssProgressDialog.dismiss()
-                    wakeLock.release()
                 }
             }
 

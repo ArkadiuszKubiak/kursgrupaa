@@ -167,7 +167,7 @@ class CatchingPokemonActivity : AppCompatActivity() {
                 Glide.with(this).load(resources.getDrawable(R.drawable.pokeball_png)).into(binding.terrainImage)
             }
             AnimateActions.NEXT_POKEMON -> {
-                Glide.with(this).load(resources.getDrawable(R.drawable.logo)).into(binding.terrainImage)
+                // None
             }
             AnimateActions.SUCCESS -> {
                 Glide.with(this).load(resources.getDrawable(R.drawable.caught)).into(binding.terrainImage)
@@ -183,7 +183,6 @@ class CatchingPokemonActivity : AppCompatActivity() {
     }
 
     fun restore(viewToAnimate: ImageView = binding.terrainImage) {
-        //Glide.with(this).load(resources.getDrawable(R.drawable.logo)).into(viewToAnimate)
         viewToAnimate.visibility = View.INVISIBLE
     }
 
