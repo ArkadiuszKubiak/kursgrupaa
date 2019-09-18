@@ -24,6 +24,7 @@ import com.example.homework1.course.viewmodels.MyViewModelFactory
 import com.example.homework1.course.viewmodels.UserCreationViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val DELETE_TIMEOUT_SECONDS = 3600
-        const val REGION = "kanto"
+        const val REGION = "kXDanto"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -141,9 +142,9 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<PokemonPokedex>?, response: Response<PokemonPokedex>?) {
                 doAsync {
                     try {
-
-
                         val database = AppDatabase.getInstance(context = this@MainActivity)
+
+                        val pokemonEntries = response!!.body()!!.pokemonEntries
 
                         // Delete older items than the specified timeout.
                         val currentTimestamp = System.currentTimeMillis() / 1000
@@ -152,7 +153,7 @@ class MainActivity : AppCompatActivity() {
                         // Because then it will download them.
                         val pokemonDatabase = database.pokemonDao().getAllPokemonsNormal()
 
-                        val pokemonEntries = response!!.body()!!.pokemonEntries
+
 
                         if (pokemonDatabase.size < pokemonEntries.size) {
                             for (pokeData in pokemonEntries) {
@@ -180,13 +181,20 @@ class MainActivity : AppCompatActivity() {
                         progerssProgressDialog.dismiss()
                         wakeLock.release()
                     } catch (e: Exception) {
-                        Toast.makeText(applicationContext, "Failed to load the Pokemons:%s. :(.".format(e.message), Toast.LENGTH_SHORT).show()
+                        progerssProgressDialog.dismiss()
+                        wakeLock.release()
+                        uiThread {
+                            Toast.makeText(applicationContext, "Failed to load the Pokemons:%s. :(.".format(e.message), Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
 
             override fun onFailure(call: Call<PokemonPokedex>?, t: Throwable?) {
                 Log.d(TAG, "Sadly, the call for getting Pokemons failed :(.")
+                progerssProgressDialog.dismiss()
+                wakeLock.release()
+                Toast.makeText(applicationContext, "Failed to load the Pokemons:. :(.", Toast.LENGTH_SHORT).show()
             }
         })
     }
