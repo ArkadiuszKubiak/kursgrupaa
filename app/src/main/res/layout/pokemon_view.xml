@@ -5,6 +5,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="4"
+        android:background="#81c1d4"
         tools:context=".course.views.PokemonView">
 
     <Button

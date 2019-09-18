@@ -22,6 +22,7 @@ class OutputFragment : Fragment() {
         viewModel = activity?.run {
             ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(PokeDexViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
