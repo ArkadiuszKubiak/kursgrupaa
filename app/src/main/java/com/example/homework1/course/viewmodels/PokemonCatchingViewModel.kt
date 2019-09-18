@@ -34,7 +34,7 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
 
     var currentChanceToCatchPokemon = MIN_CHANCE_TO_CATCH
 
-    lateinit var currentTrainerData: LiveData<PokeDexRecord>
+    var currentTrainerData: MediatorLiveData<PokeDexRecord> = MediatorLiveData()
 
     lateinit var trainerPokemons: LiveData<List<PokemonRecord>>
 
@@ -43,7 +43,9 @@ class PokemonCatchingViewModel(repository: PokemonRepository, application: Appli
     var currentTrainerPokemon: PokemonRecord? = null
 
     fun setTrainerData(loginName: String) {
-        currentTrainerData = repository.getTrainer(loginName)
+        currentTrainerData.addSource(repository.getTrainer(loginName)) { result ->
+            result?.let { currentTrainerData.value = it }
+        }
     }
 
     fun getTrainerData(): LiveData<PokeDexRecord> {

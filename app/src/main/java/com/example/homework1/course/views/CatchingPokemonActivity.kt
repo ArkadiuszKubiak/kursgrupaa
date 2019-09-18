@@ -44,6 +44,14 @@ class CatchingPokemonActivity : AppCompatActivity() {
         binding.model = model
         binding.lifecycleOwner = this
 
+        model.currentTrainerData.observe(this, Observer { it ->
+            run {
+                if (it != null) {
+                    //Toast.makeText(applicationContext, "New trainer Pokemon: %s!".format(it.login), Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+
         model.trainerPokemons.observe(this, Observer { it ->
             run {
                 if (it != null && it.size > 0) {

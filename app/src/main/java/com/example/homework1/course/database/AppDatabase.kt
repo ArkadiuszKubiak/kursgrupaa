@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 
 @Database(
     entities = [(PokemonRecord::class), (PokeDexRecord::class), (OwnedPokemonRecord::class), (SynchData::class)],
-    version = 9,
+    version = 10,
     exportSchema = false
 )
 @TypeConverters(PokemonDataConverter::class)
