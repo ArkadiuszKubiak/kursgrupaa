@@ -7,14 +7,9 @@ import androidx.test.InstrumentationRegistry
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
-import androidx.test.espresso.PerformException
-import androidx.test.espresso.UiController
-import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.espresso.util.HumanReadables
-import androidx.test.espresso.util.TreeIterables
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
@@ -28,92 +23,6 @@ import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.TimeoutException
-
-/**
- * https://stackoverflow.com/questions/49796132/android-espresso-wait-for-text-to-appear
- * Perform action of waiting for a specific view id.
- * @param text The id of the view to wait for.
- * @param millis The timeout of until when to wait for.
- */
-fun waitString(text: String, millis: Long, shouldBeFound: Boolean): ViewAction {
-    return object : ViewAction {
-        override fun getConstraints(): Matcher<View> {
-            return isRoot()
-        }
-
-        override fun getDescription(): String {
-            return "wait for a specific view with text <$text> during $millis millis."
-        }
-
-        override fun perform(uiController: UiController, view: View) {
-            uiController.loopMainThreadUntilIdle()
-            val startTime = System.currentTimeMillis()
-            val endTime = startTime + millis
-            val viewMatcher = withText(text)
-
-            do {
-                for (child in TreeIterables.breadthFirstViewTraversal(view)) {
-                    // found view with required ID
-                    if (viewMatcher.matches(child)) {
-                        if (shouldBeFound) return
-                    }
-                }
-
-                uiController.loopMainThreadForAtLeast(50)
-            } while (System.currentTimeMillis() < endTime)
-
-            if (!shouldBeFound) return
-
-            // timeout happens
-            throw PerformException.Builder()
-                .withActionDescription(this.description)
-                .withViewDescription(HumanReadables.describe(view))
-                .withCause(TimeoutException())
-                .build()
-        }
-    }
-}
-
-fun waitId(id: Int, millis: Long, shouldBeFound: Boolean): ViewAction {
-    return object : ViewAction {
-        override fun getConstraints(): Matcher<View> {
-            return isRoot()
-        }
-
-        override fun getDescription(): String {
-            return "wait for a specific view with text <$id> during $millis millis."
-        }
-
-        override fun perform(uiController: UiController, view: View) {
-            uiController.loopMainThreadUntilIdle()
-            val startTime = System.currentTimeMillis()
-            val endTime = startTime + millis
-            val viewMatcher = withId(id)
-
-            do {
-                for (child in TreeIterables.breadthFirstViewTraversal(view)) {
-                    // found view with required ID
-                    if (viewMatcher.matches(child)) {
-                        if (shouldBeFound) return
-                    }
-                }
-
-                uiController.loopMainThreadForAtLeast(50)
-            } while (System.currentTimeMillis() < endTime)
-
-            if (!shouldBeFound) return
-
-            // timeout happens
-            throw PerformException.Builder()
-                .withActionDescription(this.description)
-                .withViewDescription(HumanReadables.describe(view))
-                .withCause(TimeoutException())
-                .build()
-        }
-    }
-}
-
 
 
 @LargeTest
