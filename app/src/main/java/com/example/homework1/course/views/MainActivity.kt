@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        populateDatabase()
+        Thread.sleep(1500)
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -51,9 +53,6 @@ class MainActivity : AppCompatActivity() {
         progerssProgressDialog.setTitle("Loading Pokemons")
         progerssProgressDialog.setCancelable(false)
         progerssProgressDialog.show()
-
-
-        populateDatabase()
     }
 
     override fun onStart() {
