@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.homework1.R
 
 
 class PokemonView : AppCompatActivity() {
@@ -11,22 +12,22 @@ class PokemonView : AppCompatActivity() {
     var loginName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(com.example.homework1.R.style.AppTheme)
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-        setContentView(com.example.homework1.R.layout.pokemon_view)
+        setContentView(R.layout.pokemon_view)
 
         loginName = intent.getStringExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_LOGIN_TEXT)!!
 
         val ab = supportActionBar
-        ab!!.title = "Trainer: $loginName"
+        ab!!.title = getString(R.string.trainer_name_title).format(loginName)
 
         supportFragmentManager.beginTransaction().add(
-            com.example.homework1.R.id.layout_top,
+            R.id.layout_top,
             InputFragment.newInstance(loginName)
         ).commit()
 
         supportFragmentManager.beginTransaction().add(
-            com.example.homework1.R.id.layout_bottom,
+            R.id.layout_bottom,
             OutputFragment()
         ).commit()
     }

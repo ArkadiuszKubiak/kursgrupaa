@@ -37,7 +37,7 @@ class CreateNewUserView : AppCompatActivity() {
 
     fun createNewUser(view: View) {
         if (!login?.text?.isEmpty()!! && !name?.text?.isEmpty()!! && !surname?.text?.isEmpty()!! && !password?.text?.isEmpty()!!) {
-            Toast.makeText(applicationContext, "Creating user...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.toast_creating_user), Toast.LENGTH_SHORT).show()
 
             val loginText = login!!.text.toString()
             val nameText = name!!.text.toString()

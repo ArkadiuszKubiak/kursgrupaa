@@ -27,8 +27,6 @@ class CatchingPokemonActivity : AppCompatActivity() {
         ATTACK, CATCH, NEXT_POKEMON, SUCCESS, FAILURE
     }
 
-    // ToDo: Better messages for Toasts (they are now closed by each other)
-    // ToDo: Better nulls and bad values handling.
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
@@ -36,7 +34,7 @@ class CatchingPokemonActivity : AppCompatActivity() {
         loginName = intent.getStringExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_LOGIN_TEXT)!!
 
         val ab = supportActionBar
-        ab!!.title = "Trainer: $loginName"
+        ab!!.title = getString(R.string.trainer_name_title).format(loginName)
 
         binding = DataBindingUtil.setContentView(this, R.layout.catching_pokemons)
         model = ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(PokemonCatchingViewModel::class.java)
@@ -45,14 +43,6 @@ class CatchingPokemonActivity : AppCompatActivity() {
 
         binding.model = model
         binding.lifecycleOwner = this
-
-        model.currentTrainerData.observe(this, Observer { it ->
-            run {
-                if (it != null) {
-                    //Toast.makeText(applicationContext, "New trainer Pokemon: %s!".format(it.login), Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
 
         model.trainerPokemons.observe(this, Observer { it ->
             run {
@@ -80,18 +70,18 @@ class CatchingPokemonActivity : AppCompatActivity() {
 
             doAnimation(
                 AnimationsDifferent.THROW,
-                { Toast.makeText(applicationContext, "Suffer, you dirty something!!!.", Toast.LENGTH_SHORT).show() },
+                { Toast.makeText(applicationContext, getString(R.string.toast_attack), Toast.LENGTH_SHORT).show() },
                 {
                     if (model.onAttack()) {
                         Toast.makeText(
                             applicationContext,
-                            "Attacked! Success! Chance to catch increased: %s.".format(model.currentChanceToCatchPokemon),
+                            getString(R.string.toast_attack_success).format(model.currentChanceToCatchPokemon),
                             Toast.LENGTH_SHORT
                         )
                             .show()
                     } else {
                         model.loadRandomWildPokemon()
-                        Toast.makeText(applicationContext, "Attacked! Failure! Pokemon ran away!", Toast.LENGTH_SHORT)
+                        Toast.makeText(applicationContext, getString(R.string.toast_attack_failure), Toast.LENGTH_SHORT)
                             .show()
                     }
                     model.interactionEnabled.value = true
@@ -106,12 +96,12 @@ class CatchingPokemonActivity : AppCompatActivity() {
             loadImage(AnimateActions.CATCH)
             doAnimation(
                 AnimationsDifferent.THROW,
-                { Toast.makeText(applicationContext, "Go, Pokeball!!!.", Toast.LENGTH_SHORT).show() },
+                { Toast.makeText(applicationContext, getString(R.string.toast_pokeball_throw), Toast.LENGTH_SHORT).show() },
                 {
                     if (model.tryToCatchPokemon()) {
                         Toast.makeText(
                             applicationContext,
-                            "Caught Pokemon %s with Chance to catch: %s.".format(
+                            getString(R.string.toast_success_catch).format(
                                 model.currentWildPokemon.value!!.name,
                                 model.currentChanceToCatchPokemon
                             ),
@@ -124,7 +114,7 @@ class CatchingPokemonActivity : AppCompatActivity() {
                         loadImage(AnimateActions.SUCCESS)
                         doAnimation(AnimationsDifferent.RESIZE, null, { model.interactionEnabled.value = true })
                     } else {
-                        Toast.makeText(applicationContext, "Failed to catch. Pokemon ran.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, getString(R.string.toast_failed_catch), Toast.LENGTH_SHORT).show()
                         loadImage(AnimateActions.FAILURE)
                         doAnimation(AnimationsDifferent.RESIZE, null, { model.interactionEnabled.value = true })
                     }
@@ -140,7 +130,7 @@ class CatchingPokemonActivity : AppCompatActivity() {
             loadImage(AnimateActions.NEXT_POKEMON)
             doAnimation(
                 AnimationsDifferent.ROTATE,
-                { Toast.makeText(applicationContext, "Going for the next wild Pokemon!.", Toast.LENGTH_SHORT).show() },
+                { Toast.makeText(applicationContext, getString(R.string.toast_next_pokemon), Toast.LENGTH_SHORT).show() },
                 {
                     model.loadRandomWildPokemon()
                     model.interactionEnabled.value = true
@@ -151,7 +141,7 @@ class CatchingPokemonActivity : AppCompatActivity() {
         }
 
         binding.goBack.setOnClickListener { view ->
-            Toast.makeText(applicationContext, "Going back.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.toast_going_back), Toast.LENGTH_SHORT).show()
             finish()
         }
     }

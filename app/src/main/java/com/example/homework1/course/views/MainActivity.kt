@@ -31,16 +31,17 @@ import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity() {
-    private val CREATE_NEW_USER = 1
 
-    lateinit var progerssProgressDialog: ProgressDialog
+
+    lateinit var progressProgressDialog: ProgressDialog
     private lateinit var model: UserCreationViewModel
 
     private var pendingCreation: Boolean = false
 
     companion object {
-        const val DELETE_TIMEOUT_SECONDS = 3600
-        const val REGION = "kXDanto"
+        private const val DELETE_TIMEOUT_SECONDS = 3600
+        private const val REGION = "kanto"
+        private const val CREATE_NEW_USER = 1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,10 +51,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         model = ViewModelProviders.of(this, MyViewModelFactory(this.application)).get(UserCreationViewModel::class.java)
-        progerssProgressDialog = ProgressDialog(this)
-        progerssProgressDialog.setTitle("Loading Pokemons")
-        progerssProgressDialog.setCancelable(false)
-        progerssProgressDialog.show()
+        progressProgressDialog = ProgressDialog(this)
+        progressProgressDialog.setTitle(getString(R.string.loading_pokemon))
+        progressProgressDialog.setCancelable(false)
+        progressProgressDialog.show()
     }
 
     override fun onStart() {
@@ -66,10 +67,10 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        var loginText: String? = null
-        var surnameText: String? = null
-        var nameText: String? = null
-        var passwordText: String? = null
+        val loginText: String?
+        val surnameText: String?
+        val nameText: String?
+        val passwordText: String?
 
         if (requestCode == CREATE_NEW_USER) {
             // 2
@@ -85,16 +86,16 @@ class MainActivity : AppCompatActivity() {
                     model.getTrainerByLogin(loginText).observe(this, Observer { trainerData ->
                         if (pendingCreation) {
                             trainerData?.let {
-                                Toast.makeText(applicationContext, "User already exists!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(applicationContext, getString(R.string.toast_user_exists), Toast.LENGTH_SHORT).show()
                             } ?: doAsync {
                                 model.createNewTrainer(loginText, nameText, surnameText, passwordText)
-                                Toast.makeText(applicationContext, "User added: %s".format(loginText), Toast.LENGTH_LONG).show()
+                                Toast.makeText(applicationContext, getString(R.string.toast_user_added).format(loginText), Toast.LENGTH_LONG).show()
                             }
                         }
                         pendingCreation = false
                     })
                 } else {
-                    Toast.makeText(applicationContext, "User name or password is empty!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, getString(R.string.toast_empty_password), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -117,16 +118,16 @@ class MainActivity : AppCompatActivity() {
                         intent.putExtra(CreateNewUserView.CREATE_NEW_USER_DESCRIPTION_LOGIN_TEXT, LoginTest.text.toString())
                         startActivity(intent)
                     } else {
-                        Toast.makeText(applicationContext, "User not exists or wrong password!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, getString(R.string.toast_wrong_password), Toast.LENGTH_SHORT).show()
                     }
-                } ?: Toast.makeText(applicationContext, "User not exists or wrong password!", Toast.LENGTH_SHORT).show()
+                } ?: Toast.makeText(applicationContext, getString(R.string.toast_user_not_exist), Toast.LENGTH_SHORT).show()
             })
         } else {
-            Toast.makeText(applicationContext, "Wrong user name or password", Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, getString(R.string.toast_missing_fields), Toast.LENGTH_LONG).show()
         }
     }
 
-    fun populateDatabase() {
+    private fun populateDatabase() {
         val getAllPokemonFromGivenRegion: Call<PokemonPokedex> = ApiClient.getClient.getPokedex(
             region = REGION
         )
@@ -178,13 +179,17 @@ class MainActivity : AppCompatActivity() {
                                 database.pokemonDao().insertSynchData(synchData)
                             }
                         }
-                        progerssProgressDialog.dismiss()
+                        progressProgressDialog.dismiss()
                         wakeLock.release()
                     } catch (e: Exception) {
-                        progerssProgressDialog.dismiss()
+                        progressProgressDialog.dismiss()
                         wakeLock.release()
                         uiThread {
-                            Toast.makeText(applicationContext, "Failed to load the Pokemons:%s. :(.".format(e.message), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                applicationContext,
+                                getString(R.string.toast_failed_loading_pokemons).format(e.message),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
@@ -192,9 +197,9 @@ class MainActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<PokemonPokedex>?, t: Throwable?) {
                 Log.d(TAG, "Sadly, the call for getting Pokemons failed :(.")
-                progerssProgressDialog.dismiss()
+                progressProgressDialog.dismiss()
                 wakeLock.release()
-                Toast.makeText(applicationContext, "Failed to load the Pokemons:. :(.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, getString(R.string.toast_failed_loading_pokemons).format(t?.message), Toast.LENGTH_SHORT).show()
             }
         })
     }
