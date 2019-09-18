@@ -158,7 +158,7 @@ class CatchingPokemonActivity : AppCompatActivity() {
     fun loadImage(action: AnimateActions) {
         when (action) {
             AnimateActions.ATTACK -> {
-                Glide.with(this).load(resources.getDrawable(R.drawable.rock)).into(binding.terrainImage)
+                Glide.with(this).load(resources.getDrawable(R.drawable.myrock)).into(binding.terrainImage)
             }
             AnimateActions.CATCH -> {
                 Glide.with(this).load(resources.getDrawable(R.drawable.pokeball_png)).into(binding.terrainImage)
@@ -167,10 +167,10 @@ class CatchingPokemonActivity : AppCompatActivity() {
                 Glide.with(this).load(resources.getDrawable(R.drawable.logo)).into(binding.terrainImage)
             }
             AnimateActions.SUCCESS -> {
-                Glide.with(this).load(resources.getDrawable(R.drawable.success_png)).into(binding.terrainImage)
+                Glide.with(this).load(resources.getDrawable(R.drawable.caught)).into(binding.terrainImage)
             }
             AnimateActions.FAILURE -> {
-                Glide.with(this).load(resources.getDrawable(R.drawable.failed)).into(binding.terrainImage)
+                Glide.with(this).load(resources.getDrawable(R.drawable.fail)).into(binding.terrainImage)
             }
         }
     }
