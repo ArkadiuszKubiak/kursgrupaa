@@ -24,7 +24,13 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
+/*
+ * 1. Waits for the loading of Pokemons.
+ * 2. Tries to log-in.
+ * 3. Creates a new user.
+ * 4. Throws Pokeball and verify it's lower by one (twice).
+ * 5. Go back. End.
+ */
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class EspressoAutomatedTest {
