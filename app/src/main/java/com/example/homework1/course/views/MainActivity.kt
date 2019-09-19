@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.room.RoomSQLiteQuery.acquire
 import com.example.homework1.R
 import com.example.homework1.course.database.AppDatabase
 import com.example.homework1.course.database.PokemonRecord
@@ -135,7 +136,7 @@ class MainActivity : AppCompatActivity() {
 
         val wakeLock: PowerManager.WakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
-                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
+                newWakeLock(PowerManager.FULL_WAKE_LOCK , "MyApp::MyWakelockTag").apply {
                     acquire()
                 }
             }
